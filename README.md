@@ -38,6 +38,6 @@ https://trello.com/b/NrXnbKtG/wishmatching
 
 서규범 sgb8170@naver.com
 
-김경지 jh83370@naver.com
+김경지 ggk1104@gmail.com
 
-강준혁 ggk1104@gmail.com
+강준혁 jh83370@naver.com
