@@ -31,3 +31,10 @@
 
 https://trello.com/b/NrXnbKtG/wishmatching
 
+------------
+## 팀원 구성
+
+한승수 hanseu96@naver.com
+서규범 sgb8170@naver.com
+김경지 jh83370@naver.com
+강준혁 ggk1104@gmail.com
