@@ -70,25 +70,25 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1.2"
+        android:layout_weight="1"
         android:orientation="vertical">
 
 
         <com.shobhitpuri.custombuttons.GoogleSignInButton
-            android:id="@+id/google_sign_in_button"
             android:layout_width="251dp"
-            android:layout_height="wrap_content"
+            android:layout_height="37dp"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:text="Google로 로그인"
             app:isDarkTheme="true" />
 
-        <com.twitter.sdk.android.core.identity.TwitterLoginButton
-            android:layout_marginTop="13dp"
-            android:id="@+id/twitterLogInButton"
-            android:layout_gravity="center"
-            android:layout_width="251dp"
-            android:layout_height="wrap_content" />
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/btn_facebook_login"
+            android:layout_width="241dp"
+            android:layout_height="54dp"
+            android:layout_gravity="center" />
+
+
 
     </LinearLayout>
 
