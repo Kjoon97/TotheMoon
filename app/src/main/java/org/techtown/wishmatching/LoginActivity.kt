@@ -1,6 +1,6 @@
 package org.techtown.wishmatching
 
-
+// commit test
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
@@ -124,7 +124,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun failure(exception: TwitterException?) {
-
+                Toast.makeText(applicationContext," 실패",Toast.LENGTH_LONG).show()
             }
 
         }
