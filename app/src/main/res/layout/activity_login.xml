@@ -75,6 +75,7 @@
 
 
         <com.shobhitpuri.custombuttons.GoogleSignInButton
+            android:id="@+id/google_sign_in_button"
             android:layout_width="251dp"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
