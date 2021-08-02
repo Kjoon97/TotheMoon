@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "122414114381",
+    "project_id": "wishmatching-ed07a",
+    "storage_bucket": "wishmatching-ed07a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:122414114381:android:d4bcb63511db6076709e04",
+        "android_client_info": {
+          "package_name": "org.techtown.wishmatching"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "122414114381-1snkcpt8qjsimhdaqr49mt79tjq7sbur.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.techtown.wishmatching",
+            "certificate_hash": "707b0f9ef911fdcea944ff18ae3324bba0af6a25"
+          }
+        },
+        {
+          "client_id": "122414114381-r55omesp4e0ccedutpibirmr0h81m54s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAejjjVx-VUeVpgYvGwpPfVcndO2xytx4E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "122414114381-r55omesp4e0ccedutpibirmr0h81m54s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
