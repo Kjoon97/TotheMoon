@@ -13,18 +13,18 @@ import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_login.*
-import java.util.*
-import com.twitter.sdk.android.core.*
-import com.twitter.sdk.android.core.identity.TwitterAuthClient
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.*
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import com.twitter.sdk.android.core.*
+import com.twitter.sdk.android.core.identity.TwitterAuthClient
+import kotlinx.android.synthetic.main.activity_login.*
+import java.util.*
 
 
 class LoginActivity : AppCompatActivity() {
@@ -40,6 +40,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+
+
         initTwitter()
         setContentView(R.layout.activity_login)
         twitterAuthClient = TwitterAuthClient()
@@ -48,6 +50,26 @@ class LoginActivity : AppCompatActivity() {
 
         auth2 = Firebase.auth
         callbackManager = CallbackManager.Factory.create();
+
+        btnSignIn.setOnClickListener {
+            var intent = Intent(this, SignInActivity::class.java)
+            startActivity(intent)
+        }
+
+        btnLogIn.setOnClickListener {
+            var userEmail = editTextUserEmail.text.toString()
+            var userPw = editTextUserPassword.text.toString()
+            var user = Firebase.auth.currentUser
+
+            auth?.signInWithEmailAndPassword(userEmail, userPw)?.addOnCompleteListener(this) {
+                if(user!!.isEmailVerified) {
+                    if (it.isSuccessful) startActivity(Intent(this, MainActivity::class.java))
+                    else Toast.makeText(this,"인증 메일을 확인해주세요.",Toast.LENGTH_SHORT).show()
+                }
+                else Toast.makeText(this, "LogIn fail.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
 
         LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile","email"))
 
