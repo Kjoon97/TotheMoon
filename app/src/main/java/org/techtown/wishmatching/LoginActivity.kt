@@ -55,7 +55,7 @@ class LoginActivity : AppCompatActivity() {
             var intent = Intent(this, SignInActivity::class.java)
             startActivity(intent)
         }
-
+        //로그인
         btnLogIn.setOnClickListener {
             var userEmail = editTextUserEmail.text.toString()
             var userPw = editTextUserPassword.text.toString()
