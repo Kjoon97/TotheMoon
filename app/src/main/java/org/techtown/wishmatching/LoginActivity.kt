@@ -51,18 +51,18 @@ class LoginActivity : AppCompatActivity() {
         auth2 = Firebase.auth
         callbackManager = CallbackManager.Factory.create();
 
-        btnSignIn.setOnClickListener {
+        btnSignIn.setOnClickListener { // 회원가입 액티비티
             var intent = Intent(this, SignInActivity::class.java)
             startActivity(intent)
         }
-        //로그인ㄴ
+        //로그인
         btnLogIn.setOnClickListener {
             var userEmail = editTextUserEmail.text.toString()
             var userPw = editTextUserPassword.text.toString()
             var user = Firebase.auth.currentUser
 
             auth?.signInWithEmailAndPassword(userEmail, userPw)?.addOnCompleteListener(this) {
-                if(user!!.isEmailVerified) {
+                if(user!!.isEmailVerified) { //인증메일에서 링크 클릭시 로그인 가능
                     if (it.isSuccessful) startActivity(Intent(this, MainActivity::class.java))
                     else Toast.makeText(this,"인증 메일을 확인해주세요.",Toast.LENGTH_SHORT).show()
                 }
