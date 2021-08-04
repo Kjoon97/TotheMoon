@@ -15,16 +15,35 @@ import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
+    var dataList: ArrayList<ListData> = arrayListOf(
+        ListData("1","2"),
+        ListData("2","2"),
+        ListData("3","2"),
+        ListData("4","2"),
+        ListData("5","2"),
+        ListData("6","2"),
+        ListData("7","2"),
+        ListData("8","2"),
+        ListData("9","2"),
+        ListData("10","2")
+
+    )
+
     private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         auth = FirebaseAuth.getInstance()
+
+        intent.putExtra("DataList", dataList)
+
         configureBottomNavigation()
 
     }
 
+    // 네비게이션바 , 뷰페이지 어댑터 설정
     private fun configureBottomNavigation() {
         vp_ac_main_frag_pager.adapter = MainFragmentStatePagerAdapter(supportFragmentManager, 3)
 
