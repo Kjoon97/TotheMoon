@@ -55,7 +55,8 @@ class LoginActivity : AppCompatActivity() {
             var intent = Intent(this, SignInActivity::class.java)
             startActivity(intent)
         }
-        //로그인
+
+        //로컬 로그인
         btnLogIn.setOnClickListener {
             var userEmail = editTextUserEmail.text.toString()
             var userPw = editTextUserPassword.text.toString()
@@ -78,6 +79,7 @@ class LoginActivity : AppCompatActivity() {
                 Log.d(TAG, "facebook:onSuccess:$loginResult")
                 if (loginResult != null) {
                     handleFacebookAccessToken(loginResult.accessToken)
+                    startActivity(Intent(applicationContext, MainActivity::class.java))
                 }
             }
 
@@ -96,6 +98,7 @@ class LoginActivity : AppCompatActivity() {
                     Log.d(TAG, "facebook:onSuccess:$loginResult")
                     if (loginResult != null) {
                         handleFacebookAccessToken(loginResult.accessToken)
+                        startActivity(Intent(applicationContext, MainActivity::class.java))
                     }
                 }
 
@@ -143,6 +146,7 @@ class LoginActivity : AppCompatActivity() {
         twitterLogInButton.callback = object : Callback<TwitterSession>(){
             override fun success(result: Result<TwitterSession>?) {
                 handleTwitterLogin(result!!.data)
+                Toast.makeText(applicationContext," 성공",Toast.LENGTH_LONG).show()
             }
 
             override fun failure(exception: TwitterException?) {
@@ -161,8 +165,9 @@ class LoginActivity : AppCompatActivity() {
                 if(task.isSuccessful){
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
+                    Toast.makeText(applicationContext," 성공222",Toast.LENGTH_LONG).show()
                 } else{
-
+                    Toast.makeText(applicationContext," 실패222",Toast.LENGTH_LONG).show()
                 }
 
             }
