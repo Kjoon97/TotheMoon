@@ -2,20 +2,18 @@ package org.techtown.wishmatching
 // commit test gb
 // commit test kjh
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Gravity
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.RelativeLayout
-import android.widget.TextView
-import com.google.android.gms.common.SignInButton
+import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
-import com.twitter.sdk.android.core.TwitterCore
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-
     var dataList: ArrayList<ListData> = arrayListOf(
         ListData("1","2"),
         ListData("2","2"),
@@ -29,18 +27,27 @@ class MainActivity : AppCompatActivity() {
         ListData("10","2")
 
     )
-
     private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         auth = FirebaseAuth.getInstance()
-
         intent.putExtra("DataList", dataList)
-
         configureBottomNavigation()
+    }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        var mInflater = menuInflater
+        mInflater.inflate(R.menu.testmenu,menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.profilemenu_test-> startActivity(Intent(this,ProfileActivity::class.java))
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     // 네비게이션바 , 뷰페이지 어댑터 설정

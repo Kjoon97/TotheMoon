@@ -89,6 +89,7 @@
             android:layout_height="36dp"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
+            android:text="Continue with Google"
             android:layout_margin="5dp"
             app:isDarkTheme="true" />
 
