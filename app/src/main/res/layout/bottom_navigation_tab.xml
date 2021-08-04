@@ -11,10 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:padding="10dp"
             android:src="@drawable/selector_bottom_navi_home_icon" />
     </RelativeLayout>
 
@@ -25,20 +27,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:padding="10dp"
             android:src="@drawable/selector_bottom_navi_chatting_icon" />
     </RelativeLayout>
-
 
 
     <RelativeLayout
         android:id="@+id/btn_bottom_navi_my_page_tab"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:padding="10dp">
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
