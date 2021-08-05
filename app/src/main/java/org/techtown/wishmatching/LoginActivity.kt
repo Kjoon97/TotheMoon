@@ -7,10 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.facebook.AccessToken
-import com.facebook.CallbackManager
-import com.facebook.FacebookCallback
-import com.facebook.FacebookException
+import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.Auth
@@ -20,10 +17,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.twitter.sdk.android.core.*
 import com.twitter.sdk.android.core.identity.TwitterAuthClient
 import kotlinx.android.synthetic.main.activity_login.*
+import org.techtown.wishmatching.Database.ContentDTO
 import java.util.*
 
 
@@ -121,11 +120,6 @@ class LoginActivity : AppCompatActivity() {
         googleSignInClient = GoogleSignIn.getClient(this,gso)
 
 
-
-
-
-
-
     }
 
     private fun initTwitter(){
@@ -161,11 +155,34 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this){ task->
                 if(task.isSuccessful){
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
-                    Toast.makeText(applicationContext," 성공222",Toast.LENGTH_LONG).show()
+                    val db = Firebase.firestore
+                    db.collection("user")
+                        .whereEqualTo("uid", auth.uid)
+                        .get()
+                        .addOnSuccessListener { documents->
+                            if(documents.isEmpty){
+                                var contentDTO = ContentDTO()
+                                contentDTO.uid = auth?.currentUser?.uid
+                                contentDTO.userId = auth?.currentUser?.email
+                                db?.collection("user")?.document()?.set(contentDTO)
+                                val intent = Intent(this, ProfileActivity::class.java)
+                                startActivity(intent)
+                            } else{
+                                for(docuemnt in documents){
+                                    if(docuemnt.get("area") == null || docuemnt.get("imageUrl") == null || docuemnt.get("Nickname") == null){
+                                        val intent = Intent(this, ProfileActivity::class.java)
+                                        startActivity(intent)
+                                    } else{
+                                        val intent = Intent(this, MainActivity::class.java)
+                                        startActivity(intent)
+                                    }
+                                }
+                            }
+                        }
+
+
                 } else{
-                    Toast.makeText(applicationContext," 실패222",Toast.LENGTH_LONG).show()
+
                 }
 
             }

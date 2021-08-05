@@ -6,6 +6,10 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -17,10 +21,30 @@ import java.util.*
 
 class ProfileActivity : AppCompatActivity() {
     var PICK_IMAGE_FROM_ALBUM=0  //request code
+    var k = arrayOf(0,0)
     var storage : FirebaseStorage? = null
     var photoUri: Uri? = null // 이미지 URI 담을 수 있음
     var auth: FirebaseAuth? = null   // 유저의 정보를 가져오기 위함
     var firestore : FirebaseFirestore? = null   // 데이터베이스를 사용할 수 있도록
+    val city = arrayOf("지역","울산광역시", "충청남도", "서울특별시", "세종특별자치시", "전라북도", "경기도", "광주광역시", "인천광역시", "전라남도", "강원도", "충청북도", "대구광역시", "경상남도", "경상북도", "부산광역시", "제주특별자치도", "대전광역시")
+    val innercity = arrayOf(arrayOf("세부 지역")
+        ,arrayOf("동구", "울주군", "남구", "북구", "중구")
+        ,arrayOf("청양군", "천안시동남구", "천안시", "태안군", "부여군", "예산군", "논산시", "서산시", "보령시", "금산군", "홍성군", "당진시", "아산시", "서천군", "계룡시", "공주시", "천안시서북구")
+        ,arrayOf("중랑구", "서대문구", "구로구", "중구", "서초구", "강북구", "용산구", "도봉구", "노원구", "영등포구", "강동구", "성북구", "은평구", "광진구", "마포구", "동작구", "동대문구", "양천구", "강남구", "관악구", "송파구", "금천구", "종로구", "강서구", "성동구")
+        ,arrayOf("세종시")
+        ,arrayOf("김제시", "장수군", "순창군", "부안군", "무주군", "군산시", "남원시", "정읍시", "전주시덕진구", "진안군", "고창군", "전주시완산구", "완주군", "전주시", "익산시", "임실군")
+        ,arrayOf("김포시", "안산시상록구", "동두천시", "오산시", "용인시", "성남시", "안양시", "용인시기흥구", "안양시동안구", "화성시", "광주시", "의왕시", "포천시", "수원시팔달구", "평택시", "수원시", "안산시", "양평군", "과천시", "고양시덕양구", "성남시수정구", "의정부시", "수원시권선구", "파주시", "양주시", "광명시", "가평군", "여주시", "안양시만안구", "연천군", "부천시", "하남시", "군포시", "수원시장안구", "안산시단원구", "용인시처인구", "고양시일산동구", "시흥시", "성남시중원구", "성남시분당구", "안성시", "고양시", "남양주시", "수원시영통구", "구리시", "이천시", "고양시일산서구", "용인시수지구")
+        ,arrayOf("동구", "북구", "남구", "광산구", "서구")
+        ,arrayOf("미추홀구", "강화군", "동구", "남동구", "부평구", "옹진군", "서구", "계양구", "연수구", "중구")
+        ,arrayOf("광양시", "목포시", "장성군", "함평군", "화순군", "담양군", "무안군", "여수시", "해남군", "나주시", "영암군", "완도군", "순천시", "진도군", "고흥군", "보성군", "곡성군", "장흥군", "강진군", "영광군", "구례군", "신안군")
+        ,arrayOf("횡성군", "삼척시", "인제군", "속초시", "동해시", "정선군", "평창군", "홍천군", "영월군", "춘천시", "원주시", "양구군", "강릉시", "화천군", "양양군", "태백시", "철원군", "고성군")
+        ,arrayOf("청주시", "단양군", "괴산군", "진천군", "제천시", "영동군", "보은군", "청주시상당구", "음성군", "증평군", "청주시흥덕구", "청주시청원구", "충주시", "청주시서원구", "옥천군")
+        ,arrayOf("달서구", "동구", "달성군", "북구", "수성구", "남구", "서구", "중구")
+        ,arrayOf("거창군", "거제시", "사천시", "창원시성산구", "밀양시", "창원시마산회원구", "산청군", "양산시", "창녕군", "합천군", "의령군", "남해군", "창원시", "김해시", "창원시의창구", "창원시마산합포구", "함양군", "하동군", "통영시", "진주시", "고성군", "창원시진해구", "함안군")
+        ,arrayOf("군위군", "상주시", "영양군", "청도군", "포항시북구", "영주시", "문경시", "영덕군", "김천시", "성주군", "경주시", "구미시", "포항시", "칠곡", "고령군", "포항시남구", "청송군", "영천시", "울진군","안동시", "의성군", "경산시", "울릉군", "예천군", "봉화군")
+        ,arrayOf("금정구", "기장군", "수영구", "동구", "부산진구", "해운대구", "동래구", "연제구", "사상구", "북구", "강서구", "남구", "사하구", "서구", "영도구", "중구")
+        ,arrayOf("제주시", "서귀포시")
+        ,arrayOf("대덕구", "동구", "유성구", "서구", "중구"))
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,18 +55,79 @@ class ProfileActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()            //초기화
         firestore = FirebaseFirestore.getInstance()  //초기화
 
-        photo_btn.setOnClickListener{
-//            if(ContextCompat.checkSelfPermission(this,android.Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED){
-//            }
+
+
+        var adapter : ArrayAdapter<String>
+        adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, city)
+        spin_profile_city.adapter = adapter
+
+        spin_profile_innercity.isEnabled = false
+
+
+        spin_profile_city.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                Inner(p2)
+                spin_profile_innercity.isEnabled = true
+                k[0] = p2
+
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+
+            }
+
+        }
+
+        spin_profile_innercity.onItemSelectedListener = object  : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+               k[1] = p2
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+
+            }
+
+        }
+
+
+
+        btn_profile_previous.visibility = View.INVISIBLE
+
+        btn_profile_imgChange.setOnClickListener{
             var photoPickerIntent = Intent(Intent.ACTION_PICK)
             photoPickerIntent.type ="image/*"
             startActivityForResult(photoPickerIntent,PICK_IMAGE_FROM_ALBUM)
         }
-        profile_upload_button.setOnClickListener{
-            contentUpload()
+
+
+        btn_profile_next.setOnClickListener {
+            if(vf_profile_profile.currentView==layout_proflie_basicinfo){
+                btn_profile_previous.visibility = View.VISIBLE
+                btn_profile_next.text = "완료"
+                vf_profile_profile.showNext()
+
+            } else{
+                contentUpload()
+                //액티비티 실행
+            }
+        }
+
+        btn_profile_previous.setOnClickListener {
+            vf_profile_profile.showPrevious()
+            btn_profile_next.text = "다음"
+            btn_profile_previous.visibility = View.INVISIBLE
+
         }
     }
+
+    fun Inner(index:Int){
+        var adpt : ArrayAdapter<String>
+        adpt = ArrayAdapter(this, android.R.layout.simple_spinner_item,innercity[index])
+        spin_profile_innercity.adapter = adpt
+    }
+
     fun contentUpload(){
+
         var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())//파일이름 입력해주는 코드 - 이름이 중복 설정되지않도록 파일명을 날짜로
         var imageFileName = "IMAGE_"+timestamp+"_.png"
 
@@ -52,25 +137,30 @@ class ProfileActivity : AppCompatActivity() {
         //파일 업로드 //데이터베이스를 입력해주는코드
         storageRef?.putFile(photoUri!!)?.addOnSuccessListener {
             storageRef.downloadUrl.addOnSuccessListener { uri->
-                var contentDTO = ContentDTO()
-                contentDTO.imageUrl = uri.toString()    // 받아온 주소를 저장
-                contentDTO.uid = auth?.currentUser?.uid // 유저의 uid 저장
-                contentDTO.userId = auth?.currentUser?.email //
-                contentDTO.Nickname = editTextNickname.text.toString()
-                contentDTO.timestamp =System.currentTimeMillis()
-                firestore?.collection("Users")?.document()?.set(contentDTO)
+                firestore!!.collection("user")
+                    .whereEqualTo("uid", auth?.uid)
+                    .get()
+                    .addOnSuccessListener { documents->
+                        for(document in documents){
+                            firestore!!.collection("user").document(document.id).update(mapOf(
+                                "imageUrl" to "${uri.toString()}",
+                                "nickname" to "${edt_profile_nickname.text.toString()}",
+                                "area" to "${city[k[0]]+" "+innercity[k[0]][k[1]]}"
+                            ))
+                        }
+                    }
                 setResult(Activity.RESULT_OK)
                 finish()
             }
         } //파일업로드 성공 시 이미지 주소를 받아옴 ,받아오자마자 데이터 모델을 만듦듦
-
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode ==PICK_IMAGE_FROM_ALBUM)
             if(resultCode == Activity.RESULT_OK){  //사진을 선택했을 때 이미지의 경로가 이쪽으로 넘어옴
                 photoUri = data?.data    //경로담기
-                Imageview_Main_Myprofile.setImageURI(photoUri)   //선택한 이미지로 변경
+                img_profile_img.setImageURI(photoUri)   //선택한 이미지로 변경
             }else{  //취소버튼 눌렀을 때 작동하는 부분
                 finish()  //취소했을 때는 액티비티 그냥 취소
             }
