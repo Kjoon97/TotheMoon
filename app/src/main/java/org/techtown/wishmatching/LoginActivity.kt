@@ -28,9 +28,9 @@ import java.util.*
 
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var auth: FirebaseAuth
-    private lateinit var auth2: FirebaseAuth
-    var auth3 : FirebaseAuth? =null
+    private lateinit var auth: FirebaseAuth   // 트위터
+    private lateinit var auth2: FirebaseAuth  // 페이스북
+    var auth3 : FirebaseAuth? =null           // 구글
     lateinit var twitterAuthClient: TwitterAuthClient
     lateinit var callbackManager: CallbackManager
     var googleSignInClient : GoogleSignInClient? = null
@@ -69,7 +69,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
 
-        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile","email"))
+//        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile","email"))
 
         btn_facebook_login.registerCallback(callbackManager, object : FacebookCallback<LoginResult?> {
             override fun onSuccess(loginResult: LoginResult?) {
