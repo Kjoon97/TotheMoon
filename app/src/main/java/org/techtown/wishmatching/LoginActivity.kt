@@ -157,19 +157,19 @@ class LoginActivity : AppCompatActivity() {
                 if(task.isSuccessful){
                     val db = Firebase.firestore
                     db.collection("user")
-                        .whereEqualTo("uid", auth.uid)
+                        .whereEqualTo("uid", auth.uid) //uid
                         .get()
                         .addOnSuccessListener { documents->
-                            if(documents.isEmpty){
+                            if(documents.isEmpty){            // 처음 로그인 하면 프로필 화면으로 이동
                                 var contentDTO = ContentDTO()
                                 contentDTO.uid = auth?.currentUser?.uid
                                 contentDTO.userId = auth?.currentUser?.email
                                 db?.collection("user")?.document()?.set(contentDTO)
                                 val intent = Intent(this, ProfileActivity::class.java)
                                 startActivity(intent)
-                            } else{
+                            } else{                        // 그게 아니라면 메인액티비티로 이동
                                 for(docuemnt in documents){
-                                    if(docuemnt.get("area") == null || docuemnt.get("imageUrl") == null || docuemnt.get("Nickname") == null){
+                                    if(docuemnt.get("area") == null || docuemnt.get("imageUrl") == null || docuemnt.get("nickname") == null){// ??????
                                         val intent = Intent(this, ProfileActivity::class.java)
                                         startActivity(intent)
                                     } else{
@@ -239,18 +239,45 @@ class LoginActivity : AppCompatActivity() {
         auth3?.signInWithCredential(credential)
             ?.addOnCompleteListener { // 로그인 결과값 가져오기
                     task ->
-                if (task.isSuccessful){   //아이디와 비밀번호가 일치시에 작동
-                    moveMainPage(task.result?.user)
+//                if (task.isSuccessful){   //아이디와 비밀번호가 일치시에 작동
+//                    moveMainPage(task.result?.user)
+                if(task.isSuccessful){
+                    val db = Firebase.firestore
+                    db.collection("user")
+                        .whereEqualTo("uid", auth.uid)
+                        .get()
+                        .addOnSuccessListener { documents->
+                            if(documents.isEmpty){            // 처음 로그인 하면 프로필 화면으로 이동
+                                var contentDTO = ContentDTO()
+                                contentDTO.uid = auth?.currentUser?.uid
+                                contentDTO.userId = auth?.currentUser?.email
+                                db?.collection("user")?.document()?.set(contentDTO)
+                                val intent = Intent(this, ProfileActivity::class.java)
+                                startActivity(intent)
+                            } else{                        // 그게 아니라면 메인액티비티로 이동
+                                for(docuemnt in documents){
+                                    if(docuemnt.get("area") == null || docuemnt.get("imageUrl") == null || docuemnt.get("Nickname") == null){// ??????
+                                        val intent = Intent(this, ProfileActivity::class.java)
+                                        startActivity(intent)
+                                    } else{
+                                        val intent = Intent(this, MainActivity::class.java)
+                                        startActivity(intent)
+                                    }
+                                }
+                            }
+                        }
+
+
                 }else{ // 실패시
                     Toast.makeText(this,task.exception?.message, Toast.LENGTH_LONG).show()
                 }
             }
     }
-    fun moveMainPage(user: FirebaseUser?){ //로그인 성공 시 다음 페이지로 넘어가는 함수, 파베의 유저 상태를 넘겨줌
-        if(user != null){ // 상태가 있을 경우, 메인 액티비티로 넘어감
-            startActivity(Intent(this,MainActivity::class.java))
-        }
-    }
+//    fun moveMainPage(user: FirebaseUser?){ //로그인 성공 시 다음 페이지로 넘어가는 함수, 파베의 유저 상태를 넘겨줌
+//        if(user != null){ // 상태가 있을 경우, 메인 액티비티로 넘어감
+//            startActivity(Intent(this,MainActivity::class.java))
+//        }
+//    }
 
     //    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 //        super.onActivityResult(requestCode, resultCode, data)

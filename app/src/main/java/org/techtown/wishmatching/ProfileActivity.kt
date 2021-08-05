@@ -89,8 +89,6 @@ class ProfileActivity : AppCompatActivity() {
 
         }
 
-
-
         btn_profile_previous.visibility = View.INVISIBLE
 
         btn_profile_imgChange.setOnClickListener{
