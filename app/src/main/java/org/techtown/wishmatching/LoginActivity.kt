@@ -169,20 +169,15 @@ class LoginActivity : AppCompatActivity() {
                                 startActivity(intent)
                             } else{                        // 그게 아니라면 메인액티비티로 이동
                                 for(docuemnt in documents){
-                                    if(docuemnt.get("area") == null || docuemnt.get("imageUrl") == null || docuemnt.get("nickname") == null){// ??????
-                                        val intent = Intent(this, ProfileActivity::class.java)
-                                        startActivity(intent)
-                                    } else{
-                                        val intent = Intent(this, MainActivity::class.java)
-                                        startActivity(intent)
-                                    }
+                                    val intent = Intent(this, MainActivity::class.java)
+                                    startActivity(intent)
                                 }
                             }
                         }
 
 
-                } else{
-
+                } else{ //실패 시
+                    Toast.makeText(this,task.exception?.message, Toast.LENGTH_LONG).show()
                 }
 
             }
@@ -190,6 +185,8 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        callbackManager.onActivityResult(requestCode, resultCode, data)
+        twitterAuthClient?.onActivityResult(requestCode, resultCode, data)
         if(requestCode == GOOGLE_LOGIN_CODE){
             var result = Auth.GoogleSignInApi.getSignInResultFromIntent(data) //구글에서 넘겨주는 로그인 결과값 가져오기
             if(result.isSuccess){ //성공 시 파이어베이스에 넣게끔 만들기
@@ -197,8 +194,6 @@ class LoginActivity : AppCompatActivity() {
                 firebaseAuthWithGoogle(account)
             }
         }
-        callbackManager.onActivityResult(requestCode, resultCode, data)
-        twitterAuthClient?.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun handleFacebookAccessToken(token: AccessToken) {
@@ -244,25 +239,20 @@ class LoginActivity : AppCompatActivity() {
                 if(task.isSuccessful){
                     val db = Firebase.firestore
                     db.collection("user")
-                        .whereEqualTo("uid", auth.uid)
+                        .whereEqualTo("uid", auth3!!.uid)
                         .get()
                         .addOnSuccessListener { documents->
                             if(documents.isEmpty){            // 처음 로그인 하면 프로필 화면으로 이동
                                 var contentDTO = ContentDTO()
-                                contentDTO.uid = auth?.currentUser?.uid
-                                contentDTO.userId = auth?.currentUser?.email
+                                contentDTO.uid = auth3?.currentUser?.uid
+                                contentDTO.userId = auth3?.currentUser?.email
                                 db?.collection("user")?.document()?.set(contentDTO)
                                 val intent = Intent(this, ProfileActivity::class.java)
                                 startActivity(intent)
                             } else{                        // 그게 아니라면 메인액티비티로 이동
                                 for(docuemnt in documents){
-                                    if(docuemnt.get("area") == null || docuemnt.get("imageUrl") == null || docuemnt.get("Nickname") == null){// ??????
-                                        val intent = Intent(this, ProfileActivity::class.java)
-                                        startActivity(intent)
-                                    } else{
-                                        val intent = Intent(this, MainActivity::class.java)
-                                        startActivity(intent)
-                                    }
+                                    val intent = Intent(this, MainActivity::class.java)
+                                    startActivity(intent)
                                 }
                             }
                         }

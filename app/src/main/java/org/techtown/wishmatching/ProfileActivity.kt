@@ -98,15 +98,15 @@ class ProfileActivity : AppCompatActivity() {
         }
 
 
-        btn_profile_next.setOnClickListener {
+        btn_profile_next.setOnClickListener {// 완료버튼
             if(vf_profile_profile.currentView==layout_proflie_basicinfo){
                 btn_profile_previous.visibility = View.VISIBLE
                 btn_profile_next.text = "완료"
                 vf_profile_profile.showNext()
-
             } else{
                 contentUpload()
                 //액티비티 실행
+                startActivity(Intent(this,MainActivity::class.java))
             }
         }
 
@@ -124,7 +124,7 @@ class ProfileActivity : AppCompatActivity() {
         spin_profile_innercity.adapter = adpt
     }
 
-    fun contentUpload(){
+    fun contentUpload(){ // 파이어베이스 로드
 
         var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())//파일이름 입력해주는 코드 - 이름이 중복 설정되지않도록 파일명을 날짜로
         var imageFileName = "IMAGE_"+timestamp+"_.png"

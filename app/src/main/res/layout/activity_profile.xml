@@ -126,16 +126,6 @@
                 app:layout_constraintTop_toTopOf="@+id/spin_profile_city"
                 app:layout_constraintVertical_bias="0.0" />
 
-            <Button
-                android:id="@+id/btn_profile_cityOk"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="5dp"
-                android:text="선택"
-                app:layout_constraintEnd_toEndOf="@+id/spin_profile_innercity"
-                app:layout_constraintTop_toBottomOf="@+id/spin_profile_innercity" />
-
             <TextView
                 android:id="@+id/tv_profile_cityText"
                 android:layout_width="wrap_content"

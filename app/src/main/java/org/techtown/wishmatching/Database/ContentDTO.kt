@@ -4,4 +4,5 @@ data class ContentDTO(var nickname :String?=null,
                       var imageUrl :String? =null,
                       var uid: String?=null,
                       var userId : String? = null,
-                      var area : String? = null )
+                      var area : String? = null ){
+}
