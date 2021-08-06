@@ -5,9 +5,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.list_item.*
 
@@ -64,7 +67,26 @@ class HomeFragment : Fragment() {
                 true
             }
             R.id.action_test -> {
-                startActivity(Intent(activity,ProfileActivity::class.java))
+//                startActivity(Intent(activity,ProfileActivity::class.java))
+                val user = Firebase.auth.currentUser
+                user?.let {
+                    // Name, email address, and profile photo Url
+                    val name = user.displayName
+                    val email = user.email
+                    val photoUrl = user.photoUrl
+
+                    // Check if user's email is verified
+                    val emailVerified = user.isEmailVerified
+
+                    // The user's ID, unique to the Firebase project. Do NOT use this value to
+                    // authenticate with your backend server, if you have one. Use
+                    // FirebaseUser.getToken() instead.
+                    val uid = user.uid
+                }
+
+                if (user != null) {
+                    Toast.makeText(activity,"${user.uid}",Toast.LENGTH_LONG).show()
+                }
                 true
             }
             R.id.action_logout -> {

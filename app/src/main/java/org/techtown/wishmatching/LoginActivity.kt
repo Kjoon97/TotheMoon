@@ -54,6 +54,8 @@ class LoginActivity : AppCompatActivity() {
         }
 
 
+
+
         initTwitter()
         setContentView(R.layout.activity_login)
         twitterAuthClient = TwitterAuthClient()
@@ -67,6 +69,9 @@ class LoginActivity : AppCompatActivity() {
             var intent = Intent(this, SignInActivity::class.java)
             startActivity(intent)
         }
+
+
+
 
         //로컬 로그인
         btnLogIn.setOnClickListener {
@@ -173,6 +178,7 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener(this){ task->
                 if(task.isSuccessful){
                     MySharedPreferences.setUserId(this, "have been login")
+                    MySharedPreferences.setLoginType(this, "twitter")
                     val db = Firebase.firestore
                     db.collection("user")
                         .whereEqualTo("uid", auth.uid) //uid
@@ -221,6 +227,7 @@ class LoginActivity : AppCompatActivity() {
         auth2.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
+                    MySharedPreferences.setLoginType(this, "facebook")
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success")
                     val user = auth2.currentUser
@@ -255,6 +262,7 @@ class LoginActivity : AppCompatActivity() {
 //                if (task.isSuccessful){   //아이디와 비밀번호가 일치시에 작동
 //                    moveMainPage(task.result?.user)
                 if(task.isSuccessful){
+                    MySharedPreferences.setLoginType(this, "google")
                     val db = Firebase.firestore
                     db.collection("user")
                         .whereEqualTo("uid", auth3!!.uid)

@@ -13,6 +13,16 @@ object MySharedPreferences {
         editor.putString("MY_ID", input)
         editor.commit()
     }
+    fun setLoginType(context: Context, input: String) {
+        val prefs : SharedPreferences = context.getSharedPreferences(MY_ACCOUNT, Context.MODE_PRIVATE)
+        val editor : SharedPreferences.Editor = prefs.edit()
+        editor.putString("login_type", input)
+        editor.commit()
+    }
+    fun getLoginType(context: Context) : String {
+        val prefs : SharedPreferences = context.getSharedPreferences(MY_ACCOUNT, Context.MODE_PRIVATE)
+        return prefs.getString("login_type", "").toString()
+    }
 
     fun getUserId(context: Context): String {
         val prefs : SharedPreferences = context.getSharedPreferences(MY_ACCOUNT, Context.MODE_PRIVATE)
