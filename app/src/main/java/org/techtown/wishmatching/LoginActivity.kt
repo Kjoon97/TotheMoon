@@ -1,13 +1,18 @@
 package org.techtown.wishmatching
 
 // commit test
+import android.app.ActionBar
+import android.app.Activity
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.facebook.*
+import com.facebook.login.Login
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.Auth
@@ -24,6 +29,7 @@ import com.twitter.sdk.android.core.identity.TwitterAuthClient
 import kotlinx.android.synthetic.main.activity_login.*
 import org.techtown.wishmatching.Database.ContentDTO
 import java.util.*
+import org.techtown.wishmatching.MySharedPreferences
 
 
 class LoginActivity : AppCompatActivity() {
@@ -35,9 +41,18 @@ class LoginActivity : AppCompatActivity() {
     lateinit var callbackManager: CallbackManager
     var googleSignInClient : GoogleSignInClient? = null
     var GOOGLE_LOGIN_CODE =9001
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        if(MySharedPreferences.getUserId(this).isNotEmpty()) {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
 
         initTwitter()
         setContentView(R.layout.activity_login)
@@ -72,6 +87,7 @@ class LoginActivity : AppCompatActivity() {
 //        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile","email"))
 
         btn_facebook_login.registerCallback(callbackManager, object : FacebookCallback<LoginResult?> {
+
             override fun onSuccess(loginResult: LoginResult?) {
                 Log.d(TAG, "facebook:onSuccess:$loginResult")
                 if (loginResult != null) {
@@ -91,6 +107,7 @@ class LoginActivity : AppCompatActivity() {
 
         LoginManager.getInstance().registerCallback(callbackManager,
             object : FacebookCallback<LoginResult?> {
+
                 override fun onSuccess(loginResult: LoginResult?) {
                     Log.d(TAG, "facebook:onSuccess:$loginResult")
                     if (loginResult != null) {
@@ -155,6 +172,7 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this){ task->
                 if(task.isSuccessful){
+                    MySharedPreferences.setUserId(this, "have been login")
                     val db = Firebase.firestore
                     db.collection("user")
                         .whereEqualTo("uid", auth.uid) //uid

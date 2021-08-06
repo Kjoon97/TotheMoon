@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/tw__light_gray"
     android:orientation="vertical"
     tools:context=".LoginActivity">
 
@@ -60,7 +61,11 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:text="회원가입" />
+                android:text="회원가입"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:backgroundTint="@color/tw__blue_pressed" />
 
             <Button
                 android:id="@+id/btnLogIn"
@@ -71,7 +76,11 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:text="로그인" />
+                android:text="로그인"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:backgroundTint="@color/tw__blue_pressed" />
         </LinearLayout>
 
     </LinearLayout>
@@ -85,25 +94,27 @@
 
         <com.shobhitpuri.custombuttons.GoogleSignInButton
             android:id="@+id/google_sign_in_button"
-            android:layout_width="253dp"
-            android:layout_height="36dp"
+            android:layout_width="343dp"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
-            android:text="Continue with Google"
             android:layout_margin="5dp"
+            android:text="Continue with Google"
             app:isDarkTheme="true" />
 
         <com.facebook.login.widget.LoginButton
             android:id="@+id/btn_facebook_login"
-            android:layout_width="245dp"
-            android:layout_height="wrap_content"
+            android:layout_width="337dp"
+            android:layout_height="40dp"
             android:layout_gravity="center"
-            android:layout_margin="5dp" />
+            android:layout_margin="5dp"
+            android:paddingTop="11dp"
+            android:paddingBottom="11dp" />
 
         <com.twitter.sdk.android.core.identity.TwitterLoginButton
             android:id="@+id/twitterLogInButton"
-            android:layout_width="245dp"
-            android:layout_height="29dp"
+            android:layout_width="338dp"
+            android:layout_height="37dp"
             android:layout_gravity="center"
             android:layout_margin="5dp"
             android:layout_marginTop="5dp" />

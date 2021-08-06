@@ -12,6 +12,7 @@ import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_home.*
 
 class MainActivity : AppCompatActivity() {
     var dataList: ArrayList<ListData> = arrayListOf(
@@ -35,20 +36,25 @@ class MainActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         intent.putExtra("DataList", dataList)
         configureBottomNavigation()
+//        getSupportActionBar()?.setIcon(R.drawable.font_wishmatching_bold35)
+//        getSupportActionBar()?.setDisplayUseLogoEnabled(true)
+//        getSupportActionBar()?.setDisplayShowHomeEnabled(true)
+
+
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        var mInflater = menuInflater
-        mInflater.inflate(R.menu.testmenu,menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.profilemenu_test-> startActivity(Intent(this,ProfileActivity::class.java))
-        }
-        return super.onOptionsItemSelected(item)
-    }
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        var mInflater = menuInflater
+//        mInflater.inflate(R.menu.testmenu,menu)
+//        return true
+//    }
+//
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        when(item.itemId){
+//            R.id.profilemenu_test-> startActivity(Intent(this,ProfileActivity::class.java))
+//        }
+//        return super.onOptionsItemSelected(item)
+//    }
 
     // 네비게이션바 , 뷰페이지 어댑터 설정
     private fun configureBottomNavigation() {
