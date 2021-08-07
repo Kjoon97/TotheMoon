@@ -63,7 +63,8 @@ class HomeFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_add -> {
-                // navigate to settings screen
+                val intent = Intent(activity, AddPostActivity::class.java)
+                startActivity(intent)
                 true
             }
             R.id.action_test -> {
