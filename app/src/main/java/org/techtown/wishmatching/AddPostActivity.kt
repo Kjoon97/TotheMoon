@@ -2,16 +2,24 @@ package org.techtown.wishmatching
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.LinearLayout
+import android.widget.Toast
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_add_post.*
+import kotlinx.android.synthetic.main.activity_add_post.home2
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_profile.*
+import kotlinx.android.synthetic.main.fragment_home.*
 import org.techtown.wishmatching.Database.PostDTO
 import java.text.SimpleDateFormat
 import java.util.*
@@ -24,9 +32,12 @@ class AddPostActivity : AppCompatActivity() {
     var auth: FirebaseAuth? = null   // 유저의 정보를 가져오기 위함
     var firestore : FirebaseFirestore? = null   // 데이터베이스를 사용할 수 있도록
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_post)
+
+
 
         storage = FirebaseStorage.getInstance() //스토리지 초기화
         auth = FirebaseAuth.getInstance()            //초기화
@@ -40,6 +51,8 @@ class AddPostActivity : AppCompatActivity() {
             var photoPickerIntent = Intent(Intent.ACTION_PICK)
             photoPickerIntent.type ="image/*"
             startActivityForResult(photoPickerIntent,PICK_IMAGE_FROM_ALBUM)
+
+
         }
 
 
@@ -55,8 +68,23 @@ class AddPostActivity : AppCompatActivity() {
         when(item.itemId){
             R.id.action_addpost -> {
                 contentUpload()
-                //액티비티 실행
-                startActivity(Intent(this,MainActivity::class.java))
+//                액티비티 실행
+
+//                startActivity(Intent(this,MainActivity::class.java))
+
+//                Toast.makeText(this,"작성 완료",Toast.LENGTH_LONG).show()
+
+//                var home : View = findViewById(R.id.home_layout)
+//                Snackbar.make(home, "snack", Snackbar.LENGTH_LONG).show()
+
+                val mySnackbar = Snackbar.make(findViewById(R.id.home2),
+                    "작성 완료", Snackbar.LENGTH_SHORT)
+                mySnackbar.setAction("닫기", MyUndoListener())
+                mySnackbar.setTextColor(Color.WHITE)
+                mySnackbar.show()
+
+
+
 
             }
         }
@@ -94,7 +122,14 @@ class AddPostActivity : AppCompatActivity() {
                     }
                 setResult(Activity.RESULT_OK)
                 finish()
+
             }
         } //파일업로드 성공 시 이미지 주소를 받아옴 ,받아오자마자 데이터 모델을 만듦듦
+    }
+    class MyUndoListener : View.OnClickListener {
+
+        override fun onClick(v: View) {
+            // Code to undo the user's last action
+        }
     }
 }
