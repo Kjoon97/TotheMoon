@@ -67,11 +67,27 @@ class LoginActivity : AppCompatActivity() {
             var user = Authentication.auth.currentUser
 
             Authentication.auth?.signInWithEmailAndPassword(userEmail, userPw)?.addOnCompleteListener(this) {
-                if(user!!.isEmailVerified) { //인증메일에서 링크 클릭시 로그인 가능
-                    if (it.isSuccessful) startActivity(Intent(this, MainActivity::class.java))
-                    else Toast.makeText(this,"인증 메일을 확인해주세요.",Toast.LENGTH_SHORT).show()
+                if(Authentication.auth.currentUser!!.isEmailVerified) { //인증메일에서 링크 클릭시 로그인 가능
+                    if (it.isSuccessful){
+                        db.collection("user")
+                            .whereEqualTo("uid", Authentication.auth!!.uid)
+                            .get()
+                            .addOnSuccessListener { documents->
+                                if(documents.isEmpty){            // 처음 로그인 하면 프로필 화면으로 이동
+                                    val intent = Intent(this, ProfileActivity::class.java)
+                                    startActivity(intent)
+                                } else{                        // 그게 아니라면 메인액티비티로 이동
+                                    val intent = Intent(this, MainActivity::class.java)
+                                    startActivity(intent)
+                                }
+                            }
+                    } else{
+                        Toast.makeText(this,"인증 메일을 확인해주세요.",Toast.LENGTH_SHORT).show()
+                    }
+                }else{
+                    Toast.makeText(this, "LogIn fail.", Toast.LENGTH_SHORT).show()
                 }
-                else Toast.makeText(this, "LogIn fail.", Toast.LENGTH_SHORT).show()
+
             }
         }
 
@@ -189,6 +205,18 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
 //                    MySharedPreferences.setLoginType(this, "facebook")
                     // Sign in success, update UI with the signed-in user's information
+                    db.collection("user")
+                        .whereEqualTo("uid", Authentication.auth!!.uid)
+                        .get()
+                        .addOnSuccessListener { documents->
+                            if(documents.isEmpty){            // 처음 로그인 하면 프로필 화면으로 이동
+                                val intent = Intent(this, ProfileActivity::class.java)
+                                startActivity(intent)
+                            } else{                        // 그게 아니라면 메인액티비티로 이동
+                                val intent = Intent(this, MainActivity::class.java)
+                                startActivity(intent)
+                            }
+                        }
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
@@ -222,7 +250,6 @@ class LoginActivity : AppCompatActivity() {
                     task ->
                 if(task.isSuccessful){
 //                    MySharedPreferences.setLoginType(this, "google")
-
                     db.collection("user")
                         .whereEqualTo("uid", Authentication.auth!!.uid)
                         .get()

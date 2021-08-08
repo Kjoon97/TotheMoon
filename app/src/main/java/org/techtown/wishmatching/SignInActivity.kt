@@ -28,7 +28,10 @@ class SignInActivity : AppCompatActivity() {
                 if (task.isSuccessful) Log.d(TAG, "signInWithEmail:success")
                 user=auth.currentUser
                 user!!.sendEmailVerification()?.addOnCompleteListener { task ->
-                    if (task.isSuccessful) Log.d(TAG, "Email sent.")
+                    if (task.isSuccessful) {
+                        Log.d(TAG, "Email sent.")
+                        auth.signOut()
+                    }
                 }
             }
             var dlg = AlertDialog.Builder(this)

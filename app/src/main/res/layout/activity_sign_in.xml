@@ -71,6 +71,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="20dp"
                 android:src="@drawable/password_icon3"/>
+
             <EditText
                 android:id="@+id/editTextSignInPassword"
                 android:layout_width="match_parent"
@@ -78,7 +79,8 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="10dp"
-                android:hint="비밀번호 (최소 8자 이상)"/>
+                android:hint="비밀번호 (최소 8자 이상)"
+                android:inputType="textPassword" />
         </LinearLayout>
         <Button
             android:id="@+id/btnOk"
