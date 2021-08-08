@@ -21,7 +21,7 @@ import java.util.*
 
 class ProfileActivity : AppCompatActivity() {
     var PICK_IMAGE_FROM_ALBUM=0  //request code
-    var k = arrayOf(0,0)
+    var index = arrayOf(0,0)
     var storage : FirebaseStorage? = null
     var photoUri: Uri? = null // 이미지 URI 담을 수 있음
     var auth: FirebaseAuth? = null   // 유저의 정보를 가져오기 위함
@@ -61,14 +61,15 @@ class ProfileActivity : AppCompatActivity() {
         adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, city)
         spin_profile_city.adapter = adapter
 
-        spin_profile_innercity.isEnabled = false
 
 
         spin_profile_city.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                Inner(p2)
-                spin_profile_innercity.isEnabled = true
-                k[0] = p2
+
+                var adpt : ArrayAdapter<String>
+                adpt = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item,innercity[p2])
+                spin_profile_innercity.adapter = adpt
+                index[0] = p2
 
             }
 
@@ -80,7 +81,7 @@ class ProfileActivity : AppCompatActivity() {
 
         spin_profile_innercity.onItemSelectedListener = object  : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-               k[1] = p2
+               index[1] = p2
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -118,11 +119,6 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
-    fun Inner(index:Int){
-        var adpt : ArrayAdapter<String>
-        adpt = ArrayAdapter(this, android.R.layout.simple_spinner_item,innercity[index])
-        spin_profile_innercity.adapter = adpt
-    }
 
     fun contentUpload(){ // 파이어베이스 로드
 
@@ -135,18 +131,12 @@ class ProfileActivity : AppCompatActivity() {
         //파일 업로드 //데이터베이스를 입력해주는코드
         storageRef?.putFile(photoUri!!)?.addOnSuccessListener {
             storageRef.downloadUrl.addOnSuccessListener { uri->
-                firestore!!.collection("user")
-                    .whereEqualTo("uid", auth?.uid)
-                    .get()
-                    .addOnSuccessListener { documents->
-                        for(document in documents){
-                            firestore!!.collection("user").document(document.id).update(mapOf(
-                                "imageUrl" to "${uri.toString()}",
-                                "nickname" to "${edt_profile_nickname.text.toString()}",
-                                "area" to "${city[k[0]]+" "+innercity[k[0]][k[1]]}"
-                            ))
-                        }
-                    }
+                var contentDTO = ContentDTO()
+                contentDTO.uid = Authentication.auth.currentUser!!.uid
+                contentDTO.imageUrl = uri.toString()
+                contentDTO.nickname = edt_profile_nickname.text.toString()
+                contentDTO.area = city[index[0]]+" "+innercity[index[0]][index[1]]
+                firestore?.collection("user")?.document()?.set(contentDTO)
                 setResult(Activity.RESULT_OK)
                 finish()
             }

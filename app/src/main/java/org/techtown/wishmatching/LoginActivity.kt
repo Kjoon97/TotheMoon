@@ -1,19 +1,13 @@
 package org.techtown.wishmatching
 
-// commit test
-import android.app.ActionBar
-import android.app.Activity
+
 import android.content.ContentValues.TAG
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.facebook.*
-import com.facebook.login.Login
-import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -21,65 +15,58 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.*
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.twitter.sdk.android.core.*
 import com.twitter.sdk.android.core.identity.TwitterAuthClient
 import kotlinx.android.synthetic.main.activity_login.*
-import org.techtown.wishmatching.Database.ContentDTO
-import java.util.*
-import org.techtown.wishmatching.MySharedPreferences
-
 
 class LoginActivity : AppCompatActivity() {
-
-    private lateinit var auth: FirebaseAuth   // 트위터
-    private lateinit var auth2: FirebaseAuth  // 페이스북
-    var auth3 : FirebaseAuth? =null           // 구글
-    lateinit var twitterAuthClient: TwitterAuthClient
-    lateinit var callbackManager: CallbackManager
-    var googleSignInClient : GoogleSignInClient? = null
+    private lateinit var twitterAuthClient: TwitterAuthClient   //트위터 관련
+    private lateinit var callbackManager: CallbackManager       //페이스북 관련
+    private lateinit var googleSignInClient: GoogleSignInClient //구글 관련
     var GOOGLE_LOGIN_CODE =9001
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        if(MySharedPreferences.getUserId(this).isNotEmpty()) {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+//        if(MySharedPreferences.getUserId(this).isNotEmpty()) {
+//            val intent = Intent(this, MainActivity::class.java)
+//            startActivity(intent)
+//            finish()
+//        }
+
+        //------------------------------------------------------------------------------------------------------------------------------------
+        //Twitter
+        initTwitter()       //컨텐츠뷰 설정 전에 실행되어야함. 그렇지 않으면 트위터 버튼이 눌리지 않음
+        setContentView(R.layout.activity_login)     //컨텐츠뷰 설정
+        twitterAuthClient = TwitterAuthClient()     //트위터 로그인 관련
+        initTwitterSignIn() //트위터 로그인에서의 setOnClickListener()
 
 
+        //--------------------------------------------------------------------------------------------------------------------------------------
+        //Facebook
+
+        callbackManager = CallbackManager.Factory.create();     //페이스북 로그인 관련
+        initFacebookSignIn()       //페이스북 로그인에서의 setOnClickListener()
 
 
-        initTwitter()
-        setContentView(R.layout.activity_login)
-        twitterAuthClient = TwitterAuthClient()
-        auth = FirebaseAuth.getInstance()
-        initTwitterSignIn()
+        //--------------------------------------------------------------------------------------------------------------------------------------------
+        //Local
 
-        auth2 = Firebase.auth
-        callbackManager = CallbackManager.Factory.create();
-
-        btnSignIn.setOnClickListener { // 회원가입 액티비티
+        btnSignIn.setOnClickListener { // 로컬 회원가입 액티비티로 이동
             var intent = Intent(this, SignInActivity::class.java)
             startActivity(intent)
         }
-
-
-
 
         //로컬 로그인
         btnLogIn.setOnClickListener {
             var userEmail = editTextUserEmail.text.toString()
             var userPw = editTextUserPassword.text.toString()
-            var user = Firebase.auth.currentUser
+            var user = Authentication.auth.currentUser
 
-            auth?.signInWithEmailAndPassword(userEmail, userPw)?.addOnCompleteListener(this) {
+            Authentication.auth?.signInWithEmailAndPassword(userEmail, userPw)?.addOnCompleteListener(this) {
                 if(user!!.isEmailVerified) { //인증메일에서 링크 클릭시 로그인 가능
                     if (it.isSuccessful) startActivity(Intent(this, MainActivity::class.java))
                     else Toast.makeText(this,"인증 메일을 확인해주세요.",Toast.LENGTH_SHORT).show()
@@ -89,62 +76,22 @@ class LoginActivity : AppCompatActivity() {
         }
 
 
-//        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile","email"))
+        //---------------------------------------------------------------------------------------------------------------------------------------------
+        //Google
 
-        btn_facebook_login.registerCallback(callbackManager, object : FacebookCallback<LoginResult?> {
-
-            override fun onSuccess(loginResult: LoginResult?) {
-                Log.d(TAG, "facebook:onSuccess:$loginResult")
-                if (loginResult != null) {
-                    handleFacebookAccessToken(loginResult.accessToken)
-                    startActivity(Intent(applicationContext, MainActivity::class.java))
-                }
-            }
-
-            override fun onCancel() {
-                Log.d(TAG, "facebook:onCancel")
-            }
-
-            override fun onError(exception: FacebookException) {
-                Log.d(TAG, "facebook:onError")
-            }
-        })
-
-        LoginManager.getInstance().registerCallback(callbackManager,
-            object : FacebookCallback<LoginResult?> {
-
-                override fun onSuccess(loginResult: LoginResult?) {
-                    Log.d(TAG, "facebook:onSuccess:$loginResult")
-                    if (loginResult != null) {
-                        handleFacebookAccessToken(loginResult.accessToken)
-                        startActivity(Intent(applicationContext, MainActivity::class.java))
-                    }
-                }
-
-                override fun onCancel() {
-                    // App code
-                }
-
-                override fun onError(exception: FacebookException) {
-                    // App code
-                }
-            })
-
-        // 구글 로그인
-        auth3 = FirebaseAuth.getInstance()
-        google_sign_in_button.setOnClickListener {
+        initGoogle()    //구글 로그인 초기 설정
+        google_sign_in_button.setOnClickListener {  //구글 로그인
             googleLogin()
         }
-        var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)  //구글로그인 옵션
-            .requestIdToken(getString(R.string.default_web_client_id)) //구글 api키
-            .requestEmail() //이메일 아이디 받아옴
-            .build()
-        googleSignInClient = GoogleSignIn.getClient(this,gso)
+
+        //----------------------------------------------------------------------------------------------------------------------------------------------
 
 
     }
 
-    private fun initTwitter(){
+
+    //-------------------------------------------------------------------------------------------------
+    private fun initTwitter(){      //API키를 대입해서 트위터 인증이 가능하도록 초기 설정
         val authConfig = TwitterAuthConfig(
             getString(R.string.twitter_consumer_key),
             getString(R.string.twitter_consumer_secret)
@@ -156,13 +103,11 @@ class LoginActivity : AppCompatActivity() {
         Twitter.initialize(config)
     }
 
-    private fun initTwitterSignIn(){
+    private fun initTwitterSignIn(){    //트위터 로그인 버튼을 누르면 트위터 로그인 페이지가 뜨게하고, 그 이후 콜백을 관리
         twitterLogInButton.callback = object : Callback<TwitterSession>(){
             override fun success(result: Result<TwitterSession>?) {
-                handleTwitterLogin(result!!.data)
-                Toast.makeText(applicationContext," 성공",Toast.LENGTH_LONG).show()
+                handleTwitterLogin(result!!.data)   //로그인에 성공하였다면, 트위터에 로그인한 사용자의 데이터를 인자로 넘겨줌(파이어베이스에 로그인 등록)
             }
-
             override fun failure(exception: TwitterException?) {
                 Toast.makeText(applicationContext," 실패",Toast.LENGTH_LONG).show()
             }
@@ -170,67 +115,66 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun handleTwitterLogin(session: TwitterSession){
+    private fun handleTwitterLogin(session: TwitterSession){    //파이어베이스에서 트위터로그인을 한 사용자를 등록
         val credential = TwitterAuthProvider.getCredential(
             session.authToken.token,
             session.authToken.secret)
-        auth.signInWithCredential(credential)
+        Authentication.auth.signInWithCredential(credential)
             .addOnCompleteListener(this){ task->
                 if(task.isSuccessful){
+                    Toast.makeText(this,task.exception?.message, Toast.LENGTH_LONG).show()
                     MySharedPreferences.setUserId(this, "have been login")
                     MySharedPreferences.setLoginType(this, "twitter")
                     val db = Firebase.firestore
                     db.collection("user")
-                        .whereEqualTo("uid", auth.uid) //uid
+                        .whereEqualTo("uid", Authentication.auth.uid) //uid
                         .get()
                         .addOnSuccessListener { documents->
                             if(documents.isEmpty){            // 처음 로그인 하면 프로필 화면으로 이동
-                                var contentDTO = ContentDTO()
-                                contentDTO.uid = auth?.currentUser?.uid
-                                contentDTO.userId = auth?.currentUser?.email
-                                db?.collection("user")?.document()?.set(contentDTO)
                                 val intent = Intent(this, ProfileActivity::class.java)
                                 startActivity(intent)
                             } else{                        // 그게 아니라면 메인액티비티로 이동
-                                for(docuemnt in documents){
-                                    val intent = Intent(this, MainActivity::class.java)
-                                    startActivity(intent)
-                                }
+                                val intent = Intent(this, MainActivity::class.java)
+                                startActivity(intent)
                             }
                         }
-
-
-                } else{ //실패 시
+                } else{ //파이어베이스에 트위터 로그인 등록 못했을 시
                     Toast.makeText(this,task.exception?.message, Toast.LENGTH_LONG).show()
                 }
 
             }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        callbackManager.onActivityResult(requestCode, resultCode, data)
-        twitterAuthClient?.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == GOOGLE_LOGIN_CODE){
-            var result = Auth.GoogleSignInApi.getSignInResultFromIntent(data) //구글에서 넘겨주는 로그인 결과값 가져오기
-            if(result.isSuccess){ //성공 시 파이어베이스에 넣게끔 만들기
-                var account = result.signInAccount
-                firebaseAuthWithGoogle(account)
+//--------------------------------------------------------------------------------------------------
+
+    private fun initFacebookSignIn(){
+        btn_facebook_login.registerCallback(callbackManager, object : FacebookCallback<LoginResult?> {
+            override fun onSuccess(loginResult: LoginResult?) {     //페이스북 로그인 버튼을 누르면 페이스북에서 로그인 페이지가 뜨게하고, 그 이후 콜백을 관리
+                Log.d(TAG, "facebook:onSuccess:$loginResult")
+                if (loginResult != null) {
+                    handleFacebookAccessToken(loginResult.accessToken)
+                    startActivity(Intent(applicationContext, MainActivity::class.java))     //이부분은 잠시 보류
+                }
             }
-        }
+            override fun onCancel() {
+                Log.d(TAG, "facebook:onCancel")
+            }
+            override fun onError(exception: FacebookException) {
+                Log.d(TAG, "facebook:onError")
+            }
+        })
     }
 
-    private fun handleFacebookAccessToken(token: AccessToken) {
+    private fun handleFacebookAccessToken(token: AccessToken) {  //파이어베이스에서 페이스북 로그인을 한 사용자 등록
         Log.d(TAG, "handleFacebookAccessToken:$token")
-
         val credential = FacebookAuthProvider.getCredential(token.token)
-        auth2.signInWithCredential(credential)
+        Authentication.auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     MySharedPreferences.setLoginType(this, "facebook")
                     // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "signInWithCredential:success")
-                    val user = auth2.currentUser
+                    Log.d(TAG, "signInWithCredential:succesauth2s")
+                    val user = Authentication.auth.currentUser
                     //updateUI(user)
                 } else {
                     // If sign in fails, display a message to the user.
@@ -242,12 +186,16 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
-    public override fun onStart() {
-        super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = auth2.currentUser
-        //updateUI(currentUser)
+//--------------------------------------------------------------------------------------------------
+
+    fun initGoogle(){
+        var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)  //구글로그인 관련(옵션 설정)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail() //이메일 아이디 받아옴
+            .build()
+        googleSignInClient = GoogleSignIn.getClient(this,gso)
     }
+
 
     fun googleLogin(){  //구글 로그인 단계
         var signInIntent = googleSignInClient?.signInIntent
@@ -256,51 +204,45 @@ class LoginActivity : AppCompatActivity() {
 
     fun firebaseAuthWithGoogle(account: GoogleSignInAccount?){
         var credential = GoogleAuthProvider.getCredential(account?.idToken,null)// account안에 있는 토큰아이디 넘기기
-        auth3?.signInWithCredential(credential)
+        Authentication.auth?.signInWithCredential(credential)
             ?.addOnCompleteListener { // 로그인 결과값 가져오기
                     task ->
-//                if (task.isSuccessful){   //아이디와 비밀번호가 일치시에 작동
-//                    moveMainPage(task.result?.user)
                 if(task.isSuccessful){
                     MySharedPreferences.setLoginType(this, "google")
                     val db = Firebase.firestore
                     db.collection("user")
-                        .whereEqualTo("uid", auth3!!.uid)
+                        .whereEqualTo("uid", Authentication.auth!!.uid)
                         .get()
                         .addOnSuccessListener { documents->
                             if(documents.isEmpty){            // 처음 로그인 하면 프로필 화면으로 이동
-                                var contentDTO = ContentDTO()
-                                contentDTO.uid = auth3?.currentUser?.uid
-                                contentDTO.userId = auth3?.currentUser?.email
-                                db?.collection("user")?.document()?.set(contentDTO)
                                 val intent = Intent(this, ProfileActivity::class.java)
                                 startActivity(intent)
                             } else{                        // 그게 아니라면 메인액티비티로 이동
-                                for(docuemnt in documents){
-                                    val intent = Intent(this, MainActivity::class.java)
-                                    startActivity(intent)
-                                }
+                                val intent = Intent(this, MainActivity::class.java)
+                                startActivity(intent)
                             }
                         }
-
 
                 }else{ // 실패시
                     Toast.makeText(this,task.exception?.message, Toast.LENGTH_LONG).show()
                 }
             }
     }
-//    fun moveMainPage(user: FirebaseUser?){ //로그인 성공 시 다음 페이지로 넘어가는 함수, 파베의 유저 상태를 넘겨줌
-//        if(user != null){ // 상태가 있을 경우, 메인 액티비티로 넘어감
-//            startActivity(Intent(this,MainActivity::class.java))
-//        }
-//    }
 
-    //    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//
-//        // Pass the activity result back to the Facebook SDK
-//        callbackManager.onActivityResult(requestCode, resultCode, data)
-//    }
+//--------------------------------------------------------------------------------------------------
 
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        callbackManager.onActivityResult(requestCode, resultCode, data)     //이부분은 문제없이 돌아감
+        twitterAuthClient?.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == GOOGLE_LOGIN_CODE){
+            var result = Auth.GoogleSignInApi.getSignInResultFromIntent(data) //구글에서 넘겨주는 로그인 결과값 가져오기
+            if(result.isSuccess){ //성공 시 파이어베이스에 넣게끔 만들기
+                var account = result.signInAccount
+                firebaseAuthWithGoogle(account)
+            }
+        }
+    }
 
 }
