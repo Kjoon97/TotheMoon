@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -105,9 +106,22 @@ class ProfileActivity : AppCompatActivity() {
                 btn_profile_next.text = "완료"
                 vf_profile_profile.showNext()
             } else{
-                contentUpload()
-                //액티비티 실행
-                startActivity(Intent(this,MainActivity::class.java))
+
+                if(photoUri == null){
+                    Toast.makeText(this,"이미지를 선택해주세요", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }else if(index[0] == 0){
+                    Toast.makeText(this,"지역을 선택해주세요", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }else if(edt_profile_nickname.isEnabled == true){
+                    Toast.makeText(this, "닉네임 중복을 확인해주세요", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }else{
+                    contentUpload()
+                    //액티비티 실행
+                    startActivity(Intent(this,MainActivity::class.java))
+                }
+
             }
         }
 
@@ -116,6 +130,45 @@ class ProfileActivity : AppCompatActivity() {
             btn_profile_next.text = "다음"
             btn_profile_previous.visibility = View.INVISIBLE
 
+        }
+
+        btn_profile_doublecheck.setOnClickListener {
+            if(btn_profile_doublecheck.text.toString() == "다시입력"){
+                edt_profile_nickname.isEnabled = true
+                btn_profile_doublecheck.text = "중복확인"
+                return@setOnClickListener
+            }
+            if(edt_profile_nickname.text.toString() == null){
+                Toast.makeText(this, "닉네임을 입력해주세요", Toast.LENGTH_SHORT).show()
+            } else{
+                firestore!!.collection("user")
+                    .whereEqualTo("nickname", edt_profile_nickname.text.toString()) //uid
+                    .get()
+                    .addOnSuccessListener { documents->
+                        if(documents.isEmpty){            // 처음 로그인 하면 프로필 화면으로 이동
+                            Toast.makeText(this@ProfileActivity,"사용가능합니다", Toast.LENGTH_SHORT).show()
+                            btn_profile_doublecheck.text = "다시입력"
+                            edt_profile_nickname.isEnabled = false
+                        } else{                        // 그게 아니라면 메인액티비티로 이동
+                            Toast.makeText(this@ProfileActivity, "아이디가 중복됩니다", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+            }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if(Authentication.auth !=null){
+            firestore!!.collection("user")
+                .whereEqualTo("uid", Authentication.auth!!.uid)
+                .get()
+                .addOnSuccessListener { documents->
+                    if(!(documents.isEmpty)){            // 처음 로그인 하면 프로필 화면으로 이동
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                    }
+                }
         }
     }
 
@@ -138,7 +191,6 @@ class ProfileActivity : AppCompatActivity() {
                 contentDTO.area = city[index[0]]+" "+innercity[index[0]][index[1]]
                 firestore?.collection("user")?.document()?.set(contentDTO)
                 setResult(Activity.RESULT_OK)
-                finish()
             }
         } //파일업로드 성공 시 이미지 주소를 받아옴 ,받아오자마자 데이터 모델을 만듦듦
     }

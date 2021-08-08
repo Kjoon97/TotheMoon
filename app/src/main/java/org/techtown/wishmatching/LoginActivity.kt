@@ -26,12 +26,12 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var callbackManager: CallbackManager       //페이스북 관련
     private lateinit var googleSignInClient: GoogleSignInClient //구글 관련
     var GOOGLE_LOGIN_CODE =9001
-
+    val db = Firebase.firestore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-//        if(MySharedPreferences.getUserId(this).isNotEmpty()) {
+//        if(MySharedPreferences.getUserId(this).isNotEmpty()) {    SharedPreference를 쓰지않아도 될거같음
 //            val intent = Intent(this, MainActivity::class.java)
 //            startActivity(intent)
 //            finish()
@@ -87,8 +87,26 @@ class LoginActivity : AppCompatActivity() {
         //----------------------------------------------------------------------------------------------------------------------------------------------
 
 
+
     }
 
+    override fun onStart() {
+        super.onStart()
+        if(Authentication.auth !=null){
+            db.collection("user")
+                .whereEqualTo("uid", Authentication.auth!!.uid)
+                .get()
+                .addOnSuccessListener { documents->
+                    if(documents.isEmpty){            // 처음 로그인 하면 프로필 화면으로 이동
+                        val intent = Intent(this, ProfileActivity::class.java)
+                        startActivity(intent)
+                    } else{                        // 그게 아니라면 메인액티비티로 이동
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                    }
+                }
+        }
+    }
 
     //-------------------------------------------------------------------------------------------------
     private fun initTwitter(){      //API키를 대입해서 트위터 인증이 가능하도록 초기 설정
@@ -122,10 +140,8 @@ class LoginActivity : AppCompatActivity() {
         Authentication.auth.signInWithCredential(credential)
             .addOnCompleteListener(this){ task->
                 if(task.isSuccessful){
-                    Toast.makeText(this,task.exception?.message, Toast.LENGTH_LONG).show()
-                    MySharedPreferences.setUserId(this, "have been login")
-                    MySharedPreferences.setLoginType(this, "twitter")
-                    val db = Firebase.firestore
+//                    MySharedPreferences.setUserId(this, "have been login")
+//                    MySharedPreferences.setLoginType(this, "twitter")
                     db.collection("user")
                         .whereEqualTo("uid", Authentication.auth.uid) //uid
                         .get()
@@ -171,11 +187,8 @@ class LoginActivity : AppCompatActivity() {
         Authentication.auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    MySharedPreferences.setLoginType(this, "facebook")
+//                    MySharedPreferences.setLoginType(this, "facebook")
                     // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "signInWithCredential:succesauth2s")
-                    val user = Authentication.auth.currentUser
-                    //updateUI(user)
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
@@ -208,8 +221,8 @@ class LoginActivity : AppCompatActivity() {
             ?.addOnCompleteListener { // 로그인 결과값 가져오기
                     task ->
                 if(task.isSuccessful){
-                    MySharedPreferences.setLoginType(this, "google")
-                    val db = Firebase.firestore
+//                    MySharedPreferences.setLoginType(this, "google")
+
                     db.collection("user")
                         .whereEqualTo("uid", Authentication.auth!!.uid)
                         .get()
