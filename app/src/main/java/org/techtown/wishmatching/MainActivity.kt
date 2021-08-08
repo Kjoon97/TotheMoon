@@ -33,9 +33,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        var context_main = this
         auth = FirebaseAuth.getInstance()
         intent.putExtra("DataList", dataList)
         configureBottomNavigation()
+
 //        getSupportActionBar()?.setIcon(R.drawable.font_wishmatching_bold35)
 //        getSupportActionBar()?.setDisplayUseLogoEnabled(true)
 //        getSupportActionBar()?.setDisplayShowHomeEnabled(true)

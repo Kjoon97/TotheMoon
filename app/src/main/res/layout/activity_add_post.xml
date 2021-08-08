@@ -2,10 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ProfileActivity" >
+    tools:context=".ProfileActivity">
 
     <ImageButton
         android:id="@+id/btn_post_image"
@@ -35,8 +36,8 @@
         android:layout_width="match_parent"
         android:layout_height="239dp"
         android:layout_margin="10dp"
+        android:background="@drawable/custom_edittext"
         android:ems="10"
         android:hint="게시글 내용을 입력해주세요."
-        android:inputType="textPersonName"
-        android:background="@drawable/custom_edittext"/>
+        android:inputType="textPersonName" />
 </LinearLayout>
