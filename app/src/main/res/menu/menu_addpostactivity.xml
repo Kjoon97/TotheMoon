@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_add1"
+        android:id="@+id/action_addpost"
         android:icon="@drawable/ic_baseline_check_24"
         android:title="ddd"
         app:showAsAction="always" />

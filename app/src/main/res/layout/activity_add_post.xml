@@ -8,7 +8,7 @@
     tools:context=".ProfileActivity" >
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/btn_post_image"
         android:layout_width="match_parent"
         android:layout_height="296dp"
         android:background="#00FFFFFF"
@@ -16,7 +16,7 @@
         app:srcCompat="@drawable/common_google_signin_btn_icon_light_normal_background" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/editText_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -25,13 +25,13 @@
         android:inputType="textPersonName" />
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/spinner_category"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:layout_margin="10dp" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName3"
+        android:id="@+id/editText_content"
         android:layout_width="match_parent"
         android:layout_height="239dp"
         android:layout_margin="10dp"
