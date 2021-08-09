@@ -12,12 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WishMatching"
         android:usesCleartextTraffic="true">
+        <activity android:name=".EditLocationActivity"></activity>
         <activity
             android:name=".AddPostActivity"
             android:label="게시글 쓰기"
-            android:theme="@style/Theme.WishMatching_post"
             android:parentActivityName=".MainActivity"
-            ></activity>
+            android:theme="@style/Theme.WishMatching_post" />
         <activity
             android:name=".ProfileActivity"
             android:exported="true" />
@@ -38,7 +38,7 @@
         <activity
             android:name=".MainActivity"
             android:label=""
-            android:theme="@style/Theme.WishMatching"/>
+            android:theme="@style/Theme.WishMatching" />
     </application>
 
 </manifest>

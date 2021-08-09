@@ -1,5 +1,6 @@
 package org.techtown.wishmatching
 
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
@@ -27,6 +28,15 @@ class MyPageFragment : Fragment(){
         firestore = FirebaseFirestore.getInstance()  //초기화
         storage = FirebaseStorage.getInstance() //스토리지 초기화
 
+
+        layout_myPage_edtLoc.setOnClickListener {
+            val intent = Intent(context, EditLocationActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
         firestore!!.collection("user")
             .whereEqualTo("uid", Authentication.auth.currentUser!!.uid).limit(1)
             .get()
@@ -39,8 +49,6 @@ class MyPageFragment : Fragment(){
 
                 }
             }
-
-
 
     }
 

@@ -105,29 +105,29 @@
             android:layout_height="match_parent">
 
             <Spinner
-                android:id="@+id/spin_profile_city"
+                android:id="@+id/spin_edtLocation_city"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="55dp"
                 android:layout_marginTop="80dp"
-                app:layout_constraintEnd_toStartOf="@+id/spin_profile_innercity"
+                app:layout_constraintEnd_toStartOf="@+id/spin_edtLocation_innercity"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_profile_cityText" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_edtLocation_cityText" />
 
             <Spinner
-                android:id="@+id/spin_profile_innercity"
+                android:id="@+id/spin_edtLocation_innercity"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="30dp"
                 android:layout_marginEnd="55dp"
-                app:layout_constraintBottom_toBottomOf="@+id/spin_profile_city"
+                app:layout_constraintBottom_toBottomOf="@+id/spin_edtLocation_city"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/spin_profile_city"
-                app:layout_constraintTop_toTopOf="@+id/spin_profile_city"
+                app:layout_constraintStart_toEndOf="@+id/spin_edtLocation_city"
+                app:layout_constraintTop_toTopOf="@+id/spin_edtLocation_city"
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
-                android:id="@+id/tv_profile_cityText"
+                android:id="@+id/tv_edtLocation_cityText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="70dp"

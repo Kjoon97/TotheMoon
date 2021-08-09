@@ -2,16 +2,13 @@ package org.techtown.wishmatching
 
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -60,16 +57,16 @@ class ProfileActivity : AppCompatActivity() {
 
         var adapter : ArrayAdapter<String>
         adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, city)
-        spin_profile_city.adapter = adapter
+        spin_edtLocation_city.adapter = adapter
 
 
 
-        spin_profile_city.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        spin_edtLocation_city.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
 
                 var adpt : ArrayAdapter<String>
                 adpt = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item,innercity[p2])
-                spin_profile_innercity.adapter = adpt
+                spin_edtLocation_innercity.adapter = adpt
                 index[0] = p2
 
             }
@@ -80,7 +77,7 @@ class ProfileActivity : AppCompatActivity() {
 
         }
 
-        spin_profile_innercity.onItemSelectedListener = object  : AdapterView.OnItemSelectedListener{
+        spin_edtLocation_innercity.onItemSelectedListener = object  : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                index[1] = p2
             }
