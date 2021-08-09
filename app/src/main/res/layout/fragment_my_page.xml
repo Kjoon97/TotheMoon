@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MyPageFragment">
 
     <ScrollView
@@ -19,7 +20,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/mypage_profileimg"
+                    android:id="@+id/img_myPage_profileImg"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:src="@drawable/user_icon"
@@ -98,10 +99,6 @@
                         android:text="동네 변경하기"></TextView>
                 </LinearLayout>
             </LinearLayout>
-
-
-
         </LinearLayout>
-
     </ScrollView>
-</FrameLayout>
+</LinearLayout>
