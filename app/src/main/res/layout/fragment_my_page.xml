@@ -52,6 +52,7 @@
                 android:background="#E6E6E6"></View>
 
             <LinearLayout
+                android:id="@+id/mypage_changeProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="15dp"
