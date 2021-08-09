@@ -54,10 +54,6 @@ class HomeFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_homefragment, menu)
-
-
-
-
     }
     // 메뉴 버튼 클릭시 이벤트 처리
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -178,7 +178,7 @@ class ProfileActivity : AppCompatActivity() {
         var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())//파일이름 입력해주는 코드 - 이름이 중복 설정되지않도록 파일명을 날짜로
         var imageFileName = "IMAGE_"+timestamp+"_.png"
 
-        var storageRef =storage?.reference?.child("Users")?.child(imageFileName)
+        var storageRef =storage?.reference?.child("user")?.child(imageFileName)
 
         //callback 방식
         //파일 업로드 //데이터베이스를 입력해주는코드
