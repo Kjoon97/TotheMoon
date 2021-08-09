@@ -21,6 +21,7 @@ class EditProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
         firestore = FirebaseFirestore.getInstance()
+        storage = FirebaseStorage.getInstance()
 
         myprofile_imgChange.setOnClickListener{    // 이미지 등록 버튼
             var photoPickerIntent = Intent(Intent.ACTION_PICK)
