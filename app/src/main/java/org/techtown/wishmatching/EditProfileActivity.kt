@@ -86,26 +86,7 @@ class EditProfileActivity : AppCompatActivity() {
                 }
             }
         }
-//    fun contentUpload(){ // 파이어베이스 로드
-//
-//        var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())//파일이름 입력해주는 코드 - 이름이 중복 설정되지않도록 파일명을 날짜로
-//        var imageFileName = "IMAGE_"+timestamp+"_.png"
-//
-//        var storageRef =storage?.reference?.child("user")?.child(imageFileName)
-////
-//        callback 방식
-//        //파일 업로드 //데이터베이스를 입력해주는코드
-//        storageRef?.putFile(photoUri!!)?.addOnSuccessListener {
-//            storageRef.downloadUrl.addOnSuccessListener { uri->
-//                var contentDTO = ContentDTO()
-//                contentDTO.uid = Authentication.auth.currentUser!!.uid
-//                contentDTO.imageUrl = uri.toString()
-//                contentDTO.nickname = edt_profile_nickname.text.toString()
-//                firestore?.collection("user")?.document()?.set(contentDTO)
-//                setResult(Activity.RESULT_OK)
-//            }
-//        } //파일업로드 성공 시 이미지 주소를 받아옴 ,받아오자마자 데이터 모델을 만듦듦
-//    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode ==PICK_IMAGE_FROM_ALBUM)
