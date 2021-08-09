@@ -28,7 +28,6 @@ class MyPageFragment : Fragment(){
         firestore = FirebaseFirestore.getInstance()  //초기화
         storage = FirebaseStorage.getInstance() //스토리지 초기화
 
-
         layout_myPage_edtLoc.setOnClickListener {
             val intent = Intent(context, EditLocationActivity::class.java)
             startActivity(intent)
