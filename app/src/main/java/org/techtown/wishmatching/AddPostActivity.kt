@@ -33,6 +33,8 @@ class AddPostActivity : AppCompatActivity() {
     var firestore : FirebaseFirestore? = null   // 데이터베이스를 사용할 수 있도록
 
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_post)
@@ -98,7 +100,9 @@ class AddPostActivity : AppCompatActivity() {
                 photoUri = data?.data    //경로담기
                 btn_post_image.setImageURI(photoUri)   //선택한 이미지로 변경
             }else{  //취소버튼 눌렀을 때 작동하는 부분
-                finish()  //취소했을 때는 액티비티 그냥 취소
+                val intent = Intent(this, AddPostActivity::class.java)
+                startActivity(intent)
+//                finish()  //취소했을 때는 액티비티 그냥 취소
             }
     }
     fun contentUpload(){ // 파이어베이스 로드

@@ -1,6 +1,7 @@
 package org.techtown.wishmatching
 
 import android.app.Application
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -10,13 +11,20 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.list_item.*
+import org.techtown.wishmatching.Database.PostDTO
 
 
 class HomeFragment : Fragment() {
     private lateinit var listAdapter: ListAdapter
+    var arrayList = ArrayList<PostDTO>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +34,39 @@ class HomeFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+        val database = Firebase.database
+        val databaseReference = database.getReference("post")
+
+
+
+
+//        val postListener = object : ValueEventListener {
+//            override fun onDataChange(dataSnapshot: DataSnapshot) {
+//                // Get Post object and use the values to update the UI
+//                val post = dataSnapshot.getValue<PostDTO>()
+//                var snapshot : DataSnapshot = dataSnapshot.child("post")
+//                var snapshotcount : Long = dataSnapshot.childrenCount
+//
+//                for(i in 0..snapshotcount)
+//                {
+//                    var PostDTO : PostDTO = snapshot.getValue<PostDTO>() as PostDTO
+//                    arrayList.add(PostDTO)
+//                }
+//                listAdapter.notifyDataSetChanged()
+//
+//                if (post != null) {
+//                    arrayList.add(post)
+//                }
+//            }
+//
+//            override fun onCancelled(databaseError: DatabaseError) {
+//                // Getting Post failed, log a message
+//                Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
+//            }
+//        }
+//        databaseReference.addValueEventListener(postListener)
+
 
         // Inflate the layout for this fragment
 
@@ -37,9 +78,11 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        var list: ArrayList<ListData> =
-            requireActivity().intent!!.extras!!.get("DataList") as ArrayList<ListData>
+        var list: ArrayList<PostDTO> =
+            requireActivity().intent!!.extras!!.get("DataList") as ArrayList<PostDTO>
         Log.e("FirstFragment", "Data List: ${list}")
+
+
 
         val gridLayoutManager = GridLayoutManager(context, 2)
         gridLayoutManager.orientation = LinearLayoutManager.VERTICAL

@@ -5,10 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import org.techtown.wishmatching.Database.PostDTO
 
-class ListAdapter (private var list: MutableList<ListData>): RecyclerView.Adapter<ListAdapter.ListItemViewHolder> () {
+class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<ListAdapter.ListItemViewHolder>() {
+
 
     // inner class로 ViewHolder 정의
     inner class ListItemViewHolder(itemView: View?): RecyclerView.ViewHolder(itemView!!) {
@@ -18,12 +23,11 @@ class ListAdapter (private var list: MutableList<ListData>): RecyclerView.Adapte
         var btn_like: ImageView = itemView!!.findViewById(R.id.btn_like)
         var state_like: Int = 0
 
-        // onBindViewHolder의 역할을 대신한다.
-        fun bind(data: ListData, position: Int) {
-            Log.d("ListAdapter", "===== ===== ===== ===== bind ===== ===== ===== =====")
-            Log.d("ListAdapter", data.getData1()+" "+data.getData2())
 
-            photourl.setImageResource(R.drawable.my_page_icon)
+        // onBindViewHolder의 역할을 대신한다.
+        fun bind(data: ArrayList<PostDTO>, position: Int) {
+//            photourl.setImageURI(data.)
+//            photourl.setImageResource(data.size)
 
         }
     }
@@ -36,7 +40,13 @@ class ListAdapter (private var list: MutableList<ListData>): RecyclerView.Adapte
     }
 
     override fun getItemCount(): Int {
-        return list.count()
+        val database = Firebase.database
+        var dataSnapshot: DataSnapshot? = null
+        if (dataSnapshot != null) {
+            return dataSnapshot.childrenCount as Int
+        }
+        else
+            return list.size
     }
 
     // ViewHolder의 bind 메소드를 호출한다.
@@ -52,9 +62,23 @@ class ListAdapter (private var list: MutableList<ListData>): RecyclerView.Adapte
                 holder.btn_like.setImageResource(R.drawable.btn_heart)
                 holder.state_like=0
             }
+
         }
+//        holder.bind(list,position)
+//        var dataSnapshot: DataSnapshot? = null
+//        var snapshot : DataSnapshot = dataSnapshot!!.child("post")
+//        var snapshotcount : Long = dataSnapshot!!.childrenCount
+//        for(i in 0..snapshotcount)
+//        {
+//            var PostDTO : PostDTO = snapshot.getValue<PostDTO>() as PostDTO
+//            list.add(PostDTO)
+//        }
+
         Log.d("ListAdapter", "===== ===== ===== ===== onBindViewHolder ===== ===== ===== =====")
-        holder.bind(list[position], position)
+        Glide.with(holder.itemView)
+            .load(list.get(position).imageUrl)
+            .into(holder.photourl)
+
     }
 
 }
