@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity() {
     var dataList: ArrayList<PostDTO> = arrayListOf(
         PostDTO("https://firebasestorage.googleapis.com/v0/b/wishmatching-ed07a.appspot.com/o/Post%2FIMAGE_20210808_224047_.png?alt=media&token=7616bfae-af82-4d4b-957e-6c0d8f0477e0","","","",""),
 
-
     )
 
 
@@ -51,6 +50,19 @@ class MainActivity : AppCompatActivity() {
         val postReference = FirebaseDatabase.getInstance().getReference("post")
 
         auth = FirebaseAuth.getInstance()
+
+//        firestore!!.collection("post")
+//            .get()
+//            .addOnSuccessListener { result ->
+//                for (document in result) {
+//                    Log.d(TAG, "${document.id} => ${document.data}")
+//                    dataList.add(PostDTO(document.data["imageUrl"].toString(),document.data["uid"].toString(),document.data["title"].toString(),document.data["content"].toString(),document.data["category"].toString()))
+//                }
+//            }
+//            .addOnFailureListener { exception ->
+//                Log.d(TAG, "Error getting documents: ", exception)
+//            }
+
 
 //        val postListener = object : ValueEventListener {
 //            override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -112,6 +124,21 @@ class MainActivity : AppCompatActivity() {
             bottomNaviLayout.findViewById(R.id.btn_bottom_navi_add_tab) as RelativeLayout
         tl_ac_main_bottom_menu.getTabAt(2)!!.customView =
             bottomNaviLayout.findViewById(R.id.btn_bottom_navi_my_page_tab) as RelativeLayout
+    }
+
+    override fun onStart() {
+        firestore!!.collection("post")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    Log.d(TAG, "${document.id} => ${document.data}")
+                    dataList.add(PostDTO(document.data["imageUrl"].toString(),document.data["uid"].toString(),document.data["title"].toString(),document.data["content"].toString(),document.data["category"].toString()))
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d(TAG, "Error getting documents: ", exception)
+            }
+        super.onStart()
     }
 
 }

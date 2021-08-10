@@ -130,10 +130,10 @@ class HomeFragment : Fragment() {
                 true
             }
             R.id.action_logout -> {
-                activity?.let { MySharedPreferences.clearUser(it) }
+                Authentication.auth.signOut()
                 val intent = Intent(activity, LoginActivity::class.java)
                 startActivity(intent)
-                activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
+
 
                 true
             }
