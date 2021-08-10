@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.list_item.*
@@ -25,6 +26,11 @@ import org.techtown.wishmatching.Database.PostDTO
 class HomeFragment : Fragment() {
     private lateinit var listAdapter: ListAdapter
     var arrayList = ArrayList<PostDTO>()
+    var firestore : FirebaseFirestore? = null   // 데이터베이스를 사용할 수 있도록
+//    var dataList: ArrayList<PostDTO> = arrayListOf(
+//        PostDTO("https://firebasestorage.googleapis.com/v0/b/wishmatching-ed07a.appspot.com/o/Post%2FIMAGE_20210808_224047_.png?alt=media&token=7616bfae-af82-4d4b-957e-6c0d8f0477e0","","","",""),
+//
+//        )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -141,6 +147,21 @@ class HomeFragment : Fragment() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+//    override fun onStart() {
+//        firestore!!.collection("post")
+//            .get()
+//            .addOnSuccessListener { result ->
+//                for (document in result) {
+//                    Log.d(TAG, "${document.id} => ${document.data}")
+//                    dataList.add(PostDTO(document.data["imageUrl"].toString(),document.data["uid"].toString(),document.data["title"].toString(),document.data["content"].toString(),document.data["category"].toString()))
+//                }
+//            }
+//            .addOnFailureListener { exception ->
+//                Log.d(TAG, "Error getting documents: ", exception)
+//            }
+//        super.onStart()
+//    }
 //    override fun onPrepareOptionsMenu(menu: Menu){
 //        super.onPrepareOptionsMenu(menu)
 //        val item = menu.findItem(R.id.action_done)

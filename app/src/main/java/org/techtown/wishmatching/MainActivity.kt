@@ -5,6 +5,7 @@ import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -12,7 +13,9 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.RelativeLayout
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
@@ -31,7 +34,7 @@ class MainActivity : AppCompatActivity() {
     var firestore : FirebaseFirestore? = null   // 데이터베이스를 사용할 수 있도록
     private lateinit var database: DatabaseReference
     val storageReference = Firebase.storage.reference
-
+    var mBackWait:Long = 0
     var dataList: ArrayList<PostDTO> = arrayListOf(
         PostDTO("https://firebasestorage.googleapis.com/v0/b/wishmatching-ed07a.appspot.com/o/Post%2FIMAGE_20210808_224047_.png?alt=media&token=7616bfae-af82-4d4b-957e-6c0d8f0477e0","","","",""),
 
@@ -51,17 +54,17 @@ class MainActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-//        firestore!!.collection("post")
-//            .get()
-//            .addOnSuccessListener { result ->
-//                for (document in result) {
-//                    Log.d(TAG, "${document.id} => ${document.data}")
-//                    dataList.add(PostDTO(document.data["imageUrl"].toString(),document.data["uid"].toString(),document.data["title"].toString(),document.data["content"].toString(),document.data["category"].toString()))
-//                }
-//            }
-//            .addOnFailureListener { exception ->
-//                Log.d(TAG, "Error getting documents: ", exception)
-//            }
+        firestore!!.collection("post")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    Log.d(TAG, "${document.id} => ${document.data}")
+                    dataList.add(PostDTO(document.data["imageUrl"].toString(),document.data["uid"].toString(),document.data["title"].toString(),document.data["content"].toString(),document.data["category"].toString()))
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d(TAG, "Error getting documents: ", exception)
+            }
 
 
 //        val postListener = object : ValueEventListener {
@@ -126,19 +129,32 @@ class MainActivity : AppCompatActivity() {
             bottomNaviLayout.findViewById(R.id.btn_bottom_navi_my_page_tab) as RelativeLayout
     }
 
-    override fun onStart() {
-        firestore!!.collection("post")
-            .get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-                    Log.d(TAG, "${document.id} => ${document.data}")
-                    dataList.add(PostDTO(document.data["imageUrl"].toString(),document.data["uid"].toString(),document.data["title"].toString(),document.data["content"].toString(),document.data["category"].toString()))
-                }
-            }
-            .addOnFailureListener { exception ->
-                Log.d(TAG, "Error getting documents: ", exception)
-            }
-        super.onStart()
+//    override fun onStart() {
+//        firestore!!.collection("post")
+//            .get()
+//            .addOnSuccessListener { result ->
+//                for (document in result) {
+//                    Log.d(TAG, "${document.id} => ${document.data}")
+//                    dataList.add(PostDTO(document.data["imageUrl"].toString(),document.data["uid"].toString(),document.data["title"].toString(),document.data["content"].toString(),document.data["category"].toString()))
+//                }
+//            }
+//            .addOnFailureListener { exception ->
+//                Log.d(TAG, "Error getting documents: ", exception)
+//            }
+//        super.onStart()
+//    }
+override fun onBackPressed() {
+    // 뒤로가기 버튼 클릭
+    if(System.currentTimeMillis() - mBackWait >=2000 ) {
+        mBackWait = System.currentTimeMillis()
+        val mySnackbar = Snackbar.make(findViewById(R.id.home_layout),
+            "뒤로가기 버튼을 한번 더 누르면 종료됩니다.", Snackbar.LENGTH_SHORT)
+        mySnackbar.setTextColor(Color.WHITE)
+        mySnackbar.show()
+    } else {
+        ActivityCompat.finishAffinity(this)
+        System.runFinalization()
+        System.exit(0)
     }
-
+}
 }
