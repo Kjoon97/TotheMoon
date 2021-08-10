@@ -1,15 +1,22 @@
 package org.techtown.wishmatching
 
+import android.app.Activity
 import android.app.Application
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -21,9 +28,12 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.list_item.*
 import org.techtown.wishmatching.Database.PostDTO
+import kotlin.system.exitProcess
 
 
 class HomeFragment : Fragment() {
+//    private lateinit var callback: OnBackPressedCallback
+    var mBackWait:Long = 0
     private lateinit var listAdapter: ListAdapter
     var arrayList = ArrayList<PostDTO>()
     var firestore : FirebaseFirestore? = null   // 데이터베이스를 사용할 수 있도록
@@ -166,6 +176,29 @@ class HomeFragment : Fragment() {
 //        super.onPrepareOptionsMenu(menu)
 //        val item = menu.findItem(R.id.action_done)
 //        item.isVisible = isEditing
+//    }
+
+//    override fun onAttach(context: Context) {
+//        super.onAttach(context)
+//        callback = object : OnBackPressedCallback(true) {
+//            override fun handleOnBackPressed() {
+//                if(System.currentTimeMillis() - mBackWait >=2000 ) {
+//            mBackWait = System.currentTimeMillis()
+//            Toast.makeText(context,"뒤로가기 버튼을 한번 더 누르면 종료됩니다.",Toast.LENGTH_LONG).show()
+//        } else {
+//            finishAffinity(MainActivity())
+//
+//            System.runFinalization()
+//            exitProcess(0)
+//        }
+//            }
+//        }
+//        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+//    }
+//
+//    override fun onDetach() {
+//        super.onDetach()
+//        callback.remove()
 //    }
 
 

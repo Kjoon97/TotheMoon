@@ -1,31 +1,23 @@
 package org.techtown.wishmatching
 // commit test gb
 // commit test kjh
-import android.content.ContentValues
 import android.content.ContentValues.TAG
-import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.widget.RelativeLayout
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
-import com.google.firebase.database.ktx.getValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_home.*
 import org.techtown.wishmatching.Database.PostDTO
 
 class MainActivity : AppCompatActivity() {
@@ -35,6 +27,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var database: DatabaseReference
     val storageReference = Firebase.storage.reference
     var mBackWait:Long = 0
+    private val fragmentManager = supportFragmentManager
+
     var dataList: ArrayList<PostDTO> = arrayListOf(
         PostDTO("https://firebasestorage.googleapis.com/v0/b/wishmatching-ed07a.appspot.com/o/Post%2FIMAGE_20210808_224047_.png?alt=media&token=7616bfae-af82-4d4b-957e-6c0d8f0477e0","","","",""),
 
@@ -44,6 +38,30 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+//        fragmentManager.commit {
+//            add(R.id.home_main,HomeFragment(),"home")
+//            add(R.id.home_main,ChattingFragment(),"chatting")
+//            add(R.id.home_main,MyPageFragment(),"mypage")
+//            remove(HomeFragment())
+//            remove(ChattingFragment())
+//            remove(MyPageFragment())
+////            val homeFragment = fragmentManager.findFragmentByTag("home")
+////            val chatFragment = fragmentManager.findFragmentByTag("chat")
+////            val mypageFragment = fragmentManager.findFragmentByTag("mypage")
+////            if(homeFragment != null) {
+////                replace(R.id.home_main,homeFragment)
+////            }
+////            else if(chatFragment != null) {
+////                replace(R.id.frag_chat,chatFragment)
+////            }
+////            else if(mypageFragment != null){
+////                replace(R.id.frag_mypage,mypageFragment)
+////            }
+//        }
+
+
 
         storage = FirebaseStorage.getInstance() //스토리지 초기화
         auth = FirebaseAuth.getInstance()            //초기화
@@ -114,9 +132,9 @@ class MainActivity : AppCompatActivity() {
 
     // 네비게이션바 , 뷰페이지 어댑터 설정
     private fun configureBottomNavigation() {
-        vp_ac_main_frag_pager.adapter = MainFragmentStatePagerAdapter(supportFragmentManager, 3)
+        view_pager.adapter = MainFragmentStatePagerAdapter(supportFragmentManager, 3)
 
-        tl_ac_main_bottom_menu.setupWithViewPager(vp_ac_main_frag_pager)
+        tl_ac_main_bottom_menu.setupWithViewPager(view_pager)
 
         val bottomNaviLayout: View =
             this.layoutInflater.inflate(R.layout.bottom_navigation_tab, null, false)
@@ -143,18 +161,97 @@ class MainActivity : AppCompatActivity() {
 //            }
 //        super.onStart()
 //    }
-override fun onBackPressed() {
-    // 뒤로가기 버튼 클릭
-    if(System.currentTimeMillis() - mBackWait >=2000 ) {
-        mBackWait = System.currentTimeMillis()
-        val mySnackbar = Snackbar.make(findViewById(R.id.home_layout),
-            "뒤로가기 버튼을 한번 더 누르면 종료됩니다.", Snackbar.LENGTH_SHORT)
-        mySnackbar.setTextColor(Color.WHITE)
-        mySnackbar.show()
-    } else {
-        ActivityCompat.finishAffinity(this)
-        System.runFinalization()
-        System.exit(0)
+    override fun onBackPressed() {
+        // 뒤로가기 버튼 클릭
+    val homeFragment = fragmentManager.findFragmentByTag("home")
+    val chatFragment = fragmentManager.findFragmentByTag("chat")
+    val mypageFragment = fragmentManager.findFragmentByTag("mypage")
+    if(view_pager.currentItem == 0) {
+        if(System.currentTimeMillis() - mBackWait >=2000 ) {
+            mBackWait = System.currentTimeMillis()
+            val mySnackbar = Snackbar.make(findViewById(R.id.frag_home),
+                "뒤로가기 버튼을 한번 더 누르면 종료됩니다.", Snackbar.LENGTH_SHORT)
+
+            mySnackbar.setTextColor(Color.WHITE)
+            mySnackbar.show()
+        } else {
+            ActivityCompat.finishAffinity(this)
+            System.runFinalization()
+            System.exit(0)
+        }
     }
-}
+    else if(view_pager.currentItem == 1) {
+                if(System.currentTimeMillis() - mBackWait >=2000 ) {
+            mBackWait = System.currentTimeMillis()
+            val mySnackbar = Snackbar.make(findViewById(R.id.frag_chat),
+                "뒤로가기 버튼을 한번 더 누르면 종료됩니다.", Snackbar.LENGTH_SHORT)
+
+            mySnackbar.setTextColor(Color.WHITE)
+            mySnackbar.show()
+        } else {
+            ActivityCompat.finishAffinity(this)
+            System.runFinalization()
+            System.exit(0)
+        }
+    }
+    else if(view_pager.currentItem == 2){
+        if(System.currentTimeMillis() - mBackWait >=2000 ) {
+            mBackWait = System.currentTimeMillis()
+            val mySnackbar = Snackbar.make(findViewById(R.id.frag_mypage),
+                "뒤로가기 버튼을 한번 더 누르면 종료됩니다.", Snackbar.LENGTH_SHORT)
+
+            mySnackbar.setTextColor(Color.WHITE)
+            mySnackbar.show()
+        } else {
+            ActivityCompat.finishAffinity(this)
+            System.runFinalization()
+            System.exit(0)
+        }
+    }
+
+//    if(homeFragment != null){
+//        if(System.currentTimeMillis() - mBackWait >=2000 ) {
+//            mBackWait = System.currentTimeMillis()
+//            val mySnackbar = Snackbar.make(findViewById(R.id.frag_home),
+//                "뒤로가기 버튼을 한번 더 누르면 종료됩니다.", Snackbar.LENGTH_SHORT)
+//
+//            mySnackbar.setTextColor(Color.WHITE)
+//            mySnackbar.show()
+//        } else {
+//            ActivityCompat.finishAffinity(this)
+//            System.runFinalization()
+//            System.exit(0)
+//        }
+//    }
+//    else if(chatFragment != null) {
+//        if(System.currentTimeMillis() - mBackWait >=2000 ) {
+//            mBackWait = System.currentTimeMillis()
+//            val mySnackbar = Snackbar.make(findViewById(R.id.frag_chat),
+//                "뒤로가기 버튼을 한번 더 누르면 종료됩니다.", Snackbar.LENGTH_SHORT)
+//
+//            mySnackbar.setTextColor(Color.WHITE)
+//            mySnackbar.show()
+//        } else {
+//            ActivityCompat.finishAffinity(this)
+//            System.runFinalization()
+//            System.exit(0)
+//        }
+//    }
+//    else {
+//        if(System.currentTimeMillis() - mBackWait >=2000 ) {
+//            mBackWait = System.currentTimeMillis()
+//            val mySnackbar = Snackbar.make(findViewById(R.id.frag_mypage),
+//                "뒤로가기 버튼을 한번 더 누르면 종료됩니다.", Snackbar.LENGTH_SHORT)
+//
+//            mySnackbar.setTextColor(Color.WHITE)
+//            mySnackbar.show()
+//        } else {
+//            ActivityCompat.finishAffinity(this)
+//            System.runFinalization()
+//            System.exit(0)
+//        }
+//    }
+//
+//
+     }
 }

@@ -2,14 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/home3"
+    android:id="@+id/home_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/vp_ac_main_frag_pager"
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/tl_ac_main_bottom_menu"></androidx.viewpager.widget.ViewPager>

@@ -2,42 +2,48 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frag_mypage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MyPageFragment">
-
+    tools:context=".MyPageFragment"
+    android:tag="mypage">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="15dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="15dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/img_myPage_profileImg"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:src="@drawable/user_icon"
-                    ></de.hdodenhof.circleimageview.CircleImageView>
+                    android:src="@drawable/user_icon"></de.hdodenhof.circleimageview.CircleImageView>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="15dp"
                     android:orientation="vertical">
+
                     <TextView
                         android:id="@+id/mypage_nickname"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="20dp"
+                        android:text="Nickname"
                         android:textColor="@color/black"
-                        android:text="Nickname"></TextView>
+                        android:textSize="20dp"></TextView>
+
                     <TextView
                         android:id="@+id/mypage_location"
                         android:layout_width="wrap_content"
@@ -55,52 +61,60 @@
                 android:id="@+id/mypage_changeProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="15dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="15dp">
+
                 <ImageView
-                    android:src="@drawable/ic_baseline_face_24"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:src="@drawable/ic_baseline_face_24"
                     app:tint="@color/tw__composer_deep_gray"></ImageView>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="15dp"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="18dp"
+                        android:text="프로필 변경하기"
                         android:textColor="@color/black"
-                        android:text="프로필 변경하기"></TextView>
+                        android:textSize="18dp"></TextView>
                 </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/layout_myPage_edtLoc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="15dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="15dp">
+
                 <ImageView
-                    android:src="@drawable/ic_baseline_location_on_24"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:src="@drawable/ic_baseline_location_on_24"
                     app:tint="@color/tw__composer_deep_gray"></ImageView>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="15dp"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="18dp"
+                        android:text="동네 변경하기"
                         android:textColor="@color/black"
-                        android:text="동네 변경하기"></TextView>
+                        android:textSize="18dp"></TextView>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
 </LinearLayout>

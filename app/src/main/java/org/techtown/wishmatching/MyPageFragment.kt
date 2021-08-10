@@ -63,4 +63,7 @@ class MyPageFragment : Fragment(){
             // Failed to download the image
         }
     }
+    
+
+
 }
