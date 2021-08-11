@@ -64,13 +64,13 @@ class MainActivity : AppCompatActivity() {
 
 
         storage = FirebaseStorage.getInstance() //스토리지 초기화
-        auth = FirebaseAuth.getInstance()            //초기화
+//        auth = FirebaseAuth.getInstance()            //초기화
         firestore = FirebaseFirestore.getInstance()  //초기화
 
         val database = Firebase.database.reference
         val postReference = FirebaseDatabase.getInstance().getReference("post")
 
-        auth = FirebaseAuth.getInstance()
+//        auth = FirebaseAuth.getInstance()
 
         firestore!!.collection("post")
             .get()
@@ -78,6 +78,8 @@ class MainActivity : AppCompatActivity() {
                 for (document in result) {
                     Log.d(TAG, "${document.id} => ${document.data}")
                     dataList.add(PostDTO(document.data["imageUrl"].toString(),document.data["uid"].toString(),document.data["title"].toString(),document.data["content"].toString(),document.data["category"].toString()))
+                    intent.putExtra("DataList", dataList)
+                    configureBottomNavigation()
                 }
             }
             .addOnFailureListener { exception ->
@@ -107,8 +109,7 @@ class MainActivity : AppCompatActivity() {
 //        }
 //        postReference.addValueEventListener(postListener)
 
-        intent.putExtra("DataList", dataList)
-        configureBottomNavigation()
+
 
 //        getSupportActionBar()?.setIcon(R.drawable.font_wishmatching_bold35)
 //        getSupportActionBar()?.setDisplayUseLogoEnabled(true)
