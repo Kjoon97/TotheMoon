@@ -33,8 +33,9 @@
             android:layout_marginBottom="20dp"
             android:background="@drawable/rounded_edittext_register_login"
             android:ems="10"
-            android:hint="   Email"
-            android:inputType="textPersonName" />
+            android:hint="Email"
+            android:inputType="textPersonName"
+            android:paddingLeft="16dp" />
 
         <EditText
             android:id="@+id/editTextUserPassword"
@@ -47,8 +48,9 @@
             android:layout_marginBottom="20dp"
             android:background="@drawable/rounded_edittext_register_login"
             android:ems="10"
-            android:hint="   Password"
-            android:inputType="textPassword" />
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:paddingLeft="16dp" />
 
         <LinearLayout
             android:layout_width="match_parent"

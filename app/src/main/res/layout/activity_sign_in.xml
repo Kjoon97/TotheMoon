@@ -41,7 +41,8 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/rounded_edittext_register_login"
-                android:hint="   이름" />
+                android:hint="이름"
+                android:paddingLeft="16dp" />
         </LinearLayout>
 
 
@@ -66,7 +67,8 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/rounded_edittext_register_login"
-                android:hint="   Email" />
+                android:hint="Email"
+                android:paddingLeft="16dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -90,8 +92,9 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/rounded_edittext_register_login"
-                android:hint="   비밀번호 (최소 8자 이상)"
-                android:inputType="textPassword" />
+                android:hint="비밀번호 (최소 8자 이상)"
+                android:inputType="textPassword"
+                android:paddingLeft="16dp" />
         </LinearLayout>
 
         <Button

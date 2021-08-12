@@ -3,6 +3,7 @@ package org.techtown.wishmatching
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -24,6 +25,11 @@ class SignInActivity : AppCompatActivity() {
         btnOk.setOnClickListener { // 인증 완료시
             val userEmail = editTextSignInEmail.text.toString()
             val userPassword = editTextSignInPassword.text.toString()
+            val userName = editTextSignInUserName.text.toString()
+            if(userEmail.isEmpty() || userPassword.isEmpty() || userName.isEmpty()) {
+                Toast.makeText(this,"이름 , 이메일 , 비밀번호를 확인해주세요.",Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
             auth?.createUserWithEmailAndPassword(userEmail,userPassword).addOnCompleteListener(this) {task ->
                 if (task.isSuccessful) Log.d(TAG, "signInWithEmail:success")
                 user=auth.currentUser

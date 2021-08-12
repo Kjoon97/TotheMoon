@@ -31,6 +31,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        editTextUserEmail.setSelection(editTextUserEmail.length())
+        editTextUserPassword.setSelection(editTextUserEmail.length())
 //        if(MySharedPreferences.getUserId(this).isNotEmpty()) {    SharedPreference를 쓰지않아도 될거같음
 //            val intent = Intent(this, MainActivity::class.java)
 //            startActivity(intent)
@@ -65,6 +67,11 @@ class LoginActivity : AppCompatActivity() {
             var userEmail = editTextUserEmail.text.toString()
             var userPw = editTextUserPassword.text.toString()
             var user = Authentication.auth.currentUser
+
+            if(userEmail.isEmpty() || userPw.isEmpty()) {
+                Toast.makeText(this,"이메일과 비밀번호를 입력해주세요.",Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
 
             Authentication.auth?.signInWithEmailAndPassword(userEmail, userPw)?.addOnCompleteListener(this) {
                 if(Authentication.auth.currentUser!!.isEmailVerified) { //인증메일에서 링크 클릭시 로그인 가능
