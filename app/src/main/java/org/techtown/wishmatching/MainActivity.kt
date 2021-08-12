@@ -2,12 +2,14 @@ package org.techtown.wishmatching
 // commit test gb
 // commit test kjh
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -18,6 +20,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_home.*
 import org.techtown.wishmatching.Database.PostDTO
 
 class MainActivity : AppCompatActivity() {
@@ -28,17 +31,15 @@ class MainActivity : AppCompatActivity() {
     val storageReference = Firebase.storage.reference
     var mBackWait:Long = 0
     private val fragmentManager = supportFragmentManager
+    public lateinit var mcontext : Context
 
-    var dataList: ArrayList<PostDTO> = arrayListOf(
-        PostDTO("https://firebasestorage.googleapis.com/v0/b/wishmatching-ed07a.appspot.com/o/Post%2FIMAGE_20210808_224047_.png?alt=media&token=7616bfae-af82-4d4b-957e-6c0d8f0477e0","","","",""),
-
-    )
+    var dataList: ArrayList<PostDTO> = arrayListOf()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        mcontext = this
 
 //        fragmentManager.commit {
 //            add(R.id.home_main,HomeFragment(),"home")
@@ -77,7 +78,12 @@ class MainActivity : AppCompatActivity() {
             .addOnSuccessListener { result ->
                 for (document in result) {
                     Log.d(TAG, "${document.id} => ${document.data}")
-                    dataList.add(PostDTO(document.data["imageUrl"].toString(),document.data["uid"].toString(),document.data["title"].toString(),document.data["content"].toString(),document.data["category"].toString()))
+                    dataList.add(PostDTO(document.data["imageUrl"].toString(),
+                        document.data["uid"].toString(),
+                        document.data["title"].toString(),
+                        document.data["content"].toString(),
+                        document.data["category"].toString()))
+
                     intent.putExtra("DataList", dataList)
                     configureBottomNavigation()
                 }
@@ -85,6 +91,7 @@ class MainActivity : AppCompatActivity() {
             .addOnFailureListener { exception ->
                 Log.d(TAG, "Error getting documents: ", exception)
             }
+
 
 
 //        val postListener = object : ValueEventListener {
@@ -210,49 +217,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-//    if(homeFragment != null){
-//        if(System.currentTimeMillis() - mBackWait >=2000 ) {
-//            mBackWait = System.currentTimeMillis()
-//            val mySnackbar = Snackbar.make(findViewById(R.id.frag_home),
-//                "뒤로가기 버튼을 한번 더 누르면 종료됩니다.", Snackbar.LENGTH_SHORT)
-//
-//            mySnackbar.setTextColor(Color.WHITE)
-//            mySnackbar.show()
-//        } else {
-//            ActivityCompat.finishAffinity(this)
-//            System.runFinalization()
-//            System.exit(0)
-//        }
-//    }
-//    else if(chatFragment != null) {
-//        if(System.currentTimeMillis() - mBackWait >=2000 ) {
-//            mBackWait = System.currentTimeMillis()
-//            val mySnackbar = Snackbar.make(findViewById(R.id.frag_chat),
-//                "뒤로가기 버튼을 한번 더 누르면 종료됩니다.", Snackbar.LENGTH_SHORT)
-//
-//            mySnackbar.setTextColor(Color.WHITE)
-//            mySnackbar.show()
-//        } else {
-//            ActivityCompat.finishAffinity(this)
-//            System.runFinalization()
-//            System.exit(0)
-//        }
-//    }
-//    else {
-//        if(System.currentTimeMillis() - mBackWait >=2000 ) {
-//            mBackWait = System.currentTimeMillis()
-//            val mySnackbar = Snackbar.make(findViewById(R.id.frag_mypage),
-//                "뒤로가기 버튼을 한번 더 누르면 종료됩니다.", Snackbar.LENGTH_SHORT)
-//
-//            mySnackbar.setTextColor(Color.WHITE)
-//            mySnackbar.show()
-//        } else {
-//            ActivityCompat.finishAffinity(this)
-//            System.runFinalization()
-//            System.exit(0)
-//        }
-//    }
-//
-//
+
      }
+    public fun refresh() {
+        MainFragmentStatePagerAdapter(supportFragmentManager, 3).notifyDataSetChanged()
+    }
+
 }

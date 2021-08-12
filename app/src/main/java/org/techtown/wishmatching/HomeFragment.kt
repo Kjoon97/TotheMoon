@@ -16,6 +16,7 @@ import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -45,7 +46,6 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
     }
 
     override fun onCreateView(
@@ -53,41 +53,19 @@ class HomeFragment : Fragment() {
 
         val database = Firebase.database
         val databaseReference = database.getReference("post")
-
-
-
-
-//        val postListener = object : ValueEventListener {
-//            override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                // Get Post object and use the values to update the UI
-//                val post = dataSnapshot.getValue<PostDTO>()
-//                var snapshot : DataSnapshot = dataSnapshot.child("post")
-//                var snapshotcount : Long = dataSnapshot.childrenCount
+        val v : View = inflater.inflate(R.layout.fragment_home,container,false)
+//        var pullToRefresh : SwipeRefreshLayout = v.findViewById(R.id.pullToRefresh)
 //
-//                for(i in 0..snapshotcount)
-//                {
-//                    var PostDTO : PostDTO = snapshot.getValue<PostDTO>() as PostDTO
-//                    arrayList.add(PostDTO)
-//                }
-//                listAdapter.notifyDataSetChanged()
-//
-//                if (post != null) {
-//                    arrayList.add(post)
-//                }
-//            }
-//
-//            override fun onCancelled(databaseError: DatabaseError) {
-//                // Getting Post failed, log a message
-//                Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
-//            }
+//        pullToRefresh.setOnRefreshListener {
+//            Toast.makeText(MainActivity(),"swipe",Toast.LENGTH_LONG).show()
+//            pullToRefresh.isRefreshing = false
 //        }
-//        databaseReference.addValueEventListener(postListener)
 
 
         // Inflate the layout for this fragment
 
         setHasOptionsMenu(true)
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        return v
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -158,48 +136,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-//    override fun onStart() {
-//        firestore!!.collection("post")
-//            .get()
-//            .addOnSuccessListener { result ->
-//                for (document in result) {
-//                    Log.d(TAG, "${document.id} => ${document.data}")
-//                    dataList.add(PostDTO(document.data["imageUrl"].toString(),document.data["uid"].toString(),document.data["title"].toString(),document.data["content"].toString(),document.data["category"].toString()))
-//                }
-//            }
-//            .addOnFailureListener { exception ->
-//                Log.d(TAG, "Error getting documents: ", exception)
-//            }
-//        super.onStart()
-//    }
-//    override fun onPrepareOptionsMenu(menu: Menu){
-//        super.onPrepareOptionsMenu(menu)
-//        val item = menu.findItem(R.id.action_done)
-//        item.isVisible = isEditing
-//    }
 
-//    override fun onAttach(context: Context) {
-//        super.onAttach(context)
-//        callback = object : OnBackPressedCallback(true) {
-//            override fun handleOnBackPressed() {
-//                if(System.currentTimeMillis() - mBackWait >=2000 ) {
-//            mBackWait = System.currentTimeMillis()
-//            Toast.makeText(context,"뒤로가기 버튼을 한번 더 누르면 종료됩니다.",Toast.LENGTH_LONG).show()
-//        } else {
-//            finishAffinity(MainActivity())
-//
-//            System.runFinalization()
-//            exitProcess(0)
-//        }
-//            }
-//        }
-//        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
-//    }
-//
-//    override fun onDetach() {
-//        super.onDetach()
-//        callback.remove()
-//    }
 
 
 }

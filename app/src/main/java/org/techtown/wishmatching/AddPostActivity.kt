@@ -85,6 +85,8 @@ class AddPostActivity : AppCompatActivity() {
                 mySnackbar.setTextColor(Color.WHITE)
                 mySnackbar.show()
 
+                var intent = Intent(this,MainActivity::class.java)
+                startActivity(intent)
 
 
 
@@ -102,7 +104,7 @@ class AddPostActivity : AppCompatActivity() {
             }else{  //취소버튼 눌렀을 때 작동하는 부분
                 val intent = Intent(this, AddPostActivity::class.java)
                 startActivity(intent)
-//                finish()  //취소했을 때는 액티비티 그냥 취소
+                finish()  //취소했을 때는 액티비티 그냥 취소
             }
     }
     fun contentUpload(){ // 파이어베이스 로드
