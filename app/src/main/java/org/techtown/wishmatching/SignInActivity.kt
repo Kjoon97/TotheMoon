@@ -30,6 +30,10 @@ class SignInActivity : AppCompatActivity() {
                 Toast.makeText(this,"이름 , 이메일 , 비밀번호를 확인해주세요.",Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
+            if(userPassword.length < 8) {
+                Toast.makeText(this,"비밀번호는 8자 이상이어야 합니다.",Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
             auth?.createUserWithEmailAndPassword(userEmail,userPassword).addOnCompleteListener(this) {task ->
                 if (task.isSuccessful) Log.d(TAG, "signInWithEmail:success")
                 user=auth.currentUser

@@ -5,13 +5,16 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.android.synthetic.main.activity_edit_profile.*
 import kotlinx.android.synthetic.main.activity_profile.*
 import org.techtown.wishmatching.Database.ContentDTO
 import java.text.SimpleDateFormat
@@ -142,11 +145,11 @@ class ProfileActivity : AppCompatActivity() {
                     .whereEqualTo("nickname", edt_profile_nickname.text.toString()) //uid
                     .get()
                     .addOnSuccessListener { documents->
-                        if(documents.isEmpty){            // 처음 로그인 하면 프로필 화면으로 이동
+                        if(documents.isEmpty){
                             Toast.makeText(this@ProfileActivity,"사용가능합니다", Toast.LENGTH_SHORT).show()
                             btn_profile_doublecheck.text = "다시입력"
                             edt_profile_nickname.isEnabled = false
-                        } else{                        // 그게 아니라면 메인액티비티로 이동
+                        } else{
                             Toast.makeText(this@ProfileActivity, "아이디가 중복됩니다", Toast.LENGTH_SHORT).show()
                         }
                     }
@@ -161,7 +164,7 @@ class ProfileActivity : AppCompatActivity() {
                 .whereEqualTo("uid", Authentication.auth!!.uid)
                 .get()
                 .addOnSuccessListener { documents->
-                    if(!(documents.isEmpty)){            // 처음 로그인 하면 프로필 화면으로 이동
+                    if(!(documents.isEmpty)){
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                     }
@@ -188,8 +191,10 @@ class ProfileActivity : AppCompatActivity() {
                 contentDTO.area = city[index[0]]+" "+innercity[index[0]][index[1]]
                 firestore?.collection("user")?.document()?.set(contentDTO)
                 setResult(Activity.RESULT_OK)
+
+                saveUserToFirebaseDatabase(it.toString())
             }
-        } //파일업로드 성공 시 이미지 주소를 받아옴 ,받아오자마자 데이터 모델을 만듦듦
+        } //파일업로드 성공 시 이미지 주소를 받아옴 ,받아오자마자 데이터 모델을 만듦
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -202,4 +207,17 @@ class ProfileActivity : AppCompatActivity() {
                 finish()  //취소했을 때는 액티비티 그냥 취소
             }
     }
+    private fun saveUserToFirebaseDatabase(profileImageUrl:String) {
+        val uid = FirebaseAuth.getInstance().uid?: ""
+        val ref = FirebaseDatabase.getInstance().getReference("users/$uid")
+
+        val user = User(uid,edt_profile_nickname.text.toString(),profileImageUrl)
+        ref.setValue(user)
+            .addOnSuccessListener {
+                Log.d("ProfileActivity","register userinfo to realtime database")
+            }
+    }
+
 }
+
+class User(val uid:String , val username:String , val profileImageUrl:String )

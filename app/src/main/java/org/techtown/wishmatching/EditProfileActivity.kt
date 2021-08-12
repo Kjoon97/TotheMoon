@@ -5,7 +5,10 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_edit_profile.*
@@ -29,7 +32,7 @@ class EditProfileActivity : AppCompatActivity() {
             startActivityForResult(photoPickerIntent,PICK_IMAGE_FROM_ALBUM)
         }
 
-        myprofile_doublecheck.setOnClickListener { //닉네입 중복 확인 버튼
+        myprofile_doublecheck.setOnClickListener { //닉네임 중복 확인 버튼
             if(myprofile_doublecheck.text.toString() == "다시입력"){
                 myprofile_nickname.isEnabled = true
                 myprofile_doublecheck.text = "중복확인"
@@ -79,7 +82,9 @@ class EditProfileActivity : AppCompatActivity() {
                                     ))
                                 }
                             }
+
                     }
+
                 }
                 Toast.makeText(this, "수정하였습니다.", Toast.LENGTH_SHORT).show()
                 finish()
@@ -97,7 +102,6 @@ class EditProfileActivity : AppCompatActivity() {
                 finish()  //취소했을 때는 액티비티 그냥 취소
             }
     }
-
 
 
 }
