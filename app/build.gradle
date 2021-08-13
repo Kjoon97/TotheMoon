@@ -88,7 +88,8 @@ dependencies {
     compile 'com.squareup.picasso:picasso:3.0.0-SNAPSHOT' // 피카소 라이브러리
     compile 'com.squareup.picasso:picasso-provider:3.0.0-SNAPSHOT'
 
-
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
     implementation "android.arch.lifecycle:extensions:1.1.1"
-
+    implementation "androidx.fragment:fragment-ktx:1.1.0"
+    annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
 }

@@ -30,6 +30,7 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
     }
 
     override fun onCreateView(
@@ -38,6 +39,7 @@ class HomeFragment : Fragment() {
         val database = Firebase.database
         val databaseReference = database.getReference("post")
         val v : View = inflater.inflate(R.layout.fragment_home,container,false)
+
 //        var pullToRefresh : SwipeRefreshLayout = v.findViewById(R.id.pullToRefresh)
 //
 //        pullToRefresh.setOnRefreshListener {
@@ -54,7 +56,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         var list: ArrayList<PostDTO> =
             requireActivity().intent!!.extras!!.get("DataList") as ArrayList<PostDTO>

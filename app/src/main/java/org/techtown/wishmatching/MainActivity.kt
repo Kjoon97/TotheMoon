@@ -1,27 +1,30 @@
 package org.techtown.wishmatching
 // commit test gb
 // commit test kjh
+
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.RelativeLayout
-import android.widget.Toast
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.viewpager.widget.ViewPager
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_home.*
 import org.techtown.wishmatching.Database.PostDTO
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
@@ -32,7 +35,6 @@ class MainActivity : AppCompatActivity() {
     var mBackWait:Long = 0
     private val fragmentManager = supportFragmentManager
     public lateinit var mcontext : Context
-
     var dataList: ArrayList<PostDTO> = arrayListOf()
 
 
@@ -40,6 +42,40 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         mcontext = this
+
+
+        // 각 탭 마다 타이틀바 제목 변경
+        view_pager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+
+            override fun onPageScrollStateChanged(state: Int) {
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
+            }
+            override fun onPageSelected(position: Int) {
+                if(position == 0) {
+                    val actionBar: ActionBar? = supportActionBar
+                    if (actionBar != null) {
+                        actionBar.setTitle("Home")
+                    }
+                }
+                else if(position == 1) {
+                    val actionBar: ActionBar? = supportActionBar
+                    if (actionBar != null) {
+                        actionBar.setTitle("Chat")
+                    }
+                }
+                else if(position == 2) {
+                    val actionBar: ActionBar? = supportActionBar
+                    if (actionBar != null) {
+                        actionBar.setTitle("My")
+                    }
+                }
+
+            }
+
+        })
 
 //        fragmentManager.commit {
 //            add(R.id.home_main,HomeFragment(),"home")
@@ -222,5 +258,28 @@ class MainActivity : AppCompatActivity() {
     public fun refresh() {
         MainFragmentStatePagerAdapter(supportFragmentManager, 3).notifyDataSetChanged()
     }
+
+//    fun setActionBarTitle() {
+//        val actionBar: ActionBar? = supportActionBar
+//
+//        if(view_pager.currentItem == 0) {
+//            if (actionBar != null) {
+//                actionBar.setTitle("Home")
+//            }
+//        }
+//        else if(view_pager.currentItem == 1) {
+//            if (actionBar != null) {
+//                actionBar.setTitle("Chat")
+//            }
+//        }
+//        else if(view_pager.currentItem == 2) {
+//            if (actionBar != null) {
+//                actionBar.setTitle("My")
+//            }
+//        }
+//    }
+//    interface YourFragmentInterface {
+//        fun fragmentBecameVisible()
+//    }
 
 }

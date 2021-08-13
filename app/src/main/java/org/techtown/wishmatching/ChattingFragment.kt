@@ -18,8 +18,6 @@ import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.user_row_new_message.view.*
 
 
-
-
 class ChattingFragment : Fragment() {
 
 
@@ -32,7 +30,7 @@ class ChattingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        setHasOptionsMenu(true)
         val adapter = GroupAdapter<ViewHolder>()
         val v: View = inflater.inflate(R.layout.fragment_chatting, container, false)
         var recyclerview_newmassage = v.findViewById<RecyclerView>(R.id.recyclerview_newmassage)
@@ -88,5 +86,9 @@ class UserItem(val user: User): Item<ViewHolder>() {
     }
 }
 
-
+//    override fun onResume() {
+//        (activity as MainActivity).setActionBarTitle()
+//        super.onResume()
+//
+//    }
 }

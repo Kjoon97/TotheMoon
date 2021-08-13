@@ -8,7 +8,10 @@ class MainFragmentStatePagerAdapter(fm : FragmentManager, val fragmentCount : In
     override fun getItem(position: Int): Fragment {
 
         when(position){
-            0 -> return HomeFragment()
+            0 -> {
+
+                return HomeFragment()
+            }
             1 -> return ChattingFragment()
             2 -> return MyPageFragment()
             else -> return HomeFragment()

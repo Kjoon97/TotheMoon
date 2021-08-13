@@ -41,7 +41,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:label="위시매칭"
+            android:label="Home"
             android:theme="@style/Theme.WishMatching"/>
     </application>
 
