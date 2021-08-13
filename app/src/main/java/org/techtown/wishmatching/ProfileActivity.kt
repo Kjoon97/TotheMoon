@@ -17,6 +17,7 @@ import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 import kotlinx.android.synthetic.main.activity_profile.*
 import org.techtown.wishmatching.Database.ContentDTO
+import org.techtown.wishmatching.RealtimeDB.User
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -222,6 +223,3 @@ class ProfileActivity : AppCompatActivity() {
 
 }
 
-class User(val uid:String , val username:String , val profileImageUrl:String ) {
-    constructor() : this("","","")
-}

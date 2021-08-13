@@ -1,5 +1,6 @@
-package org.techtown.wishmatching
+package org.techtown.wishmatching.Chatting
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,6 +17,8 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.user_row_new_message.view.*
+import org.techtown.wishmatching.R
+import org.techtown.wishmatching.RealtimeDB.User
 
 
 class ChattingFragment : Fragment() {
@@ -25,7 +28,9 @@ class ChattingFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
     }
-
+    companion object{
+        val USER_KEY = "USER_KEY"
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,18 +45,28 @@ class ChattingFragment : Fragment() {
 //        adapter.add(UserItem())
 //        recyclerview_newmassage.adapter = adapter
 
-        fun fetchUsers() {
+
+        fun fetchUsers() {    //파베로부터 유저 데이터 가져옴
             val ref = FirebaseDatabase.getInstance().getReference("/users")
             ref.addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
+                override fun onDataChange(p0: DataSnapshot) {
                     val adapter = GroupAdapter<ViewHolder>()
 
-                    snapshot.children.forEach {
+                    p0.children.forEach {
                         Log.d("NewMessage",it.toString())
                         val user = it.getValue(User::class.java)
                         if(user != null) {
                             adapter.add(UserItem(user))
                         }
+                    }
+                    adapter.setOnItemClickListener { item, view ->  // 사용자 목록 중 한명 눌렀을 때
+
+                        val userItem = item as UserItem
+                        val intent= Intent(view.context, ChatLogActivity::class.java)
+//                    intent.putExtra(USER_KEY, item.user.username)
+                        intent.putExtra(USER_KEY,userItem.user)
+                        startActivity(intent)
+
                     }
                     recyclerview_newmassage.adapter = adapter
                 }

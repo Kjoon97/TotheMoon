@@ -3,6 +3,8 @@ package org.techtown.wishmatching
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import org.techtown.wishmatching.Chatting.ChattingFragment
+import org.techtown.wishmatching.Mypage.MyPageFragment
 
 class MainFragmentStatePagerAdapter(fm : FragmentManager, val fragmentCount : Int) : FragmentStatePagerAdapter(fm) {
     override fun getItem(position: Int): Fragment {

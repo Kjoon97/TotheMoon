@@ -12,11 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WishMatching"
         android:usesCleartextTraffic="true">
-        <activity android:name=".LatestMessageActivity"></activity>
         <activity
-            android:name=".EditProfileActivity"
+            android:name=".Chatting.ChatLogActivity"
             android:exported="true" />
-        <activity android:name=".EditLocationActivity" />
+        <activity android:name=".LatestMessageActivity" />
+        <activity
+            android:name=".Mypage.EditProfileActivity"
+            android:exported="true" />
+        <activity android:name=".Mypage.EditLocationActivity" />
         <activity
             android:name=".AddPostActivity"
             android:label="게시글 쓰기"
@@ -42,7 +45,7 @@
         <activity
             android:name=".MainActivity"
             android:label="Home"
-            android:theme="@style/Theme.WishMatching"/>
+            android:theme="@style/Theme.WishMatching" />
     </application>
 
 </manifest>

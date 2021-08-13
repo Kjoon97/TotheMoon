@@ -1,4 +1,4 @@
-package org.techtown.wishmatching
+package org.techtown.wishmatching.Mypage
 
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -12,6 +12,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.fragment_my_page.*
+import org.techtown.wishmatching.Authentication
+import org.techtown.wishmatching.R
 
 class MyPageFragment : Fragment(){
     var firestore : FirebaseFirestore? = null   // 데이터베이스를 사용할 수 있도록

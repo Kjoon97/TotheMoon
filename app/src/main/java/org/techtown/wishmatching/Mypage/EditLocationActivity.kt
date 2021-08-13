@@ -1,4 +1,4 @@
-package org.techtown.wishmatching
+package org.techtown.wishmatching.Mypage
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,6 +11,8 @@ import kotlinx.android.synthetic.main.activity_edit_location.*
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.activity_profile.spin_edtLocation_city
 import kotlinx.android.synthetic.main.activity_profile.spin_edtLocation_innercity
+import org.techtown.wishmatching.Authentication
+import org.techtown.wishmatching.R
 
 class EditLocationActivity : AppCompatActivity() {
     var index = arrayOf(0,0)
