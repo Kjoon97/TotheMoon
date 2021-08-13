@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WishMatching"
         android:usesCleartextTraffic="true">
+        <activity android:name=".LatestMessageActivity"></activity>
         <activity
             android:name=".EditProfileActivity"
             android:exported="true" />
@@ -40,8 +41,8 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:label=""
-            android:theme="@style/Theme.WishMatching" />
+            android:label="위시매칭"
+            android:theme="@style/Theme.WishMatching"/>
     </application>
 
 </manifest>

@@ -83,4 +83,12 @@ dependencies {
 
     implementation 'com.firebaseui:firebase-ui-storage:7.2.0'
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+
+    compile 'com.xwray:groupie:2.1.0'
+    compile 'com.squareup.picasso:picasso:3.0.0-SNAPSHOT' // 피카소 라이브러리
+    compile 'com.squareup.picasso:picasso-provider:3.0.0-SNAPSHOT'
+
+
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+
 }

@@ -3,13 +3,13 @@ package org.techtown.wishmatching
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
@@ -192,7 +192,7 @@ class ProfileActivity : AppCompatActivity() {
                 firestore?.collection("user")?.document()?.set(contentDTO)
                 setResult(Activity.RESULT_OK)
 
-                saveUserToFirebaseDatabase(it.toString())
+                saveUserToFirebaseDatabase(uri.toString())
             }
         } //파일업로드 성공 시 이미지 주소를 받아옴 ,받아오자마자 데이터 모델을 만듦
     }
@@ -212,6 +212,8 @@ class ProfileActivity : AppCompatActivity() {
         val ref = FirebaseDatabase.getInstance().getReference("users/$uid")
 
         val user = User(uid,edt_profile_nickname.text.toString(),profileImageUrl)
+
+        // realtime database 에 데이터 업로드 기능 , User 클래스 형식으로 입력
         ref.setValue(user)
             .addOnSuccessListener {
                 Log.d("ProfileActivity","register userinfo to realtime database")
@@ -220,4 +222,6 @@ class ProfileActivity : AppCompatActivity() {
 
 }
 
-class User(val uid:String , val username:String , val profileImageUrl:String )
+class User(val uid:String , val username:String , val profileImageUrl:String ) {
+    constructor() : this("","","")
+}
