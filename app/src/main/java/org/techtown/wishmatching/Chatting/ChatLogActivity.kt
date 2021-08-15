@@ -30,9 +30,9 @@ class ChatLogActivity : AppCompatActivity() {
         recyclerview_chat_log.adapter = adapter
 
         //        val username = intent.getStringExtra(NewMessageActivity.USER_KEY)
-        val toUser = intent.getParcelableExtra<User>(ChattingFragment.USER_KEY)
+        toUser = intent.getParcelableExtra<User>(ChattingFragment.USER_KEY)
         if (toUser != null) {
-            supportActionBar?.title = toUser.username
+            supportActionBar?.title = toUser?.username
         }
         //setupDummyData()
 
@@ -44,20 +44,30 @@ class ChatLogActivity : AppCompatActivity() {
     }
 
     private fun ListenForMessages() {
-        val ref = FirebaseDatabase.getInstance().getReference("/messages")
+        val fromId= FirebaseAuth.getInstance().uid
+        val toId = toUser?.uid
+        val ref = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId")
+//        val ref = FirebaseDatabase.getInstance().getReference("/user-messages/$toId/$fromId")
+//        val ref = FirebaseDatabase.getInstance().getReference("/messages")
         ref.addChildEventListener(object : ChildEventListener {
 
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
                 val chatMessage = p0.getValue(ChatMessage::class.java)
-                if (chatMessage != null) {
-                    if (chatMessage.fromId == FirebaseAuth.getInstance().uid) {
-                        val currentUser = ChattingFragment.currentUser?: return
-                        adapter.add(ChatFromItem(chatMessage.text,currentUser)) // 채팅 내용 리사이클 뷰에 띄우기
-                    } else {
-                        val toUser = intent.getParcelableExtra<User>(ChattingFragment.USER_KEY)
-                        toUser?.let { ChatToItem(chatMessage.text, it) }?.let { adapter.add(it) }
 
- //                       adapter.add(ChatToItem(chatMessage.text,toUser!!)) // 본문 강의 코드
+                if (chatMessage != null) {
+
+                    if (chatMessage.fromId == FirebaseAuth.getInstance().uid) {
+                        val currentUser = ChattingFragment.currentUser ?: return
+                        adapter.add(ChatFromItem(chatMessage.text,currentUser)) // 채팅 내용 리사이클 뷰에 띄우기
+                        Log.d("ChatMessage", "보내는사람:${fromId}")
+
+                    } else {
+
+                        toUser?.let { ChatToItem(chatMessage.text, it) }?.let { adapter.add(it) }
+                        Log.d("ChatMessage", "받는 사람:${toId}")
+
+
+//                        adapter.add(ChatToItem(chatMessage.text,toUser!!)) // 본문 강의 코드
                     }
                 }
             }
@@ -85,7 +95,12 @@ class ChatLogActivity : AppCompatActivity() {
         val fromId = FirebaseAuth.getInstance().uid
         val user = intent.getParcelableExtra<User>(ChattingFragment.USER_KEY)
         val toId = user?.uid
-        val reference = FirebaseDatabase.getInstance().getReference("/messages").push()
+
+//        val reference = FirebaseDatabase.getInstance().getReference("/messages").push()
+        val reference = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId").push()
+
+        val toReference = FirebaseDatabase.getInstance().getReference("/user-messages/$toId/$fromId").push()
+
 
         if (fromId == null) return
 
@@ -94,12 +109,15 @@ class ChatLogActivity : AppCompatActivity() {
         reference.setValue(chatMessage)
             .addOnSuccessListener {
                 Log.d("ChatMessage", "채팅 메세지 저장:${reference.key}")
+                edittext_chat_log.text.clear()
+                recyclerview_chat_log.scrollToPosition(adapter.itemCount-1)
             }
+        toReference.setValue(chatMessage)
     }
 }
 
 
-class ChatFromItem(val text:String,val user:User): Item<ViewHolder>(){
+class ChatFromItem(val text:String,val user: User): Item<ViewHolder>(){
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemView.textview_from_row.text =text  //채팅 입력->말풍선에 반영
 
