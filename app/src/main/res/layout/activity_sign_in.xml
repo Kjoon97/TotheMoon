@@ -9,7 +9,7 @@
     tools:context=".SignInActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageview_chat_to_row"
         android:layout_width="match_parent"
         android:layout_height="222dp"
         android:background="#00FFFFFF"

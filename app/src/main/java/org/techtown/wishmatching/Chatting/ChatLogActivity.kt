@@ -1,13 +1,14 @@
 package org.techtown.wishmatching.Chatting
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.squareup.picasso.provider.PicassoProvider
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
@@ -21,6 +22,7 @@ import org.techtown.wishmatching.RealtimeDB.User
 class ChatLogActivity : AppCompatActivity() {
 
     var adapter = GroupAdapter<ViewHolder>()
+    var toUser : User? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_log)
@@ -28,9 +30,9 @@ class ChatLogActivity : AppCompatActivity() {
         recyclerview_chat_log.adapter = adapter
 
         //        val username = intent.getStringExtra(NewMessageActivity.USER_KEY)
-        val user = intent.getParcelableExtra<User>(ChattingFragment.USER_KEY)
-        if (user != null) {
-            supportActionBar?.title = user.username
+        val toUser = intent.getParcelableExtra<User>(ChattingFragment.USER_KEY)
+        if (toUser != null) {
+            supportActionBar?.title = toUser.username
         }
         //setupDummyData()
 
@@ -49,9 +51,13 @@ class ChatLogActivity : AppCompatActivity() {
                 val chatMessage = p0.getValue(ChatMessage::class.java)
                 if (chatMessage != null) {
                     if (chatMessage.fromId == FirebaseAuth.getInstance().uid) {
-                        adapter.add(ChatFromItem(chatMessage.text)) // 채팅 내용 리사이클 뷰에 띄우기
+                        val currentUser = ChattingFragment.currentUser?: return
+                        adapter.add(ChatFromItem(chatMessage.text,currentUser)) // 채팅 내용 리사이클 뷰에 띄우기
                     } else {
-                        adapter.add(ChatToItem(chatMessage.text))
+                        val toUser = intent.getParcelableExtra<User>(ChattingFragment.USER_KEY)
+                        toUser?.let { ChatToItem(chatMessage.text, it) }?.let { adapter.add(it) }
+
+ //                       adapter.add(ChatToItem(chatMessage.text,toUser!!)) // 본문 강의 코드
                     }
                 }
             }
@@ -93,9 +99,13 @@ class ChatLogActivity : AppCompatActivity() {
 }
 
 
-class ChatFromItem(val text:String): Item<ViewHolder>(){
+class ChatFromItem(val text:String,val user:User): Item<ViewHolder>(){
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemView.textview_from_row.text =text  //채팅 입력->말풍선에 반영
+
+        var uri = user.profileImageUrl
+        val targetImageView = viewHolder.itemView.imageview_chat_from_row
+        PicassoProvider.get().load(uri).into(targetImageView)
     }
 
     override fun getLayout(): Int {
@@ -103,9 +113,13 @@ class ChatFromItem(val text:String): Item<ViewHolder>(){
     }
 }
 
-class ChatToItem(val text:String): Item<ViewHolder>() {
+class ChatToItem(val text:String, val user:User): Item<ViewHolder>() {
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemView.textview_to_row.text = text   // 채팅 입력->말풍선에 반영
+
+        var uri = user.profileImageUrl
+        val targetImageView = viewHolder.itemView.imageview_chat_to_row
+        PicassoProvider.get().load(uri).into(targetImageView)
     }
 
     override fun getLayout(): Int {

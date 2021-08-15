@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -24,11 +25,13 @@ import org.techtown.wishmatching.RealtimeDB.User
 class ChattingFragment : Fragment() {
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
     }
     companion object{
+        var currentUser : User? = null
         val USER_KEY = "USER_KEY"
     }
     override fun onCreateView(
@@ -36,14 +39,22 @@ class ChattingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         setHasOptionsMenu(true)
+
+        fetchCurrentUser()
+
+
+
         val adapter = GroupAdapter<ViewHolder>()
         val v: View = inflater.inflate(R.layout.fragment_chatting, container, false)
         var recyclerview_newmassage = v.findViewById<RecyclerView>(R.id.recyclerview_newmassage)
+
+
 
 //        adapter.add(UserItem())
 //        adapter.add(UserItem())
 //        adapter.add(UserItem())
 //        recyclerview_newmassage.adapter = adapter
+
 
 
         fun fetchUsers() {    //파베로부터 유저 데이터 가져옴
@@ -106,4 +117,18 @@ class UserItem(val user: User): Item<ViewHolder>() {
 //        super.onResume()
 //
 //    }
+private fun fetchCurrentUser() {
+    val uid = FirebaseAuth.getInstance().uid
+    val ref = FirebaseDatabase.getInstance().getReference("users/$uid")
+    ref.addListenerForSingleValueEvent(object: ValueEventListener {
+        override fun onDataChange(snapshot: DataSnapshot) {
+            currentUser = snapshot.getValue(User::class.java)
+        }
+
+        override fun onCancelled(error: DatabaseError) {
+
+        }
+
+    })
+}
 }
