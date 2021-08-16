@@ -32,7 +32,6 @@ class ChattingFragment : Fragment() {
     }
     companion object{
         var currentUser : User? = null
-        val USER_KEY = "USER_KEY"
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,38 +56,38 @@ class ChattingFragment : Fragment() {
 
 
 
-        fun fetchUsers() {    //파베로부터 유저 데이터 가져옴
-            val ref = FirebaseDatabase.getInstance().getReference("/users")
-            ref.addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(p0: DataSnapshot) {
-                    val adapter = GroupAdapter<ViewHolder>()
-
-                    p0.children.forEach {
-                        Log.d("NewMessage",it.toString())
-                        val user = it.getValue(User::class.java)
-                        if(user != null) {
-                            adapter.add(UserItem(user))
-                        }
-                    }
-                    adapter.setOnItemClickListener { item, view ->  // 사용자 목록 중 한명 눌렀을 때
-
-                        val userItem = item as UserItem
-                        val intent= Intent(view.context, ChatLogActivity::class.java)
-//                    intent.putExtra(USER_KEY, item.user.username)
-                        intent.putExtra(USER_KEY,userItem.user)
-                        startActivity(intent)
-
-                    }
-                    recyclerview_newmassage.adapter = adapter
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-
-                }
-            })
-        }
-
-        fetchUsers()
+//  //       fun fetchUsers() {    //파베로부터 유저 데이터 가져옴
+//            val ref = FirebaseDatabase.getInstance().getReference("/users")
+//            ref.addListenerForSingleValueEvent(object : ValueEventListener {
+//                override fun onDataChange(p0: DataSnapshot) {
+//                    val adapter = GroupAdapter<ViewHolder>()
+//
+//                    p0.children.forEach {
+//                        Log.d("NewMessage",it.toString())
+//                        val user = it.getValue(User::class.java)
+//                        if(user != null) {
+//                            adapter.add(UserItem(user))
+//                        }
+//                    }
+//                    adapter.setOnItemClickListener { item, view ->  // 사용자 목록 중 한명 눌렀을 때
+//
+//                        val userItem = item as UserItem
+//                        val intent= Intent(view.context, ChatLogActivity::class.java)
+////                    intent.putExtra(USER_KEY, item.user.username)
+//                        intent.putExtra(USER_KEY,userItem.user)
+//                        startActivity(intent)
+//
+//                    }
+//                    recyclerview_newmassage.adapter = adapter
+//                }
+//
+//                override fun onCancelled(error: DatabaseError) {
+//
+//                }
+//            })
+//        }
+//
+//        fetchUsers()
 
 
         // Inflate the layout for this fragment
@@ -102,15 +101,15 @@ class ChattingFragment : Fragment() {
 //class CustomAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //
 //}
-class UserItem(val user: User): Item<ViewHolder>() {
-    override fun bind(viewHolder: ViewHolder, position: Int) {
-        viewHolder.itemView.username_textview_new_message.text = user.username
-        PicassoProvider.get().load(user.profileImageUrl).into(viewHolder.itemView.imageview_new_message)
-    }
-    override fun getLayout(): Int {
-        return R.layout.user_row_new_message
-    }
-}
+//class UserItem(val user: User): Item<ViewHolder>() {
+//    override fun bind(viewHolder: ViewHolder, position: Int) {
+//        viewHolder.itemView.username_textview_new_message.text = user.username
+//        PicassoProvider.get().load(user.profileImageUrl).into(viewHolder.itemView.imageview_new_message)
+//    }
+//    override fun getLayout(): Int {
+//        return R.layout.user_row_new_message
+//    }
+//}
 
 //    override fun onResume() {
 //        (activity as MainActivity).setActionBarTitle()

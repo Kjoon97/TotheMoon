@@ -30,7 +30,7 @@ class ChatLogActivity : AppCompatActivity() {
         recyclerview_chat_log.adapter = adapter
 
         //        val username = intent.getStringExtra(NewMessageActivity.USER_KEY)
-        toUser = intent.getParcelableExtra<User>(ChattingFragment.USER_KEY)
+        toUser = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
         if (toUser != null) {
             supportActionBar?.title = toUser?.username
         }
@@ -93,7 +93,7 @@ class ChatLogActivity : AppCompatActivity() {
     private fun performSendMessage() {  //보낸 메세지 파이어베이스 보내기
         val text = edittext_chat_log.text.toString()
         val fromId = FirebaseAuth.getInstance().uid
-        val user = intent.getParcelableExtra<User>(ChattingFragment.USER_KEY)
+        val user = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
         val toId = user?.uid
 
 //        val reference = FirebaseDatabase.getInstance().getReference("/messages").push()

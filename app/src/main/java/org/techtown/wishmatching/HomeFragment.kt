@@ -13,6 +13,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_home.*
+import org.techtown.wishmatching.Chatting.NewMessageActivity
 import org.techtown.wishmatching.Database.PostDTO
 
 
@@ -114,6 +115,11 @@ class HomeFragment : Fragment() {
                 startActivity(intent)
 
 
+                true
+            }
+            R.id.friendlist-> {
+                val intent = Intent(activity, NewMessageActivity::class.java)
+                startActivity(intent)
                 true
             }
 

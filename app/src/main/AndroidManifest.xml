@@ -15,7 +15,7 @@
         <activity
             android:name=".Chatting.ChatLogActivity"
             android:exported="true" />
-        <activity android:name=".LatestMessageActivity" />
+        <activity android:name=".Chatting.NewMessageActivity" />
         <activity
             android:name=".Mypage.EditProfileActivity"
             android:exported="true" />
