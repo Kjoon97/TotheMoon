@@ -28,7 +28,8 @@ class NewMessageActivity : AppCompatActivity() {
     }
     companion object{
         val USER_KEY = "USER_KEY"
-    }    private fun fetchUsers(){  //파베로부터 유저 데이터 가져옴
+    }
+    private fun fetchUsers(){  //파베로부터 유저 데이터 가져옴
         val ref = FirebaseDatabase.getInstance().getReference("/users")
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
 

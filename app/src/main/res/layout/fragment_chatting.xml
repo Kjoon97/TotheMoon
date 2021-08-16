@@ -9,7 +9,7 @@
     tools:context=".Chatting.ChattingFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview_newmassage"
+        android:id="@+id/recyclerview_latest_message"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

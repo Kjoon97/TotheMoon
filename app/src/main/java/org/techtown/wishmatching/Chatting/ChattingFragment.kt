@@ -1,31 +1,24 @@
 package org.techtown.wishmatching.Chatting
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import com.squareup.picasso.provider.PicassoProvider
+import com.google.firebase.database.*
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
-import kotlinx.android.synthetic.main.user_row_new_message.view.*
+import kotlinx.android.synthetic.main.fragment_chatting.*
+import kotlinx.android.synthetic.main.latest_message_row.view.*
 import org.techtown.wishmatching.R
+import org.techtown.wishmatching.RealtimeDB.ChatMessage
 import org.techtown.wishmatching.RealtimeDB.User
 
 
 class ChattingFragment : Fragment() {
-
-
-
+    val adapter = GroupAdapter<ViewHolder>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -38,84 +31,60 @@ class ChattingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         setHasOptionsMenu(true)
-
+//        recyclerview_latest_message.adapter = adapter
         fetchCurrentUser()
-
-
-
-        val adapter = GroupAdapter<ViewHolder>()
+        listenForLatestMessages()
         val v: View = inflater.inflate(R.layout.fragment_chatting, container, false)
-        var recyclerview_newmassage = v.findViewById<RecyclerView>(R.id.recyclerview_newmassage)
 
-
-
-//        adapter.add(UserItem())
-//        adapter.add(UserItem())
-//        adapter.add(UserItem())
-//        recyclerview_newmassage.adapter = adapter
-
-
-
-//  //       fun fetchUsers() {    //파베로부터 유저 데이터 가져옴
-//            val ref = FirebaseDatabase.getInstance().getReference("/users")
-//            ref.addListenerForSingleValueEvent(object : ValueEventListener {
-//                override fun onDataChange(p0: DataSnapshot) {
-//                    val adapter = GroupAdapter<ViewHolder>()
-//
-//                    p0.children.forEach {
-//                        Log.d("NewMessage",it.toString())
-//                        val user = it.getValue(User::class.java)
-//                        if(user != null) {
-//                            adapter.add(UserItem(user))
-//                        }
-//                    }
-//                    adapter.setOnItemClickListener { item, view ->  // 사용자 목록 중 한명 눌렀을 때
-//
-//                        val userItem = item as UserItem
-//                        val intent= Intent(view.context, ChatLogActivity::class.java)
-////                    intent.putExtra(USER_KEY, item.user.username)
-//                        intent.putExtra(USER_KEY,userItem.user)
-//                        startActivity(intent)
-//
-//                    }
-//                    recyclerview_newmassage.adapter = adapter
-//                }
-//
-//                override fun onCancelled(error: DatabaseError) {
-//
-//                }
-//            })
-//        }
-//
-//        fetchUsers()
-
-
-        // Inflate the layout for this fragment
         return v
 
 
     }
+    class LatestMessageRow(val chatMessage: ChatMessage): Item<ViewHolder>(){   //최신 채팅 글 창
+        override fun bind(viewHolder: ViewHolder, position: Int){
+            viewHolder.itemView.message_textview_latest_message.text = chatMessage.text
+        }
+        override fun getLayout(): Int {
+            return R.layout.latest_message_row
+        }
+    }
+    val latestMessagesMap = HashMap<String, ChatMessage>()
 
+    private fun refreshRecyclerViewMessages(){
+        adapter.clear()        // 원래 뜨던 메세지 클리어
+        latestMessagesMap.values.forEach {
+            adapter.add(LatestMessageRow(it))
+        }
+    }
 
+    private fun listenForLatestMessages(){
+        val fromId = FirebaseAuth.getInstance().uid
+        val ref = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId")
+        ref.addChildEventListener(object: ChildEventListener {
 
-//class CustomAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
-//
-//}
-//class UserItem(val user: User): Item<ViewHolder>() {
-//    override fun bind(viewHolder: ViewHolder, position: Int) {
-//        viewHolder.itemView.username_textview_new_message.text = user.username
-//        PicassoProvider.get().load(user.profileImageUrl).into(viewHolder.itemView.imageview_new_message)
-//    }
-//    override fun getLayout(): Int {
-//        return R.layout.user_row_new_message
-//    }
-//}
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) { // 채팅 방 생성
+                val chatMessage = snapshot.getValue(ChatMessage::class.java)?:return
+                latestMessagesMap[snapshot.key!!] = chatMessage  //key는 메세지 키를 의미함
+                refreshRecyclerViewMessages() // 로드
+            }
 
-//    override fun onResume() {
-//        (activity as MainActivity).setActionBarTitle()
-//        super.onResume()
-//
-//    }
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) { //채팅 변경시 바로 반영
+                val chatMessage = snapshot.getValue(ChatMessage::class.java)?:return
+                latestMessagesMap[snapshot.key!!] = chatMessage
+                refreshRecyclerViewMessages()
+            }
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+                TODO("Not yet implemented")
+            }
+            override fun onChildRemoved(snapshot: DataSnapshot) {
+                TODO("Not yet implemented")
+            }
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+    }
+
 private fun fetchCurrentUser() {
     val uid = FirebaseAuth.getInstance().uid
     val ref = FirebaseDatabase.getInstance().getReference("users/$uid")
@@ -130,4 +99,9 @@ private fun fetchCurrentUser() {
 
     })
 }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        recyclerview_latest_message.adapter = adapter
+    }
 }
