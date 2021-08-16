@@ -70,6 +70,7 @@ class ChatLogActivity : AppCompatActivity() {
 //                        adapter.add(ChatToItem(chatMessage.text,toUser!!)) // 본문 강의 코드
                     }
                 }
+                recyclerview_chat_log.scrollToPosition(adapter.itemCount-1)
             }
 
             override fun onCancelled(error: DatabaseError) {
