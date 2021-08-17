@@ -9,7 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.list_item.view.*
 import org.techtown.wishmatching.Database.PostDTO
 
 class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<ListAdapter.ListItemViewHolder>() {
@@ -51,11 +54,33 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
 
     // ViewHolder의 bind 메소드를 호출한다.
     override fun onBindViewHolder(holder: ListAdapter.ListItemViewHolder, position: Int) {
+        var doc_id : String = list.get(position).documentId
+        var content : String = list.get(position).content.toString()
+        var title : String = list.get(position).title.toString()
+        var imageUrl : String = list.get(position).imageUrl.toString()
+        var uid : String = list.get(position).uid.toString()
+        var category : String = list.get(position).category.toString()
+
         holder.btn_like.setOnClickListener {
             if(holder.state_like==0)
             {
                 holder.btn_like.setImageResource(R.drawable.btn_clicked_heart)
                 holder.state_like=1
+                var firestore = FirebaseFirestore.getInstance()  //초기화
+                var collRef = firestore!!.collection("post")
+                var docReference : DocumentReference = collRef.document()
+                var textview_id = holder.itemView.textview_id
+                textview_id.text = doc_id.toString()
+//                val fromId = FirebaseAuth.getInstance().uid
+
+//                val toId :String? = null
+////                firestore!!.collection("post").get().addOnSuccessListener {
+////                }
+////                toId = firestore.document().d
+////                val user = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
+////                val toId = user?.uid
+//                val refefence = FirebaseDatabase.getInstance().getReference("/matching-users/$fromId")
+//                val toReference = FirebaseDatabase.getInstance().getReference("/user-messages/$toId/$fromId").push()
             }
             else
             {
@@ -80,5 +105,10 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
             .into(holder.photourl)
 
     }
+    class matchInfo(val fromId: String , val toId: String , val matcing: Boolean) {
+        constructor(): this("","",false)
+
+    }
+
 
 }

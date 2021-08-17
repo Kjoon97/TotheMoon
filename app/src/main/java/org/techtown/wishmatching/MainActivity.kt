@@ -114,7 +114,9 @@ class MainActivity : AppCompatActivity() {
             .addOnSuccessListener { result ->
                 for (document in result) {
                     Log.d(TAG, "${document.id} => ${document.data}")
-                    dataList.add(PostDTO(document.data["imageUrl"].toString(),
+                    dataList.add(PostDTO(
+                        document.data["documentId"].toString(),
+                        document.data["imageUrl"].toString(),
                         document.data["uid"].toString(),
                         document.data["title"].toString(),
                         document.data["content"].toString(),

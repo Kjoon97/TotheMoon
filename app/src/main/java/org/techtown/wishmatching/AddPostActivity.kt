@@ -4,22 +4,16 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.LinearLayout
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_add_post.*
-import kotlinx.android.synthetic.main.activity_add_post.home2
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_profile.*
-import kotlinx.android.synthetic.main.fragment_home.*
 import org.techtown.wishmatching.Database.PostDTO
 import java.text.SimpleDateFormat
 import java.util.*
@@ -122,8 +116,11 @@ class AddPostActivity : AppCompatActivity() {
                     .whereEqualTo("uid", auth?.uid)
                     .get()
                     .addOnSuccessListener { documents->
-                        firestore?.collection("post")?.document()
-                            ?.set(PostDTO("${uri.toString()}", "${auth?.uid}", editText_title.text.toString(), editText_content.text.toString(), "아직미정"))
+                        var collRef = firestore!!.collection("post")
+                        var docReference : String = collRef.document().id
+
+                        firestore?.collection("post")?.document("${docReference}")
+                            ?.set(PostDTO("${docReference}","${uri.toString()}", "${auth?.uid}", editText_title.text.toString(), editText_content.text.toString(), "아직미정"))
 
                     }
                 setResult(Activity.RESULT_OK)
