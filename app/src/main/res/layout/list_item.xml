@@ -24,7 +24,7 @@
         app:srcCompat="@drawable/btn_heart" />
 
     <TextView
-        android:id="@+id/textview_id"
+        android:id="@+id/ttt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="3"
