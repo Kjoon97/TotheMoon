@@ -89,10 +89,10 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
                 var ttt = holder.itemView.ttt
 
                 val usersDb = FirebaseDatabase.getInstance().getReference().child("matching-users")
-                val currentUserConnectionDb = usersDb.child(fromId!!).child("connections").child("yeps").child(post_uid)
+                val currentUserConnectionDb = usersDb.child(fromId!!).child("connections").child("match").child(post_uid)
 
                 if (fromId != null) {
-                    usersDb.child(post_uid).child("connections").child("yeps").child(fromId).setValue(true)
+                    usersDb.child(post_uid).child("connections").child("match").child(fromId).setValue(true)
                 }
 
                 currentUserConnectionDb.addListenerForSingleValueEvent(object: ValueEventListener{
