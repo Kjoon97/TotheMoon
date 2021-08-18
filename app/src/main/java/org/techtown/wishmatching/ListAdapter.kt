@@ -10,7 +10,6 @@ import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
-import com.google.firebase.database.ktx.getValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.list_item.view.*
@@ -74,6 +73,8 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
         val latest_ref = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$post_uid") // 메시지 기능을 위한 레퍼런스
         val latest_to_ref = FirebaseDatabase.getInstance().getReference("/user-messages/$post_uid/$fromId") // 메시지 기능을 위한 레퍼런스
 
+        val reference2 = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId/$post_uid").push()
+
 
         var database: DatabaseReference
         database = Firebase.database.reference
@@ -86,6 +87,48 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
                 holder.state_like=1
                 var firestore = FirebaseFirestore.getInstance()  //초기화
                 var ttt = holder.itemView.ttt
+
+                val usersDb = FirebaseDatabase.getInstance().getReference().child("matching-users")
+                val currentUserConnectionDb = usersDb.child(fromId!!).child("connections").child("yeps").child(post_uid)
+
+                if (fromId != null) {
+                    usersDb.child(post_uid).child("connections").child("yeps").child(fromId).setValue(true)
+                }
+
+                currentUserConnectionDb.addListenerForSingleValueEvent(object: ValueEventListener{
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if(snapshot.exists()) {
+                            val reference = FirebaseDatabase.getInstance()
+                                    .getReference("/user-messages/$fromId/$post_uid").push()
+                                val toReference = FirebaseDatabase.getInstance()
+                                    .getReference("/user-messages/$post_uid/$fromId").push()
+                                val chatMessage =
+                                    ChatMessage(
+                                        reference.key!!,
+                                        "채팅방이 생성 되었습니다.",
+                                        fromId.toString(),
+                                        post_uid,
+                                        System.currentTimeMillis() / 1000
+                                    )
+                                reference.setValue(chatMessage)
+                                toReference.setValue(chatMessage)
+
+                                val latestMessageFromRef = FirebaseDatabase.getInstance()
+                                    .getReference("/latest-messages/$fromId/$post_uid")
+                                latestMessageFromRef.setValue(chatMessage)
+
+                                val latestMessageToRef = FirebaseDatabase.getInstance()
+                                    .getReference("/latest-messages/$post_uid/$fromId")
+                                latestMessageToRef.setValue(chatMessage)
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+
+                    }
+
+
+                })
 //                val toId :String? = null
 //                firestore!!.collection("post").get().addOnSuccessListener {
 //                }
@@ -106,128 +149,40 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
 //                    val your_matchinfo = MatchInfo(fromId.toString(),post_uid.toString(),match_count)
 //                    toReference.setValue(your_matchinfo)
 //                }
-                ttt.text=reference.key.toString()
+
 
 //                ttt.text = match_count.toString()
-
-                reference.addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        var post = snapshot?.getValue<MatchInfo>()
-                            // 매칭시 채팅방 생성 코드-------------------------
-                            val reference = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$post_uid").push()
-                            val toReference = FirebaseDatabase.getInstance().getReference("/user-messages/$post_uid/$fromId").push()
-                            val chatMessage =
-                                ChatMessage(reference.key!!, "채팅방이 생성 되었습니다.", fromId.toString(), post_uid, System.currentTimeMillis() / 1000)
-                            reference.setValue(chatMessage)
-
-                            val latestMessageFromRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId/$post_uid")
-                            latestMessageFromRef.setValue(chatMessage)
-
-                            val latestMessageToRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$post_uid/$fromId")
-                            latestMessageToRef.setValue(chatMessage)
-                            // 매칭시 채팅방 생성 코드 -------------------------
+//                val my_matchinfo = MatchInfo(fromId.toString(),post_uid.toString(),0)
+//                reference.setValue(my_matchinfo)
+//                val your_matchinfo = MatchInfo(fromId.toString(),post_uid.toString(),0)
+//                toReference.setValue(your_matchinfo)
 
 
-                    }
 
-                    override fun onCancelled(error: DatabaseError) {
-                        TODO("Not yet implemented")
-                    }
-
-                })
-
-//                toReference.addListenerForSingleValueEvent(object : ValueEventListener {
-//                    override fun onDataChange(snapshot: DataSnapshot) {
-//                        var post = snapshot.getValue<MatchInfo>()
-//                                // 매칭시 채팅방 생성 코드-------------------------
-//                                val reference = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$post_uid").push()
-//                                val toReference = FirebaseDatabase.getInstance().getReference("/user-messages/$post_uid/$fromId").push()
+//                                val reference = FirebaseDatabase.getInstance()
+//                                    .getReference("/user-messages/$fromId/$post_uid").push()
+//                                val toReference = FirebaseDatabase.getInstance()
+//                                    .getReference("/user-messages/$post_uid/$fromId").push()
 //                                val chatMessage =
-//                                    ChatMessage(reference.key!!, "채팅방이 생성 되었습니다.", fromId.toString(), post_uid, System.currentTimeMillis() / 1000)
+//                                    ChatMessage(
+//                                        reference.key!!,
+//                                        "채팅방이 생성 되었습니다.",
+//                                        fromId.toString(),
+//                                        post_uid,
+//                                        System.currentTimeMillis() / 1000
+//                                    )
 //                                reference.setValue(chatMessage)
 //
-//                                val latestMessageFromRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId/$post_uid")
+//                                val latestMessageFromRef = FirebaseDatabase.getInstance()
+//                                    .getReference("/latest-messages/$fromId/$post_uid")
 //                                latestMessageFromRef.setValue(chatMessage)
 //
-//                                val latestMessageToRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$post_uid/$fromId")
+//                                val latestMessageToRef = FirebaseDatabase.getInstance()
+//                                    .getReference("/latest-messages/$post_uid/$fromId")
 //                                latestMessageToRef.setValue(chatMessage)
-//                                // 매칭시 채팅방 생성 코드 -------------------------
-//
-//
-//
-////                        else {
-////                            val matchinfo = MatchInfo(fromId.toString(),post_uid.toString(),0)
-////                            reference.setValue(matchinfo)
-////                            toReference.setValue(matchinfo)
-////                        }
-//                    }
 
-//                    override fun onCancelled(error: DatabaseError) {
-//                        TODO("Not yet implemented")
-//                    }
-//
-//                })
 
-//                val postListener = object : ValueEventListener {
-//                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                        // Get Post object and use the values to update the UI
-//                        var post = dataSnapshot.getValue<MatchInfo>()
-//                        var test = post
-//                        if (post != null) {
-//                            if(post.matching == 2) {
-//                                Log.d("ttt","채팅방 생성 기능 실행 ValueEventListener")
-//                                // 매칭시 채팅방 생성 코드-------------------------
-//                                val reference = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$post_uid").push()
-//                                val toReference = FirebaseDatabase.getInstance().getReference("/user-messages/$post_uid/$fromId").push()
-//                                val chatMessage =
-//                                    ChatMessage(reference.key!!, "채팅방이 생성 되었습니다.", fromId.toString(), post_uid, System.currentTimeMillis() / 1000)
-//                                reference.setValue(chatMessage)
-//
-//                                val latestMessageFromRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId/$post_uid")
-//                                latestMessageFromRef.setValue(chatMessage)
-//
-//                                val latestMessageToRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$post_uid/$fromId")
-//                                latestMessageToRef.setValue(chatMessage)
-//                                // 매칭시 채팅방 생성 코드 -------------------------
-//                            }
-//                        }
-//
-//                    }
-//                    override fun onCancelled(databaseError: DatabaseError) {
-//                    }
-//
-//                }
-//                reference.addValueEventListener(postListener)
 
-//                val postListener2 = object : ValueEventListener {
-//                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                        // Get Post object and use the values to update the UI
-//                        var post = dataSnapshot.getValue<MatchInfo>()
-//                        ttt.text = dataSnapshot.childrenCount.toString()
-//                        if (post != null) {
-//                            if(post.matching == 2) {
-//                                Log.d("ttt","채팅방 생성 기능 실행 ValueEventListener")
-//                                // 매칭시 채팅방 생성 코드-------------------------
-//                                val reference = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$post_uid").push()
-//                                val toReference = FirebaseDatabase.getInstance().getReference("/user-messages/$post_uid/$fromId").push()
-//                                val chatMessage =
-//                                    ChatMessage(reference.key!!, "채팅방이 생성 되었습니다.", fromId.toString(), post_uid, System.currentTimeMillis() / 1000)
-//                                reference.setValue(chatMessage)
-//
-//                                val latestMessageFromRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId/$post_uid")
-//                                latestMessageFromRef.setValue(chatMessage)
-//
-//                                val latestMessageToRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$post_uid/$fromId")
-//                                latestMessageToRef.setValue(chatMessage)
-//                                // 매칭시 채팅방 생성 코드 -------------------------
-//                            }
-//                        }
-//
-//                    }
-//                    override fun onCancelled(databaseError: DatabaseError) {
-//                    }
-//                }
-//                toReference.addValueEventListener(postListener2)
             }
             else
             {
@@ -239,15 +194,7 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
             }
 
         }
-//        holder.bind(list,position)
-//        var dataSnapshot: DataSnapshot? = null
-//        var snapshot : DataSnapshot = dataSnapshot!!.child("post")
-//        var snapshotcount : Long = dataSnapshot!!.childrenCount
-//        for(i in 0..snapshotcount)
-//        {
-//            var PostDTO : PostDTO = snapshot.getValue<PostDTO>() as PostDTO
-//            list.add(PostDTO)
-//        }
+
 
         Log.d("ListAdapter", "===== ===== ===== ===== onBindViewHolder ===== ===== ===== =====")
         Glide.with(holder.itemView)
