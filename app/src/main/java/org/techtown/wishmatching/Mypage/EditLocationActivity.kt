@@ -92,11 +92,5 @@ class EditLocationActivity : AppCompatActivity() {
             }
         }
 
-        sss.setOnClickListener {
-            val intent = Intent(this, MoreInfoActivity::class.java)
-            startActivity(intent)
-        }
-
-
     }
 }
