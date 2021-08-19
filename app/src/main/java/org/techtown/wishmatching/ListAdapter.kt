@@ -1,5 +1,6 @@
 package org.techtown.wishmatching
 
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -56,7 +57,7 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
 
     // ViewHolder의 bind 메소드를 호출한다.
     override fun onBindViewHolder(holder: ListAdapter.ListItemViewHolder, position: Int) {
-        var doc_id : String = list.get(position).documentId
+        var doc_id : String = list.get(position).documentId     //물품 Id
         var content : String = list.get(position).content.toString()
         var title : String = list.get(position).title.toString()
         var imageUrl : String = list.get(position).imageUrl.toString()
@@ -193,6 +194,12 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
                 reference.removeValue()
             }
 
+        }
+
+        holder.photourl.setOnClickListener {
+            val intent = Intent(it.context, MoreInfoActivity::class.java)
+            intent.putExtra("doc_id", doc_id)
+            it.context.startActivity(intent)
         }
 
 

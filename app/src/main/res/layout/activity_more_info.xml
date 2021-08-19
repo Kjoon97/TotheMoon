@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MoreInfoActivity">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_moreInfo_like"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:fillViewport="true"
+        app:layout_constraintVertical_bias="1.0">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/img_moreInfo_picture"
+                android:layout_width="0dp"
+                android:layout_height="270dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:background="#00FFFFFF"
+                android:scaleType="fitCenter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_moreInfo_name"
+                app:srcCompat="@drawable/custom_edittext" />
+
+            <TextView
+                android:id="@+id/tv_moreInfo_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="27dp"
+                android:text="카테고리"
+                android:textColor="#808080"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_moreInfo_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="물품 이름"
+                android:textSize="27dp"
+                android:textStyle="normal"
+                app:layout_constraintEnd_toEndOf="@+id/tv_moreInfo_category"
+                app:layout_constraintStart_toStartOf="@+id/tv_moreInfo_category"
+                app:layout_constraintTop_toBottomOf="@+id/tv_moreInfo_category" />
+
+            <TextView
+                android:id="@+id/tv_moreInfo_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="24dp"
+                android:text="설명"
+                android:textColor="#6a6a6a"
+                android:textSize="16dp"
+                android:textStyle="normal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/img_moreInfo_picture" />
+
+            <TextView
+                android:id="@+id/tv_moreInfo_areaIndex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="동네"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/tv_moreInfo_description"
+                app:layout_constraintTop_toBottomOf="@+id/tv_moreInfo_description" />
+
+            <TextView
+                android:id="@+id/tv_moreInfo_areaValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="동네"
+                android:textColor="#6a6a6a"
+                android:textSize="16dp"
+                android:textStyle="normal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tv_moreInfo_areaIndex"
+                app:layout_constraintTop_toBottomOf="@+id/tv_moreInfo_areaIndex" />
+
+            <TextView
+                android:id="@+id/tv_moreInfo_dateIndex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="등록일자"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/tv_moreInfo_areaValue"
+                app:layout_constraintTop_toBottomOf="@+id/tv_moreInfo_areaValue" />
+
+            <TextView
+                android:id="@+id/tv_moreInfo_dateValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="등록일자 db에 등록되지 않아서 아직 구현 x"
+                android:textColor="#6a6a6a"
+                android:textSize="16dp"
+                app:layout_constraintStart_toStartOf="@+id/tv_moreInfo_dateIndex"
+                app:layout_constraintTop_toBottomOf="@+id/tv_moreInfo_dateIndex" />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <ImageButton
+        android:id="@+id/btn_moreInfo_like"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/like_btn"
+        android:scaleType="fitCenter"
+        android:text="좋아요"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/btn_heart" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

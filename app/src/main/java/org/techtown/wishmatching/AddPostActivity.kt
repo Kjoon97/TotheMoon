@@ -43,7 +43,7 @@ class AddPostActivity : AppCompatActivity() {
 
 
         // 게시글에 올릴 사진 선택 버튼
-        btn_post_image.setOnClickListener{
+        img_moreInfo_picture.setOnClickListener{
             var photoPickerIntent = Intent(Intent.ACTION_PICK)
             photoPickerIntent.type ="image/*"
             startActivityForResult(photoPickerIntent,PICK_IMAGE_FROM_ALBUM)
@@ -94,7 +94,7 @@ class AddPostActivity : AppCompatActivity() {
         if(requestCode ==PICK_IMAGE_FROM_ALBUM)
             if(resultCode == Activity.RESULT_OK){  //사진을 선택했을 때 이미지의 경로가 이쪽으로 넘어옴
                 photoUri = data?.data    //경로담기
-                btn_post_image.setImageURI(photoUri)   //선택한 이미지로 변경
+                img_moreInfo_picture.setImageURI(photoUri)   //선택한 이미지로 변경
             }else{  //취소버튼 눌렀을 때 작동하는 부분
                 val intent = Intent(this, AddPostActivity::class.java)
                 startActivity(intent)

@@ -1,5 +1,6 @@
 package org.techtown.wishmatching.Mypage
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -12,6 +13,7 @@ import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.activity_profile.spin_edtLocation_city
 import kotlinx.android.synthetic.main.activity_profile.spin_edtLocation_innercity
 import org.techtown.wishmatching.Authentication
+import org.techtown.wishmatching.MoreInfoActivity
 import org.techtown.wishmatching.R
 
 class EditLocationActivity : AppCompatActivity() {
@@ -88,6 +90,11 @@ class EditLocationActivity : AppCompatActivity() {
                 Toast.makeText(this, "수정하였습니다.", Toast.LENGTH_SHORT).show()
                 finish()
             }
+        }
+
+        sss.setOnClickListener {
+            val intent = Intent(this, MoreInfoActivity::class.java)
+            startActivity(intent)
         }
 
 

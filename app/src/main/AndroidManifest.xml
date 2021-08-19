@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WishMatching"
         android:usesCleartextTraffic="true">
+        <activity android:name=".MoreInfoActivity"></activity>
         <activity
             android:name=".Chatting.ChatLogActivity"
             android:exported="true" />
