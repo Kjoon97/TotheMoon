@@ -1,5 +1,6 @@
 package org.techtown.wishmatching
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -84,6 +85,7 @@ class HomeFragment : Fragment() {
             R.id.action_add -> {
                 val intent = Intent(activity, AddPostActivity::class.java)
                 startActivity(intent)
+
                 true
             }
             R.id.action_test -> {

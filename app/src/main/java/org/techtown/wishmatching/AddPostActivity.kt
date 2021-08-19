@@ -26,9 +26,6 @@ class AddPostActivity : AppCompatActivity() {
     var auth: FirebaseAuth? = null   // 유저의 정보를 가져오기 위함
     var firestore : FirebaseFirestore? = null   // 데이터베이스를 사용할 수 있도록
 
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_post)
@@ -73,14 +70,11 @@ class AddPostActivity : AppCompatActivity() {
 //                var home : View = findViewById(R.id.home_layout)
 //                Snackbar.make(home, "snack", Snackbar.LENGTH_LONG).show()
 
-                val mySnackbar = Snackbar.make(findViewById(R.id.home2),
-                    "작성 완료", Snackbar.LENGTH_SHORT)
-                mySnackbar.setAction("닫기", MyUndoListener())
-                mySnackbar.setTextColor(Color.WHITE)
-                mySnackbar.show()
-
-                var intent = Intent(this,MainActivity::class.java)
-                startActivity(intent)
+//                val mySnackbar = Snackbar.make(findViewById(R.id.home2),
+//                    "작성 완료", Snackbar.LENGTH_SHORT)
+//                mySnackbar.setAction("닫기", MyUndoListener())
+//                mySnackbar.setTextColor(Color.WHITE)
+//                mySnackbar.show()
 
 
 
@@ -121,10 +115,11 @@ class AddPostActivity : AppCompatActivity() {
 
                         firestore?.collection("post")?.document("${docReference}")
                             ?.set(PostDTO("${docReference}","${uri.toString()}", "${auth?.uid}", editText_title.text.toString(), editText_content.text.toString(), "아직미정"))
+                        var intent = Intent(this,MainActivity::class.java)
+                        startActivity(intent)
 
                     }
                 setResult(Activity.RESULT_OK)
-                finish()
 
             }
         } //파일업로드 성공 시 이미지 주소를 받아옴 ,받아오자마자 데이터 모델을 만듦듦
