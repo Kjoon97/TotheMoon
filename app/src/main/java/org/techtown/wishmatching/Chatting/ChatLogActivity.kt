@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.chat_to_row.view.*
 import org.techtown.wishmatching.R
 import org.techtown.wishmatching.RealtimeDB.ChatMessage
 import org.techtown.wishmatching.RealtimeDB.User
-
+//ㅇㅇㅇ
 class ChatLogActivity : AppCompatActivity() {
 
     var adapter = GroupAdapter<ViewHolder>()

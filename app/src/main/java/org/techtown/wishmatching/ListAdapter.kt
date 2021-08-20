@@ -19,7 +19,6 @@ import org.techtown.wishmatching.RealtimeDB.ChatMessage
 
 class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<ListAdapter.ListItemViewHolder>() {
 
-
     // inner class로 ViewHolder 정의
     inner class ListItemViewHolder(itemView: View?): RecyclerView.ViewHolder(itemView!!) {
 
@@ -119,6 +118,7 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
                                 val latestMessageToRef = FirebaseDatabase.getInstance()
                                     .getReference("/latest-messages/$post_uid/$fromId")
                                 latestMessageToRef.setValue(chatMessage)
+
                         }
                     }
 

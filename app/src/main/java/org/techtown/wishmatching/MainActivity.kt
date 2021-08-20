@@ -9,10 +9,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.viewpager.widget.ViewPager
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -20,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import kotlinx.android.synthetic.main.activity_main.*
@@ -43,6 +46,20 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         mcontext = this
 
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            // Log and toast
+            val msg = getString(R.string.msg_token_fmt, token)
+            Log.d("ttttt", msg)
+            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+        })
 
         // 각 탭 마다 타이틀바 제목 변경
         view_pager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
@@ -76,27 +93,6 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
-
-//        fragmentManager.commit {
-//            add(R.id.home_main,HomeFragment(),"home")
-//            add(R.id.home_main,ChattingFragment(),"chatting")
-//            add(R.id.home_main,MyPageFragment(),"mypage")
-//            remove(HomeFragment())
-//            remove(ChattingFragment())
-//            remove(MyPageFragment())
-////            val homeFragment = fragmentManager.findFragmentByTag("home")
-////            val chatFragment = fragmentManager.findFragmentByTag("chat")
-////            val mypageFragment = fragmentManager.findFragmentByTag("mypage")
-////            if(homeFragment != null) {
-////                replace(R.id.home_main,homeFragment)
-////            }
-////            else if(chatFragment != null) {
-////                replace(R.id.frag_chat,chatFragment)
-////            }
-////            else if(mypageFragment != null){
-////                replace(R.id.frag_mypage,mypageFragment)
-////            }
-//        }
 
 
 
@@ -132,49 +128,9 @@ class MainActivity : AppCompatActivity() {
 
 
 
-//        val postListener = object : ValueEventListener {
-//            override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                // Get Post object and use the values to update the UI
-//                val post = dataSnapshot.getValue<PostDTO>()
-//                // ...
-//                var snapshot : DataSnapshot = dataSnapshot.child("post")
-//                var snapshotcount : Long = dataSnapshot.childrenCount
-//
-//                for(i in 0..snapshotcount)
-//                {
-//                    var PostDTO : PostDTO = snapshot.getValue<PostDTO>() as PostDTO
-//                    dataList.add(PostDTO)
-//                }
-//            }
-//
-//            override fun onCancelled(databaseError: DatabaseError) {
-//                // Getting Post failed, log a message
-//                Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
-//            }
-//        }
-//        postReference.addValueEventListener(postListener)
-
-
-
-//        getSupportActionBar()?.setIcon(R.drawable.font_wishmatching_bold35)
-//        getSupportActionBar()?.setDisplayUseLogoEnabled(true)
-//        getSupportActionBar()?.setDisplayShowHomeEnabled(true)
-
-
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        var mInflater = menuInflater
-//        mInflater.inflate(R.menu.testmenu,menu)
-//        return true
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        when(item.itemId){
-//            R.id.profilemenu_test-> startActivity(Intent(this,ProfileActivity::class.java))
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
+
 
     // 네비게이션바 , 뷰페이지 어댑터 설정
     private fun configureBottomNavigation() {
@@ -193,20 +149,7 @@ class MainActivity : AppCompatActivity() {
             bottomNaviLayout.findViewById(R.id.btn_bottom_navi_my_page_tab) as RelativeLayout
     }
 
-//    override fun onStart() {
-//        firestore!!.collection("post")
-//            .get()
-//            .addOnSuccessListener { result ->
-//                for (document in result) {
-//                    Log.d(TAG, "${document.id} => ${document.data}")
-//                    dataList.add(PostDTO(document.data["imageUrl"].toString(),document.data["uid"].toString(),document.data["title"].toString(),document.data["content"].toString(),document.data["category"].toString()))
-//                }
-//            }
-//            .addOnFailureListener { exception ->
-//                Log.d(TAG, "Error getting documents: ", exception)
-//            }
-//        super.onStart()
-//    }
+
     override fun onBackPressed() {
         // 뒤로가기 버튼 클릭
     val homeFragment = fragmentManager.findFragmentByTag("home")
@@ -261,27 +204,6 @@ class MainActivity : AppCompatActivity() {
         MainFragmentStatePagerAdapter(supportFragmentManager, 3).notifyDataSetChanged()
     }
 
-//    fun setActionBarTitle() {
-//        val actionBar: ActionBar? = supportActionBar
-//
-//        if(view_pager.currentItem == 0) {
-//            if (actionBar != null) {
-//                actionBar.setTitle("Home")
-//            }
-//        }
-//        else if(view_pager.currentItem == 1) {
-//            if (actionBar != null) {
-//                actionBar.setTitle("Chat")
-//            }
-//        }
-//        else if(view_pager.currentItem == 2) {
-//            if (actionBar != null) {
-//                actionBar.setTitle("My")
-//            }
-//        }
-//    }
-//    interface YourFragmentInterface {
-//        fun fragmentBecameVisible()
-//    }
+
 
 }
