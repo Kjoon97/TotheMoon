@@ -55,7 +55,8 @@
             android:theme="@style/Theme.WishMatching" />
         <service
             android:name=".MyFirebaseMessagingService"
-            android:exported="false">
+            android:exported="false"
+            android:enabled="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
