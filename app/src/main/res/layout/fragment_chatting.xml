@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:tag="chat"
-    tools:context=".Chatting.ChattingFragment">
+    tools:context=".Mypage.DealSituation.DoingDealFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_latest_message"
