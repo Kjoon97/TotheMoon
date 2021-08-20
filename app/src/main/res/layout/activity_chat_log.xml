@@ -4,47 +4,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@color/tw__composer_white"
     tools:context=".Chatting.ChatLogActivity">
 
     <EditText
         android:id="@+id/edittext_chat_log"
-        android:layout_width="0dp"
+        android:layout_width="262dp"
         android:layout_height="50dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/rounded_button"
         android:ems="10"
         android:hint="Enter Message"
-        android:background="@android:color/white"
         android:inputType="textPersonName"
+        android:paddingLeft="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/send_button_chat_log"
-        app:layout_constraintHorizontal_bias="0.105"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/add_image_button_chat" />
 
-    <Button
+    <ImageButton
         android:id="@+id/send_button_chat_log"
-        android:layout_width="93dp"
-        android:layout_height="54dp"
-        android:layout_marginEnd="24dp"
+        android:layout_width="36dp"
+        android:layout_height="41dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:text="Send"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:background="@drawable/rounded_button"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/android_send_icons" />
+
+    <ImageButton
+        android:id="@+id/add_image_button_chat"
+        android:layout_width="49dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginBottom="13dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_baseline_add_24" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_chat_log"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
-        android:background="@android:color/transparent"
+        android:background="#FFFAF0"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/edittext_chat_log"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.6" />
+        app:layout_constraintVertical_bias="0.6"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
