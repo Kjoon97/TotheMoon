@@ -11,10 +11,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/rounded_edittext_register_login"
+        android:background="@drawable/rounded_to_chat"
         android:maxWidth="240dp"
         android:padding="16dp"
         android:text="This is my message that will wrap into multiple lines and keep on going"
+        android:textColor="@color/white"
         app:layout_constraintStart_toEndOf="@+id/imageview_chat_to_row"
         app:layout_constraintTop_toTopOf="parent" />
 

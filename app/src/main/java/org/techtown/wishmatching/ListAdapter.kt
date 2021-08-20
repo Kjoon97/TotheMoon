@@ -13,7 +13,6 @@ import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.list_item.view.*
 import org.techtown.wishmatching.Database.PostDTO
 import org.techtown.wishmatching.RealtimeDB.ChatMessage
 
@@ -87,7 +86,6 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
                 holder.btn_like.setImageResource(R.drawable.btn_clicked_heart)
                 holder.state_like=1
                 var firestore = FirebaseFirestore.getInstance()  //초기화
-                var ttt = holder.itemView.ttt
 
                 val usersDb = FirebaseDatabase.getInstance().getReference().child("matching-users")
                 val currentUserConnectionDb = usersDb.child(fromId!!).child("connections").child("match").child(post_uid)
