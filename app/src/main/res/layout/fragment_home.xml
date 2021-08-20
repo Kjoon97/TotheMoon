@@ -9,8 +9,6 @@
     tools:context=".HomeFragment"
     android:tag="home">
 
-
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listView"
             android:layout_width="match_parent"

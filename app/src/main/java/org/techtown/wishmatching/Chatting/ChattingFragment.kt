@@ -32,11 +32,7 @@ class ChattingFragment : Fragment() {
         var currentUser : User? = null
         var partner_key : String? = null
     }
-    override fun onCreateView(
-
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var context = container?.context
         setHasOptionsMenu(true)
 //        recyclerview_latest_message.adapter = adapter

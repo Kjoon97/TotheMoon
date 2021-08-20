@@ -8,13 +8,6 @@
     android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/view_pager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/tl_ac_main_bottom_menu"></androidx.viewpager.widget.ViewPager>
-
-
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tl_ac_main_bottom_menu"
         android:layout_width="match_parent"
@@ -23,6 +16,12 @@
         android:background="#FFFFFF"
         android:elevation="5dp"
         app:tabIndicatorColor="#40D39F"></com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/tl_ac_main_bottom_menu"></androidx.viewpager.widget.ViewPager>
 
 
 </RelativeLayout>

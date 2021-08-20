@@ -41,6 +41,7 @@ class EditLocationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_location)
+        supportActionBar?.title = "동네 변경하기"
         firestore = FirebaseFirestore.getInstance()
 
         var adapter : ArrayAdapter<String>

@@ -14,6 +14,12 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".MoreInfoActivity"></activity>
         <activity
+            android:name=".Mypage.DealSituation.DealSituActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Mypage.DealSituation.DealSituationActivity"
+            android:exported="true" />
+        <activity
             android:name=".Chatting.ChatLogActivity"
             android:exported="true" />
         <activity android:name=".Chatting.NewMessageActivity" />
