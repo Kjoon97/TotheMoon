@@ -13,8 +13,8 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.fragment_my_page.*
 import org.techtown.wishmatching.Authentication
+import org.techtown.wishmatching.Mypage.DealSituation.DealCompleteActivity
 import org.techtown.wishmatching.Mypage.DealSituation.DealSituActivity
-import org.techtown.wishmatching.Mypage.DealSituation.DealSituationActivity
 import org.techtown.wishmatching.R
 
 class MyPageFragment : Fragment(){
@@ -39,8 +39,12 @@ class MyPageFragment : Fragment(){
             val intent = Intent(context, EditLocationActivity::class.java)
             startActivity(intent)
         }
-        layout_myPage_deal_situation.setOnClickListener {  //동네 변경 페이지로 이동
+        layout_myPage_deal_situation.setOnClickListener {  //물건 등록 페이지로 이동
             val intent = Intent(context, DealSituActivity::class.java)
+            startActivity(intent)
+        }
+        layout_myPage_deal_complete.setOnClickListener {
+            val intent = Intent(context, DealCompleteActivity::class.java)
             startActivity(intent)
         }
     }

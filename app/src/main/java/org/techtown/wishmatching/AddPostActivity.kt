@@ -114,7 +114,7 @@ class AddPostActivity : AppCompatActivity() {
                         var docReference : String = collRef.document().id
 
                         firestore?.collection("post")?.document("${docReference}")
-                            ?.set(PostDTO("${docReference}","${uri.toString()}", "${auth?.uid}", editText_title.text.toString(), editText_content.text.toString(), "아직미정"))
+                            ?.set(PostDTO("${docReference}","${uri.toString()}", "${auth?.uid}", editText_title.text.toString(), editText_content.text.toString(), "아직미정","doingDeal"))
                         var intent = Intent(this,MainActivity::class.java)
                         startActivity(intent)
 

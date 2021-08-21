@@ -12,7 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WishMatching"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MoreInfoActivity"></activity>
+        <activity
+            android:name=".Mypage.DealSituation.DealCompleteActivity"
+            android:exported="true" />
+        <activity android:name=".MoreInfoActivity" />
         <activity
             android:name=".Mypage.DealSituation.DealSituActivity"
             android:exported="true" />
@@ -53,14 +56,14 @@
             android:name=".MainActivity"
             android:label="Home"
             android:theme="@style/Theme.WishMatching" />
+
         <service
             android:name=".MyFirebaseMessagingService"
-            android:exported="false"
-            android:enabled="true">
+            android:enabled="true"
+            android:exported="false">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
-
         </service>
     </application>
 

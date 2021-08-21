@@ -6,4 +6,5 @@ data class PostDTO(
     var uid :String? =null,
     var title: String?=null,
     var content : String? = null,
-    var category : String? = null )
+    var category : String? = null,
+    var dealsituation : String? = null)

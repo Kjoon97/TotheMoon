@@ -3,36 +3,29 @@ package org.techtown.wishmatching.Mypage.DealSituation
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide.init
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.provider.PicassoProvider
 import kotlinx.android.synthetic.main.activity_deal_situ.*
-import kotlinx.android.synthetic.main.doingdeal_row.*
 import kotlinx.android.synthetic.main.doingdeal_row.view.*
 import org.techtown.wishmatching.Authentication
 import org.techtown.wishmatching.Database.PostDTO
 import org.techtown.wishmatching.R
-import java.util.Calendar.getInstance
-import java.util.Currency.getInstance
 
-class DealSituActivity : AppCompatActivity() {
-
+class DealCompleteActivity : AppCompatActivity() {
     var firestore : FirebaseFirestore? = null
     var storage : FirebaseStorage? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_deal_situ)
-        supportActionBar?.title = "등록 목록"
+        setContentView(R.layout.activity_deal_complete)
+        supportActionBar?.title = "거래 완료 물품"
         storage = FirebaseStorage.getInstance() //스토리지 초기화
         firestore = FirebaseFirestore.getInstance()
         var data:MutableList<PostDTO> = mutableListOf()
@@ -40,39 +33,40 @@ class DealSituActivity : AppCompatActivity() {
         firestore
             ?.collection("post")!!
             .whereEqualTo("uid", Authentication.auth.currentUser!!.uid)
-            .whereEqualTo("dealsituation", "doingDeal")
+            .whereEqualTo("dealsituation", "dealComplete")
             .get()
             .addOnSuccessListener { documents->
-            for(document in documents){
-                data.add(PostDTO(document.get("documentId").toString(), document.get("imageUrl").toString(),
-                    document.get("uid").toString(), document.get("title").toString(), document.get("content").toString(), document.get("category").toString()))
+                for(document in documents){
+                    data.add(
+                        PostDTO(document.get("documentId").toString(), document.get("imageUrl").toString(),
+                        document.get("uid").toString(), document.get("title").toString(), document.get("content").toString(), document.get("category").toString())
+                    )
+                }
+                var adapter = RecyclerViewAdapt(this)
+                adapter.Postdata = data
+
+
+                my_goods_Recyclerview.adapter = adapter
+                my_goods_Recyclerview.layoutManager = LinearLayoutManager(this)
             }
-            var adapter = RecyclerViewAdapter(this)
-            adapter.Postdata = data
-
-
-            my_goods_Recyclerview.adapter = adapter
-            my_goods_Recyclerview.layoutManager = LinearLayoutManager(this)
-        }
     }
 }
-
-class RecyclerViewAdapter(val c:Context): RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>(){
+class RecyclerViewAdapt(val c: Context): RecyclerView.Adapter<RecyclerViewAdapt.ViewHolder>(){
     var Postdata = mutableListOf<PostDTO>()
 
-    inner class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
+    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         var mMenus: ImageView
         var firestore = FirebaseFirestore.getInstance()
         init{
             mMenus = itemView.findViewById(R.id.mMenus)
             mMenus.setOnClickListener { popupMenus(it) }
         }
-        private fun popupMenus(v:View){  //팝업 메뉴
+        private fun popupMenus(v: View){  //팝업 메뉴
             val popupMenus = PopupMenu(c,v)
-            popupMenus.inflate(R.menu.deal_situ_menu)
+            popupMenus.inflate(R.menu.deal_complete_menu)
             popupMenus.setOnMenuItemClickListener {
                 when(it.itemId){
-                    R.id.deal_complete->{  //거래 완료를 누르면 해당 물품의 디비의 dealsituation의 doingDeal ->dealComplete로 변경,
+                    R.id.return_doing_deal->{  //거래 중으로 변경을 누르면 해당 물품의 디비의 dealsituation의 dealComplete로 ->doingDeal로 변경,
                         firestore
                             ?.collection("post")!!
                             .whereEqualTo("documentId", itemView.documentID.text.toString())
@@ -80,7 +74,7 @@ class RecyclerViewAdapter(val c:Context): RecyclerView.Adapter<RecyclerViewAdapt
                             .addOnSuccessListener { documents->
                                 for (document in documents){
                                     firestore!!.collection("post").document(document.id).update(mapOf(
-                                        "dealsituation" to "dealComplete"
+                                        "dealsituation" to "doingDeal"
                                     ))
                                 }
                             }

@@ -20,6 +20,9 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
+    viewBinding{
+        enabled = true
+    }
 
     buildTypes {
         release {
