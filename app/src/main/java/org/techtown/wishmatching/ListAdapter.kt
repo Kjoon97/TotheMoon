@@ -1,11 +1,17 @@
 package org.techtown.wishmatching
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
@@ -62,7 +68,7 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
         var post_uid : String = list.get(position).uid.toString() // 게시글 올린 사람
         var category : String = list.get(position).category.toString()
         val fromId = FirebaseAuth.getInstance().uid // 현재 사용자
-
+        var context : Context = holder.itemView.context
         var match_count = 0
 
         val reference = FirebaseDatabase.getInstance().getReference("/matching-users/$fromId/$post_uid").push()
@@ -74,9 +80,12 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
 
         val reference2 = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId/$post_uid").push()
 
+        val usersDb = FirebaseDatabase.getInstance().getReference().child("matching-users")
+        val currentUserConnectionDb = usersDb.child(fromId!!).child("connections").child("match").child(post_uid)
 
         var database: DatabaseReference
         database = Firebase.database.reference
+
 
 
         holder.btn_like.setOnClickListener {
@@ -86,8 +95,6 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
                 holder.state_like=1
                 var firestore = FirebaseFirestore.getInstance()  //초기화
 
-                val usersDb = FirebaseDatabase.getInstance().getReference().child("matching-users")
-                val currentUserConnectionDb = usersDb.child(fromId!!).child("connections").child("match").child(post_uid)
 
                 if (fromId != null) {
                     usersDb.child(post_uid).child("connections").child("match").child(fromId).setValue(true)
@@ -118,6 +125,35 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
                                 val latestMessageToRef = FirebaseDatabase.getInstance()
                                     .getReference("/latest-messages/$post_uid/$fromId")
                                 latestMessageToRef.setValue(chatMessage)
+
+                            val channel_name = "match_channel"
+                            val channelId = "MATCH_ID"
+                            val channel_description = "test"
+                            val notificationBuilder = NotificationCompat.Builder(context, channelId)
+                                .setSmallIcon(R.mipmap.ic_launcher) // 아이콘 설정
+                                .setContentTitle("매칭이 성사되었습니다.") // 제목
+                                .setContentText("채팅방이 생성되었습니다.") // 메시지 내용
+                                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                                .setAutoCancel(true)
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+                                val importance = NotificationManager.IMPORTANCE_DEFAULT
+                                val channel = NotificationChannel(channelId, channel_name, importance).apply {
+                                    description = channel_description
+                                }
+                                // Register the channel with the system
+                                val notificationManager: NotificationManager =
+                                    context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                                notificationManager.createNotificationChannel(channel)
+                            }
+
+                            with(NotificationManagerCompat.from(context)) {
+                                // notificationId is a unique int for each notification that you must define
+                                notify(8154, notificationBuilder.build())
+                            }
+
+
 
                         }
                     }
@@ -211,6 +247,7 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
         constructor(): this("","",1)
 
     }
+
 
 
 }
