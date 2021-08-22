@@ -30,7 +30,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         Log.i("로그: ", "성공적으로 토큰을 저장함")
     }
 
-    override fun onMessageReceived(remoteMessage: RemoteMessage) {
+    public override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived (remoteMessage)
         Log.d(TAG, "From: " + remoteMessage!!.from)
 

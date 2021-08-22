@@ -192,7 +192,7 @@ class LoginActivity : AppCompatActivity() {
                 Log.d(TAG, "facebook:onSuccess:$loginResult")
                 if (loginResult != null) {
                     handleFacebookAccessToken(loginResult.accessToken)
-                    startActivity(Intent(applicationContext, MainActivity::class.java))     //이부분은 잠시 보류
+                        //이부분은 잠시 보류
                 }
             }
             override fun onCancel() {

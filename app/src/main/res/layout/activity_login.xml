@@ -114,7 +114,8 @@
             android:layout_gravity="center"
             android:layout_margin="5dp"
             android:paddingTop="11dp"
-            android:paddingBottom="11dp" />
+            android:paddingBottom="11dp"
+            />
 
         <com.twitter.sdk.android.core.identity.TwitterLoginButton
             android:id="@+id/twitterLogInButton"

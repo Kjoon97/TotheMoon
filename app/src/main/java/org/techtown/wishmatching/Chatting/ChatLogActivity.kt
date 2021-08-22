@@ -66,6 +66,33 @@ class ChatLogActivity : AppCompatActivity() {
                         toUser?.let { ChatToItem(chatMessage.text, it) }?.let { adapter.add(it) }
                         Log.d("ChatMessage", "받는 사람:${toId}")
 
+//                        val channel_name = "match_channel"
+//                        val channelId = "MATCH_ID"
+//                        val channel_description = "test"
+//                        val notificationBuilder = NotificationCompat.Builder(this@ChatLogActivity, channelId)
+//                            .setSmallIcon(R.mipmap.ic_launcher) // 아이콘 설정
+//                            .setContentTitle("매칭이 성사되었습니다.") // 제목
+//                            .setContentText("채팅방이 생성되었습니다.") // 메시지 내용
+//                            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+//                            .setAutoCancel(true)
+//
+//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//
+//                            val importance = NotificationManager.IMPORTANCE_DEFAULT
+//                            val channel = NotificationChannel(channelId, channel_name, importance).apply {
+//                                description = channel_description
+//                            }
+//                            // Register the channel with the system
+//                            val notificationManager: NotificationManager =
+//                                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+//                            notificationManager.createNotificationChannel(channel)
+//                        }
+//
+//                        with(NotificationManagerCompat.from(this@ChatLogActivity)) {
+//                            // notificationId is a unique int for each notification that you must define
+//                            notify(8154, notificationBuilder.build())
+//                        }
+
 
 //                        adapter.add(ChatToItem(chatMessage.text,toUser!!)) // 본문 강의 코드
                     }

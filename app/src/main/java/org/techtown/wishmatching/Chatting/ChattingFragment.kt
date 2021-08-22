@@ -32,7 +32,11 @@ class ChattingFragment : Fragment() {
         var currentUser : User? = null
         var partner_key : String? = null
     }
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         var context = container?.context
         setHasOptionsMenu(true)
 //        recyclerview_latest_message.adapter = adapter
@@ -94,7 +98,7 @@ class ChattingFragment : Fragment() {
 
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) { // 채팅 방 생성
                 var partner_id = snapshot.getValue<ListAdapter.MatchInfo>()?.toId
-
+                
                 Log.d("tttt","${snapshot.childrenCount}")
 
                 val chatMessage = snapshot.getValue(ChatMessage::class.java) ?: return
