@@ -78,6 +78,7 @@ class RecyclerViewAdapt(val c: Context): RecyclerView.Adapter<RecyclerViewAdapt.
                                     ))
                                 }
                             }
+                        itemView.card.visibility = View.GONE
                         true
                     }
                     else->true

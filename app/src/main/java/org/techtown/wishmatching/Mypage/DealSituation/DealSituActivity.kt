@@ -1,6 +1,7 @@
 package org.techtown.wishmatching.Mypage.DealSituation
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide.init
@@ -24,6 +26,7 @@ import org.techtown.wishmatching.Database.PostDTO
 import org.techtown.wishmatching.R
 import java.util.Calendar.getInstance
 import java.util.Currency.getInstance
+import kotlin.coroutines.coroutineContext
 
 class DealSituActivity : AppCompatActivity() {
 
@@ -67,6 +70,8 @@ class RecyclerViewAdapter(val c:Context): RecyclerView.Adapter<RecyclerViewAdapt
             mMenus = itemView.findViewById(R.id.mMenus)
             mMenus.setOnClickListener { popupMenus(it) }
         }
+
+
         private fun popupMenus(v:View){  //팝업 메뉴
             val popupMenus = PopupMenu(c,v)
             popupMenus.inflate(R.menu.deal_situ_menu)
@@ -84,6 +89,7 @@ class RecyclerViewAdapter(val c:Context): RecyclerView.Adapter<RecyclerViewAdapt
                                     ))
                                 }
                             }
+                        itemView.card.visibility = View.GONE
                         true
                     }
                     else->true

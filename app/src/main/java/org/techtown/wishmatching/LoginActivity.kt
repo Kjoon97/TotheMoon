@@ -238,7 +238,7 @@ class LoginActivity : AppCompatActivity() {
 
     fun initGoogle(){
         var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)  //구글로그인 관련(옵션 설정)
-            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestIdToken("122414114381-r55omesp4e0ccedutpibirmr0h81m54s.apps.googleusercontent.com")
             .requestEmail() //이메일 아이디 받아옴
             .build()
         googleSignInClient = GoogleSignIn.getClient(this,gso)
