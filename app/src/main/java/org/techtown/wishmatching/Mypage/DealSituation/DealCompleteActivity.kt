@@ -78,7 +78,7 @@ class RecyclerViewAdapt(val c: Context): RecyclerView.Adapter<RecyclerViewAdapt.
                                     ))
                                 }
                             }
-                        itemView.card.visibility = View.GONE
+                        itemView.card.visibility = View.GONE  //카드 사라지기.
                         true
                     }
                     else->true
