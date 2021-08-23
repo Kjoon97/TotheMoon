@@ -8,6 +8,7 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.provider.PicassoProvider
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
@@ -15,6 +16,7 @@ import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_chat_log.*
 import kotlinx.android.synthetic.main.chat_from_row.view.*
 import kotlinx.android.synthetic.main.chat_to_row.view.*
+import org.techtown.wishmatching.Authentication
 import org.techtown.wishmatching.R
 import org.techtown.wishmatching.RealtimeDB.ChatMessage
 import org.techtown.wishmatching.RealtimeDB.User
@@ -23,8 +25,11 @@ import java.text.SimpleDateFormat
 //ㅇㅇㅇ
 class ChatLogActivity : AppCompatActivity() {
 
+
     var adapter = GroupAdapter<ViewHolder>()
-    var toUser : User? = null
+    companion object {
+        var toUser: User? = null
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_log)
@@ -60,12 +65,12 @@ class ChatLogActivity : AppCompatActivity() {
 
                     if (chatMessage.fromId == FirebaseAuth.getInstance().uid) {
                         val currentUser = ChattingFragment.currentUser ?: return
-                        adapter.add(ChatFromItem(chatMessage.text,currentUser,chatMessage.timestamp)) // 채팅 내용 리사이클 뷰에 띄우기
+                        adapter.add(ChatFromItem(chatMessage.text,currentUser,chatMessage.timestamp,chatMessage.nickname)) // 채팅 내용 리사이클 뷰에 띄우기
                         Log.d("ChatMessage", "보내는사람:${fromId}")
 
                     } else {
 
-                        toUser?.let { ChatToItem(chatMessage.text, it,chatMessage.timestamp) }?.let { adapter.add(it) }
+                        toUser?.let { ChatToItem(chatMessage.text, it,chatMessage.timestamp,chatMessage.nickname) }?.let { adapter.add(it) }
                         Log.d("ChatMessage", "받는 사람:${toId}")
 
 //                        val channel_name = "match_channel"
@@ -128,12 +133,26 @@ class ChatLogActivity : AppCompatActivity() {
         if (fromId == null) return
 //        val reference = FirebaseDatabase.getInstance().getReference("/messages").push()
         val reference = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId").push()
+        var user_nickname :String = ""
 
         val toReference = FirebaseDatabase.getInstance().getReference("/user-messages/$toId/$fromId").push()
+        var firestore : FirebaseFirestore? = null   // 데이터베이스를 사용할 수 있도록
+        firestore = FirebaseFirestore.getInstance()  //초기화
+        firestore!!.collection("user")
+            .whereEqualTo("uid", Authentication.auth.currentUser!!.uid).limit(1)
+            .get()
+            .addOnSuccessListener { documents->
+                for(document in documents){
+                    user_nickname = document.data["nickname"].toString()
+                }
+            }
 
 
         val chatMessage =
-            ChatMessage(reference.key!!, text, fromId, toId!!, System.currentTimeMillis())
+            toUser?.let {
+                ChatMessage(reference.key!!, text, fromId, toId!!, System.currentTimeMillis(),
+                    it.username)
+            }
         reference.setValue(chatMessage)
             .addOnSuccessListener {
                 Log.d("ChatMessage", "채팅 메세지 저장:${reference.key}")
@@ -151,7 +170,7 @@ class ChatLogActivity : AppCompatActivity() {
 }
 
 
-class ChatFromItem(val text:String,val user: User,val time: Long ): Item<ViewHolder>(){
+class ChatFromItem(val text:String,val user: User,val time: Long,val nickname: String): Item<ViewHolder>(){
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemView.textview_from_row.text =text  //채팅 입력->말풍선에 반영
 
@@ -171,7 +190,7 @@ class ChatFromItem(val text:String,val user: User,val time: Long ): Item<ViewHol
     }
 }
 
-class ChatToItem(val text:String, val user:User,val time: Long): Item<ViewHolder>() {
+class ChatToItem(val text:String, val user:User,val time: Long,val nickname:String): Item<ViewHolder>() {
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemView.textview_to_row.text = text   // 채팅 입력->말풍선에 반영
 
@@ -184,6 +203,7 @@ class ChatToItem(val text:String, val user:User,val time: Long): Item<ViewHolder
         PicassoProvider.get().load(uri).into(targetImageView)
 
         viewHolder.itemView.textview_to_chat_time.text = time_string.toString()
+        viewHolder.itemView.textview_to_chat_nickname.text = nickname.toString()
 //            SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(time).toString()
     }
 

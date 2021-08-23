@@ -24,6 +24,7 @@ import org.techtown.wishmatching.RealtimeDB.ChatMessage
 
 
 class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<ListAdapter.ListItemViewHolder>() {
+    var firestore : FirebaseFirestore? = null   // 데이터베이스를 사용할 수 있도록
 
     // inner class로 ViewHolder 정의
     inner class ListItemViewHolder(itemView: View?): RecyclerView.ViewHolder(itemView!!) {
@@ -69,7 +70,18 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
         var category : String = list.get(position).category.toString()
         val fromId = FirebaseAuth.getInstance().uid // 현재 사용자
         var context : Context = holder.itemView.context
-        var match_count = 0
+        var user_nickname = ""
+        firestore = FirebaseFirestore.getInstance()  //초기화
+        firestore!!.collection("user")
+            .whereEqualTo("uid", Authentication.auth.currentUser!!.uid).limit(1)
+            .get()
+            .addOnSuccessListener { documents->
+                for(document in documents){
+                    user_nickname = document.data["nickname"].toString()
+
+
+                }
+            }
 
         val reference = FirebaseDatabase.getInstance().getReference("/matching-users/$fromId/$post_uid").push()
         val toReference = FirebaseDatabase.getInstance().getReference("/matching-users/$post_uid/$fromId").push()
@@ -113,7 +125,9 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
                                         "채팅방이 생성 되었습니다.",
                                         fromId.toString(),
                                         post_uid,
-                                        System.currentTimeMillis() / 1000
+                                        System.currentTimeMillis(),
+                                        user_nickname
+
                                     )
                                 reference.setValue(chatMessage)
                                 toReference.setValue(chatMessage)
