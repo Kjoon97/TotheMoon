@@ -18,6 +18,8 @@ import kotlinx.android.synthetic.main.chat_to_row.view.*
 import org.techtown.wishmatching.R
 import org.techtown.wishmatching.RealtimeDB.ChatMessage
 import org.techtown.wishmatching.RealtimeDB.User
+import java.text.SimpleDateFormat
+
 //ㅇㅇㅇ
 class ChatLogActivity : AppCompatActivity() {
 
@@ -58,12 +60,12 @@ class ChatLogActivity : AppCompatActivity() {
 
                     if (chatMessage.fromId == FirebaseAuth.getInstance().uid) {
                         val currentUser = ChattingFragment.currentUser ?: return
-                        adapter.add(ChatFromItem(chatMessage.text,currentUser)) // 채팅 내용 리사이클 뷰에 띄우기
+                        adapter.add(ChatFromItem(chatMessage.text,currentUser,chatMessage.timestamp)) // 채팅 내용 리사이클 뷰에 띄우기
                         Log.d("ChatMessage", "보내는사람:${fromId}")
 
                     } else {
 
-                        toUser?.let { ChatToItem(chatMessage.text, it) }?.let { adapter.add(it) }
+                        toUser?.let { ChatToItem(chatMessage.text, it,chatMessage.timestamp) }?.let { adapter.add(it) }
                         Log.d("ChatMessage", "받는 사람:${toId}")
 
 //                        val channel_name = "match_channel"
@@ -131,7 +133,7 @@ class ChatLogActivity : AppCompatActivity() {
 
 
         val chatMessage =
-            ChatMessage(reference.key!!, text, fromId, toId!!, System.currentTimeMillis() / 1000)
+            ChatMessage(reference.key!!, text, fromId, toId!!, System.currentTimeMillis())
         reference.setValue(chatMessage)
             .addOnSuccessListener {
                 Log.d("ChatMessage", "채팅 메세지 저장:${reference.key}")
@@ -149,13 +151,19 @@ class ChatLogActivity : AppCompatActivity() {
 }
 
 
-class ChatFromItem(val text:String,val user: User): Item<ViewHolder>(){
+class ChatFromItem(val text:String,val user: User,val time: Long ): Item<ViewHolder>(){
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemView.textview_from_row.text =text  //채팅 입력->말풍선에 반영
 
+        val time_minutes = SimpleDateFormat("mm").format(time).toString()
+        val time_hours = SimpleDateFormat("HH").format(time).toString()
+        val time_AP= SimpleDateFormat("aa").format(time).toString()
+        val time_string = time_AP+" "+time_hours+":"+time_minutes.toString()
         var uri = user.profileImageUrl
         val targetImageView = viewHolder.itemView.imageview_chat_from_row
         PicassoProvider.get().load(uri).into(targetImageView)
+
+        viewHolder.itemView.textview_from_chat_time.text = time_string.toString()
     }
 
     override fun getLayout(): Int {
@@ -163,13 +171,20 @@ class ChatFromItem(val text:String,val user: User): Item<ViewHolder>(){
     }
 }
 
-class ChatToItem(val text:String, val user:User): Item<ViewHolder>() {
+class ChatToItem(val text:String, val user:User,val time: Long): Item<ViewHolder>() {
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemView.textview_to_row.text = text   // 채팅 입력->말풍선에 반영
 
+        val time_minutes = SimpleDateFormat("mm").format(time).toString()
+        val time_hours = SimpleDateFormat("HH").format(time).toString()
+        val time_AP= SimpleDateFormat("aa").format(time).toString()
+        val time_string = time_AP+" "+time_hours+":"+time_minutes
         var uri = user.profileImageUrl
         val targetImageView = viewHolder.itemView.imageview_chat_to_row
         PicassoProvider.get().load(uri).into(targetImageView)
+
+        viewHolder.itemView.textview_to_chat_time.text = time_string.toString()
+//            SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(time).toString()
     }
 
     override fun getLayout(): Int {
