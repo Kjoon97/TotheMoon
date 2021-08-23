@@ -238,8 +238,7 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
                 holder.btn_like.setImageResource(R.drawable.btn_heart)
                 holder.state_like=0
 
-                val matchinfo = MatchInfo(fromId.toString(),post_uid.toString(),1)
-                reference.removeValue()
+                usersDb.child(post_uid).child("connections").child("match").child(fromId).removeValue()
             }
 
         }
