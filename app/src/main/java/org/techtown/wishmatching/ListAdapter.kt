@@ -20,6 +20,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import org.techtown.wishmatching.Database.PostDTO
+import org.techtown.wishmatching.LoginActivity.Companion.prefs
 import org.techtown.wishmatching.RealtimeDB.ChatMessage
 
 
@@ -98,8 +99,16 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
         var database: DatabaseReference
         database = Firebase.database.reference
 
+        if(prefs.getString("$position","0").toInt()==1) {
+            holder.btn_like.setImageResource(R.drawable.btn_clicked_heart)
+            holder.state_like=1
+        }
+        else {
+            holder.btn_like.setImageResource(R.drawable.btn_heart)
+            holder.state_like=0
+        }
 
-
+        var btn_like_state : Int
         holder.btn_like.setOnClickListener {
             if(holder.state_like==0)
             {
@@ -230,7 +239,7 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
 //                                    .getReference("/latest-messages/$post_uid/$fromId")
 //                                latestMessageToRef.setValue(chatMessage)
 
-
+                prefs.setString("$position","1")
 
             }
             else

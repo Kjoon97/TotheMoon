@@ -22,12 +22,17 @@ import com.twitter.sdk.android.core.identity.TwitterAuthClient
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
+    companion object {
+        lateinit var prefs: PreferenceUtil
+    }
+
     private lateinit var twitterAuthClient: TwitterAuthClient   //트위터 관련
     private lateinit var callbackManager: CallbackManager       //페이스북 관련
     private lateinit var googleSignInClient: GoogleSignInClient //구글 관련
     var GOOGLE_LOGIN_CODE =9001
     val db = Firebase.firestore
     override fun onCreate(savedInstanceState: Bundle?) {
+        prefs = PreferenceUtil(applicationContext)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
@@ -291,5 +296,7 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
+
+
 
 }
