@@ -174,8 +174,11 @@ class ChatFromItem(val text:String,val user: User,val time: Long,val nickname: S
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemView.textview_from_row.text =text  //채팅 입력->말풍선에 반영
 
+        var time_hours = SimpleDateFormat("HH").format(time).toString()
+        if(time_hours.toInt()>12 ){
+            time_hours = (time_hours.toInt()-12).toString()
+        }
         val time_minutes = SimpleDateFormat("mm").format(time).toString()
-        val time_hours = SimpleDateFormat("HH").format(time).toString()
         val time_AP= SimpleDateFormat("aa").format(time).toString()
         val time_string = time_AP+" "+time_hours+":"+time_minutes.toString()
         var uri = user.profileImageUrl
@@ -194,8 +197,11 @@ class ChatToItem(val text:String, val user:User,val time: Long,val nickname:Stri
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemView.textview_to_row.text = text   // 채팅 입력->말풍선에 반영
 
+        var time_hours = SimpleDateFormat("HH").format(time).toString()
+        if(time_hours.toInt()>12 ){
+            time_hours = (time_hours.toInt()-12).toString()
+        }
         val time_minutes = SimpleDateFormat("mm").format(time).toString()
-        val time_hours = SimpleDateFormat("HH").format(time).toString()
         val time_AP= SimpleDateFormat("aa").format(time).toString()
         val time_string = time_AP+" "+time_hours+":"+time_minutes
         var uri = user.profileImageUrl
