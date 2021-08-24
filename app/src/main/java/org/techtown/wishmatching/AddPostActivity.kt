@@ -9,6 +9,8 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
@@ -29,6 +31,7 @@ class AddPostActivity : AppCompatActivity() {
     var photoUri: Uri? = null // 이미지 URI 담을 수 있음
     var auth: FirebaseAuth? = null   // 유저의 정보를 가져오기 위함
     var firestore : FirebaseFirestore? = null   // 데이터베이스를 사용할 수 있도록
+    var selectedCategory : String? = ""
 
     private var context: Context? = null
     var PICK_IMAGE_MULTIPLE = 1
@@ -67,7 +70,33 @@ class AddPostActivity : AppCompatActivity() {
 
 
         }
+        val list = listOf<String>("디지털기기", "가구/인테리어", "식품", "스포츠/레저", "남성잡화",
+            "여성잡화", "게임/취미", "뷰티/미용", "반려동물용품", "도서/티켓/음반", "유아용품", "기타")
+        val adapter = ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, list)
+        spinner_category.adapter = adapter
 
+        spinner_category.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                when(p2) {
+                    0 -> selectedCategory = list[0]
+                    1 -> selectedCategory = list[1]
+                    2 -> selectedCategory = list[2]
+                    3 -> selectedCategory = list[3]
+                    4 -> selectedCategory = list[4]
+                    5 -> selectedCategory = list[5]
+                    6 -> selectedCategory = list[6]
+                    7 -> selectedCategory = list[7]
+                    8 -> selectedCategory = list[8]
+                    9 -> selectedCategory = list[9]
+                    10 -> selectedCategory = list[10]
+                    11 -> selectedCategory = list[11]
+                }
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+
+            }
+        }
 
     }
 
@@ -205,7 +234,7 @@ class AddPostActivity : AppCompatActivity() {
                         "null", "null", "null",
                         "null", "null", "${auth?.uid}",
                         editText_title.text.toString(), editText_content.text.toString(),
-                        "아직미정", "doingDeal"
+                        "${selectedCategory}", "doingDeal"
                     )
                 )
             var intent = Intent(this, MainActivity::class.java)
@@ -229,7 +258,7 @@ class AddPostActivity : AppCompatActivity() {
                                                 uri1.toString(), "null", "null",
                                                 "null", "null", "${auth?.uid}",
                                                 editText_title.text.toString(), editText_content.text.toString(),
-                                                "아직미정", "doingDeal"
+                                                "${selectedCategory}", "doingDeal"
                                             )
                                         )
                                     var intent = Intent(this, MainActivity::class.java)
@@ -260,7 +289,7 @@ class AddPostActivity : AppCompatActivity() {
                                                         uri1.toString(), uri2.toString(), "null",
                                                         "null", "null", "${auth?.uid}",
                                                         editText_title.text.toString(), editText_content.text.toString(),
-                                                        "아직미정", "doingDeal"
+                                                        "${selectedCategory}", "doingDeal"
                                                     )
                                                 )
                                             var intent = Intent(this, MainActivity::class.java)
@@ -295,7 +324,7 @@ class AddPostActivity : AppCompatActivity() {
                                                                 uri1.toString(), uri2.toString(), uri3.toString(),
                                                                 "null", "null", "${auth?.uid}",
                                                                 editText_title.text.toString(), editText_content.text.toString(),
-                                                                "아직미정", "doingDeal"
+                                                                "${selectedCategory}", "doingDeal"
                                                             )
                                                         )
                                                     var intent = Intent(this, MainActivity::class.java)
@@ -334,7 +363,7 @@ class AddPostActivity : AppCompatActivity() {
                                                                         uri1.toString(), uri2.toString(), uri3.toString(),
                                                                         uri4.toString(), "null", "${auth?.uid}",
                                                                         editText_title.text.toString(), editText_content.text.toString(),
-                                                                        "아직미정", "doingDeal"
+                                                                        "${selectedCategory}", "doingDeal"
                                                                     )
                                                                 )
                                                             var intent = Intent(this, MainActivity::class.java)
@@ -381,7 +410,7 @@ class AddPostActivity : AppCompatActivity() {
                                                                         uri1.toString(), uri2.toString(), uri3.toString(),
                                                                         uri4.toString(), uri5.toString(), "${auth?.uid}",
                                                                         editText_title.text.toString(), editText_content.text.toString(),
-                                                                        "아직미정", "doingDeal"
+                                                                        "${selectedCategory}", "doingDeal"
                                                                     )
                                                                 )
                                                             var intent = Intent(this, MainActivity::class.java)
