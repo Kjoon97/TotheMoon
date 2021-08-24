@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -25,7 +27,7 @@ class AddPostActivity : AppCompatActivity() {
     var photoUri: Uri? = null // 이미지 URI 담을 수 있음
     var auth: FirebaseAuth? = null   // 유저의 정보를 가져오기 위함
     var firestore : FirebaseFirestore? = null   // 데이터베이스를 사용할 수 있도록
-
+    var selectedCategory : String? = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_post)
@@ -38,7 +40,33 @@ class AddPostActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        val list = listOf<String>("디지털기기", "가구/인테리어", "식품", "스포츠/레저", "남성잡화",
+        "여성잡화", "게임/취미", "뷰티/미용", "반려동물용품", "도서/티켓/음반", "유아용품", "기타")
+        val adapter = ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, list)
+        spinner_category.adapter = adapter
 
+        spinner_category.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                when(p2) {
+                    0 -> selectedCategory = list[0]
+                    1 -> selectedCategory = list[1]
+                    2 -> selectedCategory = list[2]
+                    3 -> selectedCategory = list[3]
+                    4 -> selectedCategory = list[4]
+                    5 -> selectedCategory = list[5]
+                    6 -> selectedCategory = list[6]
+                    7 -> selectedCategory = list[7]
+                    8 -> selectedCategory = list[8]
+                    9 -> selectedCategory = list[9]
+                    10 -> selectedCategory = list[10]
+                    11 -> selectedCategory = list[11]
+                }
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+
+            }
+        }
         // 게시글에 올릴 사진 선택 버튼
         img_moreInfo_picture.setOnClickListener{
             var photoPickerIntent = Intent(Intent.ACTION_PICK)
@@ -114,7 +142,7 @@ class AddPostActivity : AppCompatActivity() {
                         var docReference : String = collRef.document().id
 
                         firestore?.collection("post")?.document("${docReference}")
-                            ?.set(PostDTO("${docReference}","${uri.toString()}", "${auth?.uid}", editText_title.text.toString(), editText_content.text.toString(), "아직미정","doingDeal"))
+                            ?.set(PostDTO("${docReference}","${uri.toString()}", "${auth?.uid}", editText_title.text.toString(), editText_content.text.toString(), "${selectedCategory}","doingDeal"))
                         var intent = Intent(this,MainActivity::class.java)
                         startActivity(intent)
 

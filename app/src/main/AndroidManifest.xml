@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WishMatching"
         android:usesCleartextTraffic="true">
+        <activity android:name=".CategoryActivity"></activity>
         <activity
             android:name=".Mypage.DealSituation.DealCompleteActivity"
             android:exported="true" />

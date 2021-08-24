@@ -174,6 +174,34 @@
                         android:textSize="18dp"></TextView>
                 </LinearLayout>
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/layout_myPage_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/category_icon"
+                    app:tint="@color/tw__composer_deep_gray"></ImageView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="15dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="카테고리 설정"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"></TextView>
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
