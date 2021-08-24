@@ -37,8 +37,8 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/location"
-            android:layout_width="50dp"
+            android:id="@+id/deal_location"
+            android:layout_width="wrap_content"
             android:layout_height="19dp"
             android:layout_marginStart="24dp"
             android:layout_marginBottom="48dp"

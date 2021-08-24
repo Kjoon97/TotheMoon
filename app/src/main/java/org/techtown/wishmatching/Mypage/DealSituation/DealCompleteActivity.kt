@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.PopupMenu
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
@@ -81,6 +83,34 @@ class RecyclerViewAdapt(val c: Context): RecyclerView.Adapter<RecyclerViewAdapt.
                         itemView.card.visibility = View.GONE  //카드 사라지기.
                         true
                     }
+                    R.id.deal_complete_delete->{
+                        AlertDialog.Builder(c)
+                            .setTitle("삭제하기")
+                            .setIcon(R.drawable.ic_warning)
+                            .setMessage("정말로 삭제하시겠습니까? 해당 물건이 거래 완료 목록에서 영구히 삭제됩니다.")
+                            .setPositiveButton("네"){
+                                    dialog,_->
+                                firestore
+                                    ?.collection("post")!!
+                                    .whereEqualTo("documentId", itemView.documentID.text.toString())
+                                    .get()
+                                    .addOnSuccessListener { documents->
+                                        for (document in documents){
+                                            firestore!!.collection("post").document(document.id).delete()
+                                        }
+                                    }
+                                itemView.card.visibility = View.GONE
+                                Toast.makeText(c,"삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                                dialog.dismiss()
+                            }
+                            .setNegativeButton("아니요"){
+                                    dialog,_->
+                                dialog.dismiss()
+                            }
+                            .create()
+                            .show()
+                        true
+                    }
                     else->true
                 }
             }
@@ -96,6 +126,14 @@ class RecyclerViewAdapt(val c: Context): RecyclerView.Adapter<RecyclerViewAdapt.
             itemView.stuff_name.text = post.title.toString()
             PicassoProvider.get().load(post.imageUrl).into(itemView.doingdeal_row_image)
             itemView.documentID.text =post.documentId
+            firestore!!.collection("user")
+                .whereEqualTo("uid", Authentication.auth.currentUser!!.uid).limit(1)
+                .get()
+                .addOnSuccessListener { documents->
+                    for(document in documents){
+                        itemView.deal_location.text = document.data["area"].toString()
+                    }
+                }
         }
     }
 

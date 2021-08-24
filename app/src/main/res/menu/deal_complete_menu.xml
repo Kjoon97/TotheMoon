@@ -4,4 +4,8 @@
         android:id="@+id/return_doing_deal"
         android:title="등록 물품으로 변경하기"
         />
+    <item
+        android:id="@+id/deal_complete_delete"
+        android:title="삭제하기"
+        />
 </menu>

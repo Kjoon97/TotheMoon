@@ -21,7 +21,8 @@
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/tl_ac_main_bottom_menu"></androidx.viewpager.widget.ViewPager>
+        android:layout_above="@+id/tl_ac_main_bottom_menu"
+        android:layout_marginBottom="-3dp"></androidx.viewpager.widget.ViewPager>
 
 
 </RelativeLayout>

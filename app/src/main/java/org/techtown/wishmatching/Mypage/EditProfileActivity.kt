@@ -2,22 +2,30 @@ package org.techtown.wishmatching.Mypage
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.ImageView
 import android.widget.Toast
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.google.gson.internal.bind.TypeAdapters.URI
 import kotlinx.android.synthetic.main.activity_edit_profile.*
+import kotlinx.android.synthetic.main.fragment_my_page.*
 import org.techtown.wishmatching.Authentication
 import org.techtown.wishmatching.R
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.logging.Level.parse
 
 class EditProfileActivity : AppCompatActivity() {
     var PICK_IMAGE_FROM_ALBUM=0
     var storage : FirebaseStorage? = null
     var photoUri: Uri? = null // 이미지 URI 담을 수 있음
+    var alreadyPhotouri: Uri? = null
     var firestore : FirebaseFirestore? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +33,20 @@ class EditProfileActivity : AppCompatActivity() {
         supportActionBar?.title = "프로필 변경하기"
         firestore = FirebaseFirestore.getInstance()
         storage = FirebaseStorage.getInstance()
+
+        firestore!!.collection("user")
+            .whereEqualTo("uid", Authentication.auth.currentUser!!.uid)
+            .get()
+            .addOnSuccessListener { documents->
+                for(document in documents){
+                    val image = storage!!.getReferenceFromUrl(document.data["imageUrl"].toString())
+                    displayImageRef(image, myprofile_img)
+                    image.downloadUrl.addOnSuccessListener {uri ->
+                        photoUri = uri
+                        alreadyPhotouri = uri
+                    }
+                }
+            }
 
         myprofile_imgChange.setOnClickListener{    // 이미지 등록 버튼
             var photoPickerIntent = Intent(Intent.ACTION_PICK)
@@ -69,28 +91,49 @@ class EditProfileActivity : AppCompatActivity() {
                     Toast.makeText(this, "닉네임 중복을 확인해주세요", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
             }else{
-                storageRef?.putFile(photoUri!!)?.addOnSuccessListener {
-                    storageRef.downloadUrl.addOnSuccessListener { uri ->
-                        firestore!!.collection("user")
-                            .whereEqualTo("uid", Authentication.auth.currentUser!!.uid)
-                            .get()
-                            .addOnSuccessListener { documents->
-                                for(document in documents){
-                                    firestore!!.collection("user").document(document.id).update(mapOf(
-                                        "nickname" to myprofile_nickname.text.toString(),
-                                        "imageUrl" to uri.toString()
-                                    ))
-                                }
+                if(photoUri == alreadyPhotouri){   // 프로필 사진 갱신 안하고 닉네임만 변경했을 때
+                    firestore!!.collection("user")
+                        .whereEqualTo("uid", Authentication.auth.currentUser!!.uid)
+                        .get()
+                        .addOnSuccessListener { documents->
+                            for(document in documents){
+                                firestore!!.collection("user").document(document.id).update(mapOf(
+                                    "nickname" to myprofile_nickname.text.toString(),
+                                ))
                             }
-
+                        }
+                }
+                else{   // 프로필 사진 갱신하기위해 photoUri를 새로 다운받고, 닉네임도 변경했을 때
+                    storageRef?.putFile(photoUri!!)?.addOnSuccessListener {
+                        storageRef.downloadUrl.addOnSuccessListener { uri ->
+                            firestore!!.collection("user")
+                                .whereEqualTo("uid", Authentication.auth.currentUser!!.uid)
+                                .get()
+                                .addOnSuccessListener { documents->
+                                    for(document in documents){
+                                        firestore!!.collection("user").document(document.id).update(mapOf(
+                                            "nickname" to myprofile_nickname.text.toString(),
+                                            "imageUrl" to uri.toString()
+                                        ))
+                                    }
+                                }
+                        }
                     }
-
                 }
                 Toast.makeText(this, "수정하였습니다.", Toast.LENGTH_SHORT).show()
                 finish()
                 }
             }
         }
+
+    private fun displayImageRef(imageRef: StorageReference?, view: ImageView) {
+        imageRef?.getBytes(Long.MAX_VALUE)?.addOnSuccessListener {
+            val bmp = BitmapFactory.decodeByteArray(it, 0, it.size)
+            view.setImageBitmap(bmp)
+        }?.addOnFailureListener {
+            // Failed to download the image
+        }
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
