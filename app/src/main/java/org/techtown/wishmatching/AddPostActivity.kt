@@ -274,7 +274,7 @@ class AddPostActivity : AppCompatActivity() {
             storageRef?.putFile(imagesPathList.get(0).toUri()!!)?.addOnSuccessListener {
                 storageRef?.downloadUrl?.addOnSuccessListener { uri1->
                     storageRef2?.putFile(imagesPathList.get(1).toUri()!!)?.addOnSuccessListener {
-                        storageRef?.downloadUrl?.addOnSuccessListener { uri2->
+                        storageRef2?.downloadUrl?.addOnSuccessListener { uri2->
                                     firestore!!.collection("post")
                                         .whereEqualTo("uid", auth?.uid)
                                         .get()
@@ -307,9 +307,9 @@ class AddPostActivity : AppCompatActivity() {
             storageRef?.putFile(imagesPathList.get(0).toUri()!!)?.addOnSuccessListener {
                 storageRef?.downloadUrl?.addOnSuccessListener { uri1->
                     storageRef2?.putFile(imagesPathList.get(1).toUri()!!)?.addOnSuccessListener {
-                        storageRef?.downloadUrl?.addOnSuccessListener { uri2->
+                        storageRef2?.downloadUrl?.addOnSuccessListener { uri2->
                             storageRef3?.putFile(imagesPathList.get(2).toUri()!!)?.addOnSuccessListener {
-                                storageRef?.downloadUrl?.addOnSuccessListener { uri3->
+                                storageRef3?.downloadUrl?.addOnSuccessListener { uri3->
                                             firestore!!.collection("post")
                                                 .whereEqualTo("uid", auth?.uid)
                                                 .get()
@@ -344,11 +344,11 @@ class AddPostActivity : AppCompatActivity() {
             storageRef?.putFile(imagesPathList.get(0).toUri()!!)?.addOnSuccessListener {
                 storageRef?.downloadUrl?.addOnSuccessListener { uri1->
                     storageRef2?.putFile(imagesPathList.get(1).toUri()!!)?.addOnSuccessListener {
-                        storageRef?.downloadUrl?.addOnSuccessListener { uri2->
+                        storageRef2?.downloadUrl?.addOnSuccessListener { uri2->
                             storageRef3?.putFile(imagesPathList.get(2).toUri()!!)?.addOnSuccessListener {
-                                storageRef?.downloadUrl?.addOnSuccessListener { uri3->
+                                storageRef3?.downloadUrl?.addOnSuccessListener { uri3->
                                     storageRef4?.putFile(imagesPathList.get(3).toUri()!!)?.addOnSuccessListener {
-                                        storageRef?.downloadUrl?.addOnSuccessListener { uri4->
+                                        storageRef4?.downloadUrl?.addOnSuccessListener { uri4->
                                                     firestore!!.collection("post")
                                                         .whereEqualTo("uid", auth?.uid)
                                                         .get()
