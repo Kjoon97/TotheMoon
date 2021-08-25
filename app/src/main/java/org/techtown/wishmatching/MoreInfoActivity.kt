@@ -1,6 +1,7 @@
 package org.techtown.wishmatching
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -34,17 +35,31 @@ class MoreInfoActivity : AppCompatActivity() {
                     tv_moreInfo_name.text = document.data["title"].toString()           //물품 이름
                     tv_moreInfo_description.text = document.data["content"].toString()  //물품 설명
                     if(document.data["imageUrl"].toString() == null  ){
+                        imageview1.visibility= View.INVISIBLE
+                        imageview2.visibility= View.INVISIBLE
+                        imageview3.visibility= View.INVISIBLE
+                        imageview4.visibility= View.INVISIBLE
+                        imageview5.visibility= View.INVISIBLE
+
 
                     }
                     else if(document.data["imageUrl2"].toString() == null  ){
                         PicassoProvider.get().load(document.data["imageUrl"].toString())
                             .into(imageview1)     //물품 이미지
+                        imageview2.visibility= View.INVISIBLE
+                        imageview3.visibility= View.INVISIBLE
+                        imageview4.visibility= View.INVISIBLE
+                        imageview5.visibility= View.INVISIBLE
+
                     }
                     else if(document.data["imageUrl3"].toString() == null  ){
                         PicassoProvider.get().load(document.data["imageUrl"].toString())
                             .into(imageview1)     //물품 이미지
                         PicassoProvider.get().load(document.data["imageUrl2"].toString())
                             .into(imageview2)     //물품 이미지
+                        imageview3.visibility= View.INVISIBLE
+                        imageview4.visibility= View.INVISIBLE
+                        imageview5.visibility= View.INVISIBLE
                     }
                     else if(document.data["imageUrl4"].toString() == null  ){
                         PicassoProvider.get().load(document.data["imageUrl"].toString())
@@ -53,6 +68,8 @@ class MoreInfoActivity : AppCompatActivity() {
                             .into(imageview2)     //물품 이미지
                         PicassoProvider.get().load(document.data["imageUrl3"].toString())
                             .into(imageview3)     //물품 이미지
+                        imageview4.visibility= View.INVISIBLE
+                        imageview5.visibility= View.INVISIBLE
                     }
                     else if(document.data["imageUrl5"].toString() == null  ){
                         PicassoProvider.get().load(document.data["imageUrl"].toString())
@@ -63,6 +80,7 @@ class MoreInfoActivity : AppCompatActivity() {
                             .into(imageview3)     //물품 이미지
                         PicassoProvider.get().load(document.data["imageUrl4"].toString())
                             .into(imageview4)     //물품 이미지
+                        imageview5.visibility= View.INVISIBLE
                     }
                     else {
                         PicassoProvider.get().load(document.data["imageUrl"].toString())

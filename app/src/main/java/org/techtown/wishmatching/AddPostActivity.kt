@@ -175,6 +175,9 @@ class AddPostActivity : AppCompatActivity() {
                     imagesPathList.add(data4.toString())
                     imagesPathList.add(data5.toString())
                 }
+                else if((mclipdata?.itemCount!! > 5)){
+                    Toast.makeText(this,"사진은 최대 5장 까지만 선택가능합니다.",Toast.LENGTH_LONG).show()
+                }
             }
         }
     }
