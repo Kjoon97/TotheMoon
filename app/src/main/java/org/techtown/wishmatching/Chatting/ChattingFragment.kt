@@ -82,7 +82,7 @@ class ChattingFragment : Fragment() {
     }
     val latestMessagesMap = HashMap<String, ChatMessage>()
 
-    private fun refreshRecyclerViewMessages(){
+    public fun refreshRecyclerViewMessages(){
         adapter.clear()        // 원래 뜨던 메세지 클리어
         latestMessagesMap.values.forEach {
             adapter.add(LatestMessageRow(it))
@@ -117,7 +117,7 @@ class ChattingFragment : Fragment() {
                 TODO("Not yet implemented")
             }
             override fun onChildRemoved(snapshot: DataSnapshot) {
-                TODO("Not yet implemented")
+                refreshRecyclerViewMessages()
             }
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")

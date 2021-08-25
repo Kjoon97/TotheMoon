@@ -1,7 +1,11 @@
 package org.techtown.wishmatching.Chatting
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
@@ -17,6 +21,7 @@ import kotlinx.android.synthetic.main.activity_chat_log.*
 import kotlinx.android.synthetic.main.chat_from_row.view.*
 import kotlinx.android.synthetic.main.chat_to_row.view.*
 import org.techtown.wishmatching.Authentication
+import org.techtown.wishmatching.MainActivity
 import org.techtown.wishmatching.R
 import org.techtown.wishmatching.RealtimeDB.ChatMessage
 import org.techtown.wishmatching.RealtimeDB.User
@@ -48,6 +53,44 @@ class ChatLogActivity : AppCompatActivity() {
         send_button_chat_log.setOnClickListener {   // send버튼 눌렀을 때
             performSendMessage()
         }
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.menu_chattinglog,menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        return when(item.itemId) {
+            R.id.action_exit -> {
+                var builder = AlertDialog.Builder(this)
+                    builder.setTitle("채팅방 나가기")
+                    builder.setMessage("채팅방을 나가면 대화 내역이 삭제됩니다. 나가겠습니까?")
+                    builder.setPositiveButton("예") { dialog, which ->
+
+                        val fromId= FirebaseAuth.getInstance().uid
+                        val toId = toUser?.uid
+                        val ref = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId")
+                        val latestMessageFromRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId/$toId")
+
+                        ref.removeValue()
+                        latestMessageFromRef.removeValue()
+
+                        this.finish()
+                        var intent = Intent(this,MainActivity::class.java)
+                        startActivity(intent)
+                    }
+                    .setNegativeButton("취소",null)
+                        .create()
+                builder.show()
+
+
+                true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+
     }
 
     private fun ListenForMessages() {
@@ -216,4 +259,7 @@ class ChatToItem(val text:String, val user:User,val time: Long,val nickname:Stri
     override fun getLayout(): Int {
         return R.layout.chat_to_row
     }
+
+
+
 }
