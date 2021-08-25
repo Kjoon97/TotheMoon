@@ -51,7 +51,8 @@ class DealSituActivity : AppCompatActivity() {
             .addOnSuccessListener { documents->
             for(document in documents){
                 data.add(PostDTO(document.get("documentId").toString(), document.get("imageUrl").toString(),
-                    document.get("uid").toString(), document.get("title").toString(), document.get("content").toString(), document.get("category").toString()))
+                    document.get("imageUrl2").toString(),document.get("imageUrl3").toString(),document.get("imageUrl4").toString(),
+                    document.get("imageUrl5").toString(), document.get("uid").toString(), document.get("title").toString(), document.get("content").toString(), document.get("category").toString(), document.get("dealsituation").toString()))
             }
             var adapter = RecyclerViewAdapter(this)
             adapter.Postdata = data
@@ -134,8 +135,8 @@ class RecyclerViewAdapter(val c:Context): RecyclerView.Adapter<RecyclerViewAdapt
         }
 
         fun setPost(post : PostDTO){
-            itemView.stuff_name.text = post.title.toString()
             PicassoProvider.get().load(post.imageUrl).into(itemView.doingdeal_row_image)
+            itemView.stuff_name.text = post.title.toString()
             itemView.documentID.text =post.documentId
             firestore!!.collection("user")
                 .whereEqualTo("uid", Authentication.auth.currentUser!!.uid).limit(1)

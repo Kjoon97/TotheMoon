@@ -39,10 +39,10 @@ class DealCompleteActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener { documents->
                 for(document in documents){
-                    data.add(
-                        PostDTO(document.get("documentId").toString(), document.get("imageUrl").toString(),
-                        document.get("uid").toString(), document.get("title").toString(), document.get("content").toString(), document.get("category").toString())
-                    )
+                    data.add(PostDTO(document.get("documentId").toString(), document.get("imageUrl").toString(),
+                        document.get("imageUrl2").toString(),document.get("imageUrl3").toString(),document.get("imageUrl4").toString(),
+                        document.get("imageUrl5").toString(), document.get("uid").toString(), document.get("title").toString(), document.get("content").toString(), document.get("category").toString(), document.get("dealsituation").toString()))
+
                 }
                 var adapter = RecyclerViewAdapt(this)
                 adapter.Postdata = data
