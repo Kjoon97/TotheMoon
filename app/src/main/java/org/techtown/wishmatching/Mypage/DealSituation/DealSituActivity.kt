@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ListAdapter
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -60,13 +61,31 @@ class DealSituActivity : AppCompatActivity() {
 
             my_goods_Recyclerview.adapter = adapter
             my_goods_Recyclerview.layoutManager = LinearLayoutManager(this)
+            adapter.setItemClickListener(object : RecyclerViewAdapter.onItemClickListener{
+                override fun onClick(v: View, position: Int) {
+                    Toast.makeText(v.context, "HelloWorld", Toast.LENGTH_SHORT).show()
+                }
+
+            })
         }
     }
 }
 
 class RecyclerViewAdapter(val c:Context): RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>(){
     var Postdata = mutableListOf<PostDTO>()
+
+    interface onItemClickListener {
+        fun onClick(v: View, position: Int)
+    }
+
+    private lateinit var itemClickListener: onItemClickListener
+
+    fun setItemClickListener(onItemClickListener: onItemClickListener){
+        this.itemClickListener = onItemClickListener
+    }
+
     inner class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
+
         var mMenus: ImageView
         var firestore = FirebaseFirestore.getInstance()
         init{
@@ -155,6 +174,9 @@ class RecyclerViewAdapter(val c:Context): RecyclerView.Adapter<RecyclerViewAdapt
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.itemView.setOnClickListener{
+            itemClickListener.onClick(it, position)
+        }
         val post = Postdata.get(position)
         holder.setPost(post)
     }
