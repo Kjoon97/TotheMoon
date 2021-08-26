@@ -27,6 +27,7 @@ import kotlinx.android.synthetic.main.fragment_my_page.*
 import org.techtown.wishmatching.Authentication
 import org.techtown.wishmatching.Database.ContentDTO
 import org.techtown.wishmatching.Database.PostDTO
+import org.techtown.wishmatching.MyItemMoreInfoActivity
 import org.techtown.wishmatching.R
 import java.util.Calendar.getInstance
 import java.util.Currency.getInstance
@@ -61,9 +62,12 @@ class DealSituActivity : AppCompatActivity() {
 
             my_goods_Recyclerview.adapter = adapter
             my_goods_Recyclerview.layoutManager = LinearLayoutManager(this)
-            adapter.setItemClickListener(object : RecyclerViewAdapter.onItemClickListener{
+            adapter.setItemClickListener(object : RecyclerViewAdapter.onItemClickListener{      //리사이클러 뷰를 눌렀을 때 발생한는 클릭 이벤트
                 override fun onClick(v: View, position: Int) {
-                    Toast.makeText(v.context, "HelloWorld", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this@DealSituActivity, MyItemMoreInfoActivity::class.java)
+                    intent.putExtra("doc_id", v.documentID.text.toString())
+                    startActivity(intent)
+
                 }
 
             })

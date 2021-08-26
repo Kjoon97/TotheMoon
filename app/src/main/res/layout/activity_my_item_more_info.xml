@@ -4,15 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MoreInfoActivity">
+    tools:context=".MyItemMoreInfoActivity">
 
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="16dp"
         android:fillViewport="true"
-        app:layout_constraintBottom_toTopOf="@+id/btn_moreInfo_like"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +24,7 @@
             android:layout_height="match_parent">
 
             <ViewFlipper
-                android:id="@+id/vlf_moreInfo_imglist"
+                android:id="@+id/vlf_itemMoreInfo_imglist"
                 android:layout_width="228dp"
                 android:layout_height="207dp"
                 android:layout_marginStart="10dp"
@@ -33,42 +32,42 @@
                 android:layout_marginEnd="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_moreInfo_name">
+                app:layout_constraintTop_toBottomOf="@+id/tv_itemMoreInfo_name">
 
 
                 <ImageView
-                    android:id="@+id/img_moreInfo_img1"
+                    android:id="@+id/img_itemMoreInfo_img1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     tools:srcCompat="@tools:sample/avatars" />
 
                 <ImageView
-                    android:id="@+id/img_moreInfo_img2"
+                    android:id="@+id/img_itemMoreInfo_img2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     tools:srcCompat="@tools:sample/avatars" />
 
                 <ImageView
-                    android:id="@+id/img_moreInfo_img3"
+                    android:id="@+id/img_itemMoreInfo_img3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     tools:srcCompat="@tools:sample/avatars" />
 
                 <ImageView
-                    android:id="@+id/img_moreInfo_img4"
+                    android:id="@+id/img_itemMoreInfo_img4"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     tools:srcCompat="@tools:sample/avatars" />
 
                 <ImageView
-                    android:id="@+id/img_moreInfo_img5"
+                    android:id="@+id/img_itemMoreInfo_img5"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     tools:srcCompat="@tools:sample/avatars" />
             </ViewFlipper>
 
             <TextView
-                android:id="@+id/tv_moreInfo_category"
+                android:id="@+id/tv_itemMoreInfo_category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="27dp"
@@ -81,19 +80,19 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tv_moreInfo_name"
+                android:id="@+id/tv_itemMoreInfo_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:text="물품 이름"
                 android:textSize="27dp"
                 android:textStyle="normal"
-                app:layout_constraintEnd_toEndOf="@+id/tv_moreInfo_category"
-                app:layout_constraintStart_toStartOf="@+id/tv_moreInfo_category"
-                app:layout_constraintTop_toBottomOf="@+id/tv_moreInfo_category" />
+                app:layout_constraintEnd_toEndOf="@+id/tv_itemMoreInfo_category"
+                app:layout_constraintStart_toStartOf="@+id/tv_itemMoreInfo_category"
+                app:layout_constraintTop_toBottomOf="@+id/tv_itemMoreInfo_category" />
 
             <TextView
-                android:id="@+id/tv_moreInfo_description"
+                android:id="@+id/tv_itemMoreInfo_description"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -105,21 +104,21 @@
                 android:textStyle="normal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/vlf_moreInfo_imglist" />
+                app:layout_constraintTop_toBottomOf="@+id/vlf_itemMoreInfo_imglist" />
 
             <TextView
-                android:id="@+id/tv_moreInfo_areaIndex"
+                android:id="@+id/tv_itemMoreInfo_areaIndex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="동네"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/tv_moreInfo_description"
-                app:layout_constraintTop_toBottomOf="@+id/tv_moreInfo_description" />
+                app:layout_constraintStart_toStartOf="@+id/tv_itemMoreInfo_description"
+                app:layout_constraintTop_toBottomOf="@+id/tv_itemMoreInfo_description" />
 
             <TextView
-                android:id="@+id/tv_moreInfo_areaValue"
+                android:id="@+id/tv_itemMoreInfo_areaValue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
@@ -128,33 +127,33 @@
                 android:textSize="16dp"
                 android:textStyle="normal"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/tv_moreInfo_areaIndex"
-                app:layout_constraintTop_toBottomOf="@+id/tv_moreInfo_areaIndex" />
+                app:layout_constraintStart_toStartOf="@+id/tv_itemMoreInfo_areaIndex"
+                app:layout_constraintTop_toBottomOf="@+id/tv_itemMoreInfo_areaIndex" />
 
             <TextView
-                android:id="@+id/tv_moreInfo_dateIndex"
+                android:id="@+id/tv_itemMoreInfo_dateIndex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:text="등록일자"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/tv_moreInfo_areaValue"
-                app:layout_constraintTop_toBottomOf="@+id/tv_moreInfo_areaValue" />
+                app:layout_constraintStart_toStartOf="@+id/tv_itemMoreInfo_areaValue"
+                app:layout_constraintTop_toBottomOf="@+id/tv_itemMoreInfo_areaValue" />
 
             <TextView
-                android:id="@+id/tv_moreInfo_dateValue"
+                android:id="@+id/tv_itemMoreInfo_dateValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:text="등록일자 db에 등록되지 않아서 아직 구현 x"
                 android:textColor="#6a6a6a"
                 android:textSize="16dp"
-                app:layout_constraintStart_toStartOf="@+id/tv_moreInfo_dateIndex"
-                app:layout_constraintTop_toBottomOf="@+id/tv_moreInfo_dateIndex" />
+                app:layout_constraintStart_toStartOf="@+id/tv_itemMoreInfo_dateIndex"
+                app:layout_constraintTop_toBottomOf="@+id/tv_itemMoreInfo_dateIndex" />
 
             <ImageButton
-                android:id="@+id/btn_moreInfo_right"
+                android:id="@+id/btn_itemMoreInfo_right"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginTop="180dp"
@@ -163,19 +162,19 @@
                 android:scaleType="fitCenter"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/vlf_moreInfo_imglist"
+                app:layout_constraintStart_toEndOf="@+id/vlf_itemMoreInfo_imglist"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/right_icon" />
 
             <ImageButton
-                android:id="@+id/btn_moreInfo_left"
+                android:id="@+id/btn_itemMoreInfo_left"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="180dp"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
-                app:layout_constraintEnd_toStartOf="@+id/vlf_moreInfo_imglist"
+                app:layout_constraintEnd_toStartOf="@+id/vlf_itemMoreInfo_imglist"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -184,21 +183,5 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-
-    <ImageButton
-        android:id="@+id/btn_moreInfo_like"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/like_btn"
-        android:scaleType="fitCenter"
-        android:text="좋아요"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/btn_heart" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
