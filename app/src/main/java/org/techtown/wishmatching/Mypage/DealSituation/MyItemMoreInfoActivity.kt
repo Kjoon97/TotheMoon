@@ -46,8 +46,6 @@ class MyItemMoreInfoActivity : AppCompatActivity() {
                         img_itemMoreInfo_img3.visibility= View.INVISIBLE
                         img_itemMoreInfo_img4.visibility= View.INVISIBLE
                         img_itemMoreInfo_img5.visibility= View.INVISIBLE
-
-
                     }
                     else if(document.data["imageUrl2"].toString() == null  ){
                         PicassoProvider.get().load(document.data["imageUrl"].toString())
@@ -134,6 +132,7 @@ class MyItemMoreInfoActivity : AppCompatActivity() {
                 val intent = Intent(this, EditItemInfoActivity::class.java)
                 intent.putExtra("doc_id", goodsId)
                 startActivity(intent)
+                finish()
             }
         }
 
