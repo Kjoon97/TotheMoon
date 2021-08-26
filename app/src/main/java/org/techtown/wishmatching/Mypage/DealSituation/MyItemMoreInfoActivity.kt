@@ -1,16 +1,24 @@
-package org.techtown.wishmatching
+package org.techtown.wishmatching.Mypage.DealSituation
 
+import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.provider.PicassoProvider
 import kotlinx.android.synthetic.main.activity_my_item_more_info.*
+import org.techtown.wishmatching.MyUndoListener
+import org.techtown.wishmatching.R
 
 class MyItemMoreInfoActivity : AppCompatActivity() {
     var firestore : FirebaseFirestore? = null
     var storage : FirebaseStorage? = null
+    var goodsId : String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_item_more_info)
@@ -20,7 +28,7 @@ class MyItemMoreInfoActivity : AppCompatActivity() {
         storage = FirebaseStorage.getInstance()
 
         val intent = intent
-        val goodsId = intent.getStringExtra("doc_id")      //물품 아이디를 인텐트를 통해 받아옴
+        goodsId = intent.getStringExtra("doc_id")      //물품 아이디를 인텐트를 통해 받아옴
 
 
         firestore!!.collection("post")  //물품 아이디를 바탕으로 post쿼리 조회
@@ -110,5 +118,27 @@ class MyItemMoreInfoActivity : AppCompatActivity() {
             vlf_itemMoreInfo_imglist.showNext()
         }
 
+
+
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        var mInflater = menuInflater
+        mInflater.inflate(R.menu.edit_item_menu,menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.action_edit -> {
+                val intent = Intent(this, EditItemInfoActivity::class.java)
+                intent.putExtra("doc_id", goodsId)
+                startActivity(intent)
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+
 }

@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WishMatching"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MyItemMoreInfoActivity"></activity>
+        <activity android:name=".Mypage.DealSituation.EditItemInfoActivity"></activity>
+        <activity android:name=".Mypage.DealSituation.MyItemMoreInfoActivity" />
         <activity android:name=".CategoryActivity" />
         <activity
             android:name=".Mypage.DealSituation.DealCompleteActivity"

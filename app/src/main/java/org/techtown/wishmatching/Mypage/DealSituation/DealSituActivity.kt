@@ -4,19 +4,15 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.ListAdapter
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide.init
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.provider.PicassoProvider
@@ -25,13 +21,8 @@ import kotlinx.android.synthetic.main.doingdeal_row.*
 import kotlinx.android.synthetic.main.doingdeal_row.view.*
 import kotlinx.android.synthetic.main.fragment_my_page.*
 import org.techtown.wishmatching.Authentication
-import org.techtown.wishmatching.Database.ContentDTO
 import org.techtown.wishmatching.Database.PostDTO
-import org.techtown.wishmatching.MyItemMoreInfoActivity
 import org.techtown.wishmatching.R
-import java.util.Calendar.getInstance
-import java.util.Currency.getInstance
-import kotlin.coroutines.coroutineContext
 
 class DealSituActivity : AppCompatActivity() {
 

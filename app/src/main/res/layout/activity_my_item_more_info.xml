@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MyItemMoreInfoActivity">
+    tools:context=".Mypage.DealSituation.MyItemMoreInfoActivity">
 
 
     <ScrollView
@@ -83,7 +83,7 @@
                 android:id="@+id/tv_itemMoreInfo_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:text="물품 이름"
                 android:textSize="27dp"
                 android:textStyle="normal"
