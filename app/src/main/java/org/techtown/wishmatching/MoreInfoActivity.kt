@@ -34,6 +34,7 @@ class MoreInfoActivity : AppCompatActivity() {
                     tv_moreInfo_category.text = document.data["category"].toString()    //카테고리
                     tv_moreInfo_name.text = document.data["title"].toString()           //물품 이름
                     tv_moreInfo_description.text = document.data["content"].toString()  //물품 설명
+                    tv_moreInfo_dateValue.text = document.data["date"].toString()
                     if(document.data["imageUrl"].toString() == null  ){
                         imageview1.visibility= View.INVISIBLE
                         imageview2.visibility= View.INVISIBLE

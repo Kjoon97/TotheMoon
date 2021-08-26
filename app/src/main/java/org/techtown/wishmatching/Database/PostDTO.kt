@@ -11,4 +11,5 @@ data class PostDTO(
     var title: String?=null,
     var content : String? = null,
     var category : String? = null,
-    var dealsituation : String? = null)
+    var dealsituation : String? = null,
+    var date : String? = null)
