@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/jh833/.gradle/caches/transforms-3/c8b5c5196cd7b661cbb8f957bedd4193/transformed/appcompat-1.3.1/res/layout/support_simple_spinner_dropdown_item.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/drawable/bg_label.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/drawable/ic_baseline_face_24.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/drawable/ic_more.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/drawable/ic_warning.xml" value="0.26979166666666665" />
@@ -42,14 +44,16 @@
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/menu/button_navigation_main.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/menu/deal_complete_menu.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/menu/deal_situ_menu.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/menu/edit_item_menu.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/menu/menu_addpostactivity.xml" value="0.2203125" />
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/menu/menu_chattingfragment.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/menu/menu_chattinglog.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/menu/menu_homefragment.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/menu/testmenu.xml" value="0.2203125" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

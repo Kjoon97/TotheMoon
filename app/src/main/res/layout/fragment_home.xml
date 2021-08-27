@@ -23,28 +23,41 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"></androidx.recyclerview.widget.RecyclerView>
 
+        <com.getbase.floatingactionbutton.FloatingActionsMenu
+            android:id="@+id/floatingmenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="28dp"
+            app:fab_addButtonColorNormal="#FFC107"
+            app:fab_addButtonColorPressed="#ffff"
+            app:fab_labelStyle="@style/custom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
-<!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--            android:id="@+id/fab_capture"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_margin="24dp"-->
-<!--            android:layout_marginEnd="24dp"-->
-<!--            android:src="@drawable/iconfloatingnew"-->
-<!--            app:layout_constraintBottom_toBottomOf="@+id/fab_main"-->
-<!--            app:layout_constraintEnd_toEndOf="@+id/fab_main"-->
-<!--            app:layout_constraintStart_toStartOf="@+id/fab_main"-->
-<!--            app:layout_constraintTop_toTopOf="@+id/fab_main" />-->
+                <com.getbase.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/float_category_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:fab_colorNormal="#FFEB3B"
+                    app:fab_colorPressed="#ffff"
+                    app:fab_icon="@drawable/category_icon"
+                    app:fab_size="mini"
+                    app:fab_title="카테고리"
+                    tools:layout_editor_absoluteX="85dp"
+                    tools:layout_editor_absoluteY="163dp"></com.getbase.floatingactionbutton.FloatingActionButton>
 
-<!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--            android:id="@+id/fab_main"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_margin="24dp"-->
-<!--            android:layout_marginEnd="24dp"-->
-<!--            android:layout_marginBottom="24dp"-->
-<!--            android:src="@drawable/iconfloatingplus"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent" />-->
+                <com.getbase.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/float_addpost_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:fab_colorNormal="#FFEB3B"
+                    app:fab_colorPressed="#ffff"
+                    app:fab_icon="@drawable/box_4241"
+                    app:fab_size="mini"
+                    app:fab_title="물건 등록"
+                    tools:layout_editor_absoluteX="85dp"
+                    tools:layout_editor_absoluteY="163dp"></com.getbase.floatingactionbutton.FloatingActionButton>
 
+        </com.getbase.floatingactionbutton.FloatingActionsMenu>
 </androidx.constraintlayout.widget.ConstraintLayout>

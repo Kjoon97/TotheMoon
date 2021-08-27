@@ -1,7 +1,10 @@
 package org.techtown.wishmatching
 
+import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -37,7 +40,6 @@ class HomeFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
         val database = Firebase.database
         val databaseReference = database.getReference("post")
         val v : View = inflater.inflate(R.layout.fragment_home,container,false)
@@ -53,12 +55,14 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
 
         setHasOptionsMenu(true)
+
         return v
     }
 
+
+    @SuppressLint("ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         var list: ArrayList<PostDTO> =
             requireActivity().intent!!.extras!!.get("DataList") as ArrayList<PostDTO>
         Log.e("FirstFragment", "Data List: ${list}")
@@ -72,8 +76,18 @@ class HomeFragment : Fragment() {
         listView.adapter = listAdapter
 
 //        listView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL,false)
+        float_addpost_button.setOnClickListener {
+            var intent = Intent(context, AddPostActivity::class.java)
+            startActivity(intent)
+        }
+
+        float_category_button.setOnClickListener {
+            var intent = Intent(context, CategoryActivity::class.java)
+            startActivity(intent)
+        }
 
     }
+
     // 메뉴 생성
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
