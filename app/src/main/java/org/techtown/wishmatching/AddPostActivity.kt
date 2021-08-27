@@ -175,6 +175,9 @@ class AddPostActivity : AppCompatActivity() {
                     imagesPathList.add(data4.toString())
                     imagesPathList.add(data5.toString())
                 }
+                else if((mclipdata?.itemCount!! > 5)){
+                    Toast.makeText(this,"사진은 최대 5장 까지만 선택가능합니다.",Toast.LENGTH_LONG).show()
+                }
             }
         }
     }
@@ -214,6 +217,8 @@ class AddPostActivity : AppCompatActivity() {
         var imageFileName5 = "IMAGE_"+timestamp+"4_.png"
         // 이미지 5개에 대해서 중복 방지
 
+        val today = SimpleDateFormat("yyyy-MM-dd").format(Date())
+
 
         var storageRef =storage?.reference?.child("Post")?.child(imageFileName)
         var storageRef2 =storage?.reference?.child("Post")?.child(imageFileName2)
@@ -234,7 +239,8 @@ class AddPostActivity : AppCompatActivity() {
                         "null", "null", "null",
                         "null", "null", "${auth?.uid}",
                         editText_title.text.toString(), editText_content.text.toString(),
-                        "${selectedCategory}", "doingDeal"
+                        "${selectedCategory}", "doingDeal",
+                        today
                     )
                 )
             var intent = Intent(this, MainActivity::class.java)
@@ -258,7 +264,8 @@ class AddPostActivity : AppCompatActivity() {
                                                 uri1.toString(), "null", "null",
                                                 "null", "null", "${auth?.uid}",
                                                 editText_title.text.toString(), editText_content.text.toString(),
-                                                "${selectedCategory}", "doingDeal"
+                                                "${selectedCategory}", "doingDeal",
+                                                today
                                             )
                                         )
                                     var intent = Intent(this, MainActivity::class.java)
@@ -289,7 +296,8 @@ class AddPostActivity : AppCompatActivity() {
                                                         uri1.toString(), uri2.toString(), "null",
                                                         "null", "null", "${auth?.uid}",
                                                         editText_title.text.toString(), editText_content.text.toString(),
-                                                        "${selectedCategory}", "doingDeal"
+                                                        "${selectedCategory}", "doingDeal",
+                                                        today
                                                     )
                                                 )
                                             var intent = Intent(this, MainActivity::class.java)
@@ -324,7 +332,8 @@ class AddPostActivity : AppCompatActivity() {
                                                                 uri1.toString(), uri2.toString(), uri3.toString(),
                                                                 "null", "null", "${auth?.uid}",
                                                                 editText_title.text.toString(), editText_content.text.toString(),
-                                                                "${selectedCategory}", "doingDeal"
+                                                                "${selectedCategory}", "doingDeal",
+                                                                today
                                                             )
                                                         )
                                                     var intent = Intent(this, MainActivity::class.java)
@@ -363,7 +372,8 @@ class AddPostActivity : AppCompatActivity() {
                                                                         uri1.toString(), uri2.toString(), uri3.toString(),
                                                                         uri4.toString(), "null", "${auth?.uid}",
                                                                         editText_title.text.toString(), editText_content.text.toString(),
-                                                                        "${selectedCategory}", "doingDeal"
+                                                                        "${selectedCategory}", "doingDeal",
+                                                                        today
                                                                     )
                                                                 )
                                                             var intent = Intent(this, MainActivity::class.java)
@@ -410,7 +420,8 @@ class AddPostActivity : AppCompatActivity() {
                                                                         uri1.toString(), uri2.toString(), uri3.toString(),
                                                                         uri4.toString(), uri5.toString(), "${auth?.uid}",
                                                                         editText_title.text.toString(), editText_content.text.toString(),
-                                                                        "${selectedCategory}", "doingDeal"
+                                                                        "${selectedCategory}", "doingDeal",
+                                                                        today
                                                                     )
                                                                 )
                                                             var intent = Intent(this, MainActivity::class.java)

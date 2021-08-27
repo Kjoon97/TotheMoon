@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,10 +11,8 @@ import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide.init
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.provider.PicassoProvider
@@ -24,12 +21,8 @@ import kotlinx.android.synthetic.main.doingdeal_row.*
 import kotlinx.android.synthetic.main.doingdeal_row.view.*
 import kotlinx.android.synthetic.main.fragment_my_page.*
 import org.techtown.wishmatching.Authentication
-import org.techtown.wishmatching.Database.ContentDTO
 import org.techtown.wishmatching.Database.PostDTO
 import org.techtown.wishmatching.R
-import java.util.Calendar.getInstance
-import java.util.Currency.getInstance
-import kotlin.coroutines.coroutineContext
 
 class DealSituActivity : AppCompatActivity() {
 
@@ -60,13 +53,34 @@ class DealSituActivity : AppCompatActivity() {
 
             my_goods_Recyclerview.adapter = adapter
             my_goods_Recyclerview.layoutManager = LinearLayoutManager(this)
+            adapter.setItemClickListener(object : RecyclerViewAdapter.onItemClickListener{      //리사이클러 뷰를 눌렀을 때 발생한는 클릭 이벤트
+                override fun onClick(v: View, position: Int) {
+                    val intent = Intent(this@DealSituActivity, MyItemMoreInfoActivity::class.java)
+                    intent.putExtra("doc_id", v.documentID.text.toString())
+                    startActivity(intent)
+
+                }
+
+            })
         }
     }
 }
 
 class RecyclerViewAdapter(val c:Context): RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>(){
     var Postdata = mutableListOf<PostDTO>()
+
+    interface onItemClickListener {
+        fun onClick(v: View, position: Int)
+    }
+
+    private lateinit var itemClickListener: onItemClickListener
+
+    fun setItemClickListener(onItemClickListener: onItemClickListener){
+        this.itemClickListener = onItemClickListener
+    }
+
     inner class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
+
         var mMenus: ImageView
         var firestore = FirebaseFirestore.getInstance()
         init{
@@ -155,6 +169,9 @@ class RecyclerViewAdapter(val c:Context): RecyclerView.Adapter<RecyclerViewAdapt
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.itemView.setOnClickListener{
+            itemClickListener.onClick(it, position)
+        }
         val post = Postdata.get(position)
         holder.setPost(post)
     }

@@ -1,6 +1,7 @@
 package org.techtown.wishmatching
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -33,48 +34,66 @@ class MoreInfoActivity : AppCompatActivity() {
                     tv_moreInfo_category.text = document.data["category"].toString()    //카테고리
                     tv_moreInfo_name.text = document.data["title"].toString()           //물품 이름
                     tv_moreInfo_description.text = document.data["content"].toString()  //물품 설명
+                    tv_moreInfo_dateValue.text = document.data["date"].toString()
                     if(document.data["imageUrl"].toString() == null  ){
+                        img_moreInfo_img1.visibility= View.INVISIBLE
+                        img_moreInfo_img2.visibility= View.INVISIBLE
+                        img_moreInfo_img3.visibility= View.INVISIBLE
+                        img_moreInfo_img4.visibility= View.INVISIBLE
+                        img_moreInfo_img5.visibility= View.INVISIBLE
+
 
                     }
                     else if(document.data["imageUrl2"].toString() == null  ){
                         PicassoProvider.get().load(document.data["imageUrl"].toString())
-                            .into(imageview1)     //물품 이미지
+                            .into(img_moreInfo_img1)     //물품 이미지
+                        img_moreInfo_img2.visibility= View.INVISIBLE
+                        img_moreInfo_img3.visibility= View.INVISIBLE
+                        img_moreInfo_img4.visibility= View.INVISIBLE
+                        img_moreInfo_img5.visibility= View.INVISIBLE
+
                     }
                     else if(document.data["imageUrl3"].toString() == null  ){
                         PicassoProvider.get().load(document.data["imageUrl"].toString())
-                            .into(imageview1)     //물품 이미지
+                            .into(img_moreInfo_img1)     //물품 이미지
                         PicassoProvider.get().load(document.data["imageUrl2"].toString())
-                            .into(imageview2)     //물품 이미지
+                            .into(img_moreInfo_img2)     //물품 이미지
+                        img_moreInfo_img3.visibility= View.INVISIBLE
+                        img_moreInfo_img4.visibility= View.INVISIBLE
+                        img_moreInfo_img5.visibility= View.INVISIBLE
                     }
                     else if(document.data["imageUrl4"].toString() == null  ){
                         PicassoProvider.get().load(document.data["imageUrl"].toString())
-                            .into(imageview1)     //물품 이미지
+                            .into(img_moreInfo_img1)     //물품 이미지
                         PicassoProvider.get().load(document.data["imageUrl2"].toString())
-                            .into(imageview2)     //물품 이미지
+                            .into(img_moreInfo_img2)     //물품 이미지
                         PicassoProvider.get().load(document.data["imageUrl3"].toString())
-                            .into(imageview3)     //물품 이미지
+                            .into(img_moreInfo_img3)     //물품 이미지
+                        img_moreInfo_img4.visibility= View.INVISIBLE
+                        img_moreInfo_img5.visibility= View.INVISIBLE
                     }
                     else if(document.data["imageUrl5"].toString() == null  ){
                         PicassoProvider.get().load(document.data["imageUrl"].toString())
-                            .into(imageview1)     //물품 이미지
+                            .into(img_moreInfo_img1)     //물품 이미지
                         PicassoProvider.get().load(document.data["imageUrl2"].toString())
-                            .into(imageview2)     //물품 이미지
+                            .into(img_moreInfo_img2)     //물품 이미지
                         PicassoProvider.get().load(document.data["imageUrl3"].toString())
-                            .into(imageview3)     //물품 이미지
+                            .into(img_moreInfo_img3)     //물품 이미지
                         PicassoProvider.get().load(document.data["imageUrl4"].toString())
-                            .into(imageview4)     //물품 이미지
+                            .into(img_moreInfo_img4)     //물품 이미지
+                        img_moreInfo_img5.visibility= View.INVISIBLE
                     }
                     else {
                         PicassoProvider.get().load(document.data["imageUrl"].toString())
-                            .into(imageview1)     //물품 이미지
+                            .into(img_moreInfo_img1)     //물품 이미지
                         PicassoProvider.get().load(document.data["imageUrl2"].toString())
-                            .into(imageview2)     //물품 이미지
+                            .into(img_moreInfo_img2)     //물품 이미지
                         PicassoProvider.get().load(document.data["imageUrl3"].toString())
-                            .into(imageview3)     //물품 이미지
+                            .into(img_moreInfo_img3)     //물품 이미지
                         PicassoProvider.get().load(document.data["imageUrl4"].toString())
-                            .into(imageview4)     //물품 이미지
+                            .into(img_moreInfo_img4)     //물품 이미지
                         PicassoProvider.get().load(document.data["imageUrl5"].toString())
-                            .into(imageview5)     //물품 이미지
+                            .into(img_moreInfo_img5)     //물품 이미지
                     }
                     firestore!!.collection("user")  //동네 정보를 받아와야하기 때문에 user db 쿼리 조회(post db의 uid를 바탕으로)
                         .whereEqualTo("uid", document.data["uid"].toString())
@@ -87,11 +106,11 @@ class MoreInfoActivity : AppCompatActivity() {
                 }
             }
 
-        btn_left_flipper.setOnClickListener {
-            mviewflipper.showPrevious()
+        btn_moreInfo_left.setOnClickListener {
+            vlf_moreInfo_imglist.showPrevious()
         }
-        btn_right_flipper.setOnClickListener {
-            mviewflipper.showNext()
+        btn_moreInfo_right.setOnClickListener {
+            vlf_moreInfo_imglist.showNext()
         }
 
         //만약 좋아요를 이미 누른 상태이면 좋아요 색이 빨간색이 되어야함

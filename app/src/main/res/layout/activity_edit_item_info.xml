@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Mypage.DealSituation.EditItemInfoActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ViewFlipper
+                android:id="@+id/vlf_editItemInfo_imglist"
+                android:layout_width="228dp"
+                android:layout_height="207dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <ImageView
+                    android:id="@+id/img_editItemInfo_img1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <ImageView
+                    android:id="@+id/img_editItemInfo_img2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <ImageView
+                    android:id="@+id/img_editItemInfo_img3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <ImageView
+                    android:id="@+id/img_editItemInfo_img4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <ImageView
+                    android:id="@+id/img_editItemInfo_img5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </ViewFlipper>
+
+            <ImageButton
+                android:id="@+id/btn_editItemInfo_right"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginEnd="4dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="@+id/vlf_editItemInfo_imglist"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/vlf_editItemInfo_imglist"
+                app:layout_constraintTop_toTopOf="@+id/vlf_editItemInfo_imglist"
+                app:srcCompat="@drawable/right_icon" />
+
+            <ImageButton
+                android:id="@+id/btn_editItemInfo_left"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="4dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="@+id/vlf_editItemInfo_imglist"
+                app:layout_constraintEnd_toStartOf="@+id/vlf_editItemInfo_imglist"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/vlf_editItemInfo_imglist"
+                app:srcCompat="@drawable/left_icon" />
+
+            <TextView
+                android:id="@+id/tv_editItemInfo_titleIndex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="20dp"
+                android:text="제목"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vlf_editItemInfo_imglist" />
+
+            <EditText
+                android:id="@+id/edt_editItemInfo_titleValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="24dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="제목"
+                android:textColor="#6a6a6a"
+                android:textSize="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tv_editItemInfo_titleIndex"
+                app:layout_constraintTop_toBottomOf="@+id/tv_editItemInfo_titleIndex" />
+
+            <TextView
+                android:id="@+id/tv_editItemInfo_categoryIndex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="카테고리"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/edt_editItemInfo_titleValue"
+                app:layout_constraintTop_toBottomOf="@+id/edt_editItemInfo_titleValue" />
+
+            <Spinner
+                android:id="@+id/spinner_editItemInfo_categoryValue"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_editItemInfo_categoryIndex" />
+
+            <TextView
+                android:id="@+id/tv_editItemInfo_descriptionIndex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="설명"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/spinner_editItemInfo_categoryValue"
+                app:layout_constraintTop_toBottomOf="@+id/spinner_editItemInfo_categoryValue" />
+
+            <EditText
+                android:id="@+id/edt_editItemInfo_descriptionValue"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/custom_edittext"
+                android:ems="10"
+                android:text="게시글 내용"
+                android:inputType="textPersonName"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_editItemInfo_descriptionIndex" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

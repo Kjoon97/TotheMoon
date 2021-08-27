@@ -9,13 +9,19 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.gson.internal.bind.TypeAdapters.URI
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 import kotlinx.android.synthetic.main.fragment_my_page.*
 import org.techtown.wishmatching.Authentication
+import org.techtown.wishmatching.Database.ContentDTO
 import org.techtown.wishmatching.R
 import java.text.SimpleDateFormat
 import java.util.*
@@ -27,6 +33,8 @@ class EditProfileActivity : AppCompatActivity() {
     var photoUri: Uri? = null // 이미지 URI 담을 수 있음
     var alreadyPhotouri: Uri? = null
     var firestore : FirebaseFirestore? = null
+    val myuid = FirebaseAuth.getInstance().uid
+    lateinit var realtimedb : DatabaseReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
@@ -92,18 +100,26 @@ class EditProfileActivity : AppCompatActivity() {
                     return@setOnClickListener
             }else{
                 if(photoUri == alreadyPhotouri){   // 프로필 사진 갱신 안하고 닉네임만 변경했을 때
+                    realtimedb = Firebase.database.reference  //리얼타임 디비
                     firestore!!.collection("user")
                         .whereEqualTo("uid", Authentication.auth.currentUser!!.uid)
                         .get()
-                        .addOnSuccessListener { documents->
-                            for(document in documents){
-                                firestore!!.collection("user").document(document.id).update(mapOf(
-                                    "nickname" to myprofile_nickname.text.toString(),
-                                ))
+                        .addOnSuccessListener { documents ->
+                            for (document in documents) {
+                                firestore!!.collection("user").document(document.id).update(
+                                    mapOf(
+                                        "nickname" to myprofile_nickname.text.toString(),
+                                    )
+                                )
                             }
                         }
+                    if (myuid != null) {   //리얼타임디비 username 변경
+                        realtimedb.child("users").child(myuid).child("username").setValue(myprofile_nickname.text.toString())
+                    }
+
                 }
                 else{   // 프로필 사진 갱신하기위해 photoUri를 새로 다운받고, 닉네임도 변경했을 때
+                    realtimedb = Firebase.database.reference   //리얼타임 디비
                     storageRef?.putFile(photoUri!!)?.addOnSuccessListener {
                         storageRef.downloadUrl.addOnSuccessListener { uri ->
                             firestore!!.collection("user")
@@ -117,6 +133,10 @@ class EditProfileActivity : AppCompatActivity() {
                                         ))
                                     }
                                 }
+                            if (myuid != null) {  //리얼 타임 디비의 usernaem, profileImageUrl변경
+                                realtimedb.child("users").child(myuid).child("username").setValue(myprofile_nickname.text.toString())
+                                realtimedb.child("users").child(myuid).child("profileImageUrl").setValue(uri.toString())
+                            }
                         }
                     }
                 }
