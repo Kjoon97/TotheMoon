@@ -16,9 +16,12 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_deal_situ.*
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_home.view.*
 import org.techtown.wishmatching.Chatting.NewMessageActivity
 import org.techtown.wishmatching.Database.PostDTO
+import org.techtown.wishmatching.Mypage.DealSituation.DealSituActivity
 
 
 class HomeFragment : Fragment() {
@@ -55,7 +58,6 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
 
         setHasOptionsMenu(true)
-
         return v
     }
 
@@ -63,6 +65,8 @@ class HomeFragment : Fragment() {
     @SuppressLint("ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
         var list: ArrayList<PostDTO> =
             requireActivity().intent!!.extras!!.get("DataList") as ArrayList<PostDTO>
         Log.e("FirstFragment", "Data List: ${list}")
@@ -74,6 +78,12 @@ class HomeFragment : Fragment() {
         listAdapter = ListAdapter(list)
         listView.layoutManager = gridLayoutManager
         listView.adapter = listAdapter
+
+        homefragment_swipe.setOnRefreshListener {  // 새로고침- 다른 방법 없는지
+            val intent = Intent(context, MainActivity::class.java)
+            startActivity(intent)
+//            srl_deal_situ.isRefreshing = false
+        }
 
 //        listView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL,false)
         float_addpost_button.setOnClickListener {

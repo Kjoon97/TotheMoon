@@ -6,6 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".Mypage.DealSituation.DealSituActivity">
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/srl_deal_situ"
+        >
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/my_goods_Recyclerview"
         android:layout_width="match_parent"
@@ -14,4 +19,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></androidx.recyclerview.widget.RecyclerView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

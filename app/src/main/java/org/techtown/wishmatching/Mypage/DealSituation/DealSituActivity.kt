@@ -19,6 +19,7 @@ import com.squareup.picasso.provider.PicassoProvider
 import kotlinx.android.synthetic.main.activity_deal_situ.*
 import kotlinx.android.synthetic.main.doingdeal_row.*
 import kotlinx.android.synthetic.main.doingdeal_row.view.*
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_my_page.*
 import org.techtown.wishmatching.Authentication
 import org.techtown.wishmatching.Database.PostDTO
@@ -35,7 +36,12 @@ class DealSituActivity : AppCompatActivity() {
         storage = FirebaseStorage.getInstance() //스토리지 초기화
         firestore = FirebaseFirestore.getInstance()
         var data:MutableList<PostDTO> = mutableListOf()
-
+        srl_deal_situ.setOnRefreshListener {  // 새로고침- 불완전..... 다른 방법 없나봐야함.
+            val intent = Intent(this@DealSituActivity, DealSituActivity::class.java)
+            startActivity(intent)
+//            srl_deal_situ.isRefreshing = false
+            finish()
+        }
         firestore
             ?.collection("post")!!
             .whereEqualTo("uid", Authentication.auth.currentUser!!.uid)
