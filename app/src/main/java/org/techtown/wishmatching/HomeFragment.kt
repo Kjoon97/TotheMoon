@@ -1,10 +1,8 @@
 package org.techtown.wishmatching
 
-import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
-import android.app.Activity
+import android.content.ContentValues
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -16,12 +14,9 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_deal_situ.*
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_home.view.*
 import org.techtown.wishmatching.Chatting.NewMessageActivity
 import org.techtown.wishmatching.Database.PostDTO
-import org.techtown.wishmatching.Mypage.DealSituation.DealSituActivity
 
 
 class HomeFragment : Fragment() {
@@ -29,6 +24,7 @@ class HomeFragment : Fragment() {
     var mBackWait:Long = 0
     private lateinit var listAdapter: ListAdapter
     var arrayList = ArrayList<PostDTO>()
+    var refresh_arrayList = ArrayList<PostDTO>()
     var firestore : FirebaseFirestore? = null   // 데이터베이스를 사용할 수 있도록
 //    var dataList: ArrayList<PostDTO> = arrayListOf(
 //        PostDTO("https://firebasestorage.googleapis.com/v0/b/wishmatching-ed07a.appspot.com/o/Post%2FIMAGE_20210808_224047_.png?alt=media&token=7616bfae-af82-4d4b-957e-6c0d8f0477e0","","","",""),
@@ -80,9 +76,34 @@ class HomeFragment : Fragment() {
         listView.adapter = listAdapter
 
         homefragment_swipe.setOnRefreshListener {  // 새로고침- 다른 방법 없는지
-            val intent = Intent(context, MainActivity::class.java)
-            startActivity(intent)
-//            srl_deal_situ.isRefreshing = false
+//            val intent = Intent(context, MainActivity::class.java)
+//            startActivity(intent)
+            refresh_arrayList.clear()
+            firestore = FirebaseFirestore.getInstance()
+            firestore!!.collection("post")
+                .get()
+                .addOnSuccessListener { result ->
+                    for (document in result) {
+                        Log.d(ContentValues.TAG, "${document.id} => ${document.data}")
+                        refresh_arrayList.add(PostDTO(
+                            document.data["documentId"].toString(),
+                            document.data["imageUrl"].toString(),
+                            document.data["uid"].toString(),
+                            document.data["title"].toString(),
+                            document.data["content"].toString(),
+                            document.data["category"].toString()))
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.d(ContentValues.TAG, "Error getting documents: ", exception)
+                }
+            val gridLayoutManager = GridLayoutManager(context, 2)
+            var listAdapter: ListAdapter
+            listAdapter = ListAdapter(refresh_arrayList)
+            listView.layoutManager = gridLayoutManager
+            listView.adapter = listAdapter
+//            listAdapter.notifyDataSetChanged()
+            homefragment_swipe.isRefreshing = false
         }
 
 //        listView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL,false)
