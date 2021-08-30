@@ -21,15 +21,21 @@
             android:id="@+id/btn_my_wish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:layout_weight="1"
-            android:text="나의 물건" />
+            android:background="@drawable/rounded_button"
+            android:text="상대 물품"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btn_partner_wish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:layout_weight="1"
-            android:text="상대 물건" />
+            android:background="@drawable/rounded_button"
+            android:text="나의 물품"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <EditText
@@ -72,8 +78,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_chat_log"
-        android:layout_width="413dp"
-        android:layout_height="600dp"
+        android:layout_width="412dp"
+        android:layout_height="617dp"
         android:layout_marginBottom="8dp"
         android:background="#FFFAF0"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

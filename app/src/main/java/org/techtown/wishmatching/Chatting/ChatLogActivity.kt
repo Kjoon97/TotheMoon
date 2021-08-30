@@ -24,7 +24,6 @@ import kotlinx.android.synthetic.main.chat_from_row.view.*
 import kotlinx.android.synthetic.main.chat_to_row.view.*
 import org.techtown.wishmatching.Authentication
 import org.techtown.wishmatching.MainActivity
-import org.techtown.wishmatching.MoreInfoActivity
 import org.techtown.wishmatching.Mypage.DealSituation.MyItemMoreInfoActivity
 import org.techtown.wishmatching.R
 import org.techtown.wishmatching.RealtimeDB.ChatMessage
@@ -75,7 +74,7 @@ class ChatLogActivity : AppCompatActivity() {
                 .document("${fromId.toString()}"+"${toUser!!.uid.toString()}")
                 .get()
                 .addOnSuccessListener {
-                    my_like_post= it.data?.get("matchPostId")?.toString() ?: return@addOnSuccessListener
+//                    my_like_post= it.data?.get("matchPostId")?.toString() ?: return@addOnSuccessListener
                     Toast.makeText(this,"$my_like_post",Toast.LENGTH_LONG).show()
                     val intent = Intent(this, MyItemMoreInfoActivity::class.java)
                     intent.putExtra("doc_id", my_like_post)
@@ -103,8 +102,8 @@ class ChatLogActivity : AppCompatActivity() {
                 .get()
                 .addOnSuccessListener {
                     partner_like_post= it.data?.get("matchPostId")?.toString() ?: return@addOnSuccessListener
-                    Toast.makeText(this,"$partner_like_post",Toast.LENGTH_LONG).show()
-                    val intent = Intent(this, MoreInfoActivity::class.java)
+//                    Toast.makeText(this,"$partner_like_post",Toast.LENGTH_LONG).show()
+                    val intent = Intent(this, MyItemMoreInfoActivity::class.java)
                     intent.putExtra("doc_id", partner_like_post)
                     startActivity(intent)
                 }
