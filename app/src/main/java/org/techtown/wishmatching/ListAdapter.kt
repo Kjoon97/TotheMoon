@@ -255,6 +255,8 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
         holder.photourl.setOnClickListener {
             val intent = Intent(it.context, MoreInfoActivity::class.java)
             intent.putExtra("doc_id", doc_id)
+            intent.putExtra("state", holder.state_like)
+            intent.putExtra("post_id", post_uid)
             it.context.startActivity(intent)
         }
 
