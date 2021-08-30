@@ -1,19 +1,30 @@
 package org.techtown.wishmatching
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.provider.PicassoProvider
 import kotlinx.android.synthetic.main.activity_more_info.*
+import org.techtown.wishmatching.RealtimeDB.ChatMessage
 
 class MoreInfoActivity : AppCompatActivity() {
     var firestore : FirebaseFirestore? = null
     var storage : FirebaseStorage? = null
     var imageList : ArrayList<MoreInfoImageList> = arrayListOf()
 
-
+    var user_nickname : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,9 +32,23 @@ class MoreInfoActivity : AppCompatActivity() {
 
         firestore = FirebaseFirestore.getInstance()
         storage = FirebaseStorage.getInstance()
+        val usersDb = FirebaseDatabase.getInstance().getReference().child("matching-users")
+        val currentUser = Authentication.auth.currentUser!!.uid
+
 
         val intent = intent
         val goodsId = intent.getStringExtra("doc_id")      //물품 아이디를 인텐트를 통해 받아옴
+        var state = intent.getIntExtra("state",0)
+        val post_id = intent.getStringExtra("post_id")
+
+
+        val currentUserConnectionDb = usersDb.child(currentUser!!).child("connections").child("match").child(post_id!!)
+
+        if(state == 1){
+            btn_moreInfo_like.setImageResource(R.drawable.btn_clicked_heart)
+        } else{
+            btn_moreInfo_like.setImageResource(R.drawable.btn_heart)
+        }
 
 
         firestore!!.collection("post")  //물품 아이디를 바탕으로 post쿼리 조회
@@ -106,6 +131,15 @@ class MoreInfoActivity : AppCompatActivity() {
                 }
             }
 
+            firestore!!.collection("user")
+                .whereEqualTo("uid", currentUser!!).limit(1)
+                .get()
+                .addOnSuccessListener { documents->
+                    for(document in documents){
+                        user_nickname = document.data["nickname"].toString()
+                    }
+                }
+
         btn_moreInfo_left.setOnClickListener {
             vlf_moreInfo_imglist.showPrevious()
         }
@@ -116,6 +150,91 @@ class MoreInfoActivity : AppCompatActivity() {
         //만약 좋아요를 이미 누른 상태이면 좋아요 색이 빨간색이 되어야함
         btn_moreInfo_like.setOnClickListener {
             //좋아요 버튼 이벤트 처리
+
+            if(state == 0 ){
+                btn_moreInfo_like.setImageResource(R.drawable.btn_clicked_heart)
+                state=1
+
+                if (currentUser != null) {
+                    usersDb.child(post_id).child("connections").child("match").child(currentUser).setValue(true)
+                }
+
+                currentUserConnectionDb.addListenerForSingleValueEvent(object: ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if(snapshot.exists()) {
+                            val reference = FirebaseDatabase.getInstance()
+                                .getReference("/user-messages/$currentUser/$post_id").push()
+                            val toReference = FirebaseDatabase.getInstance()
+                                .getReference("/user-messages/$post_id/$currentUser").push()
+                            val chatMessage =
+                                ChatMessage(
+                                    reference.key!!,
+                                    "채팅방이 생성 되었습니다.",
+                                    currentUser.toString(),
+                                    post_id,
+                                    System.currentTimeMillis(),
+                                    user_nickname!!
+
+                                )
+                            reference.setValue(chatMessage)
+                            toReference.setValue(chatMessage)
+
+                            val latestMessageFromRef = FirebaseDatabase.getInstance()
+                                .getReference("/latest-messages/$currentUser/$post_id")
+                            latestMessageFromRef.setValue(chatMessage)
+
+                            val latestMessageToRef = FirebaseDatabase.getInstance()
+                                .getReference("/latest-messages/$post_id/$currentUser")
+                            latestMessageToRef.setValue(chatMessage)
+
+                            val channel_name = "match_channel"
+                            val channelId = "MATCH_ID"
+                            val channel_description = "test"
+                            val notificationBuilder = NotificationCompat.Builder(this@MoreInfoActivity, channelId)
+                                .setSmallIcon(R.mipmap.ic_launcher) // 아이콘 설정
+                                .setContentTitle("매칭이 성사되었습니다.") // 제목
+                                .setContentText("채팅방이 생성되었습니다.") // 메시지 내용
+                                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                                .setAutoCancel(true)
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+                                val importance = NotificationManager.IMPORTANCE_DEFAULT
+                                val channel = NotificationChannel(channelId, channel_name, importance).apply {
+                                    description = channel_description
+                                }
+                                // Register the channel with the system
+                                val notificationManager: NotificationManager =
+                                    this@MoreInfoActivity.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                                notificationManager.createNotificationChannel(channel)
+                            }
+
+                            with(NotificationManagerCompat.from(this@MoreInfoActivity)) {
+                                // notificationId is a unique int for each notification that you must define
+                                notify(8154, notificationBuilder.build())
+                            }
+
+
+
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+
+                    }
+
+
+                })
+
+
+            } else{
+                btn_moreInfo_like.setImageResource(R.drawable.btn_heart)
+                state=0
+                usersDb.child(post_id).child("connections").child("match").child(currentUser).removeValue()
+            }
+
+
+
 
         }
     }

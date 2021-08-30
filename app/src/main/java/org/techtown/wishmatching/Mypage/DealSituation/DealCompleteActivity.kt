@@ -1,6 +1,7 @@
 package org.techtown.wishmatching.Mypage.DealSituation
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.provider.PicassoProvider
-import kotlinx.android.synthetic.main.activity_deal_situ.*
+import kotlinx.android.synthetic.main.activity_deal_complete.*
 import kotlinx.android.synthetic.main.doingdeal_row.view.*
 import org.techtown.wishmatching.Authentication
 import org.techtown.wishmatching.Database.PostDTO
@@ -50,11 +51,32 @@ class DealCompleteActivity : AppCompatActivity() {
 
                 my_goods_Recyclerview.adapter = adapter
                 my_goods_Recyclerview.layoutManager = LinearLayoutManager(this)
+
+                adapter.setItemClickListener(object : RecyclerViewAdapt.onItemClickListener{      //리사이클러 뷰를 눌렀을 때 발생한는 클릭 이벤트
+                    override fun onClick(v: View, position: Int) {
+                        val intent = Intent(this@DealCompleteActivity, MyItemMoreInfoActivity::class.java)
+                        intent.putExtra("doc_id", v.documentID.text.toString())
+                        intent.putExtra("state","finish")
+                        startActivity(intent)
+
+                    }
+
+                })
             }
     }
 }
 class RecyclerViewAdapt(val c: Context): RecyclerView.Adapter<RecyclerViewAdapt.ViewHolder>(){
     var Postdata = mutableListOf<PostDTO>()
+
+    interface onItemClickListener {
+        fun onClick(v: View, position: Int)
+    }
+
+    private lateinit var itemClickListener: onItemClickListener
+
+    fun setItemClickListener(onItemClickListener: onItemClickListener){
+        this.itemClickListener = onItemClickListener
+    }
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         var mMenus: ImageView
@@ -143,6 +165,9 @@ class RecyclerViewAdapt(val c: Context): RecyclerView.Adapter<RecyclerViewAdapt.
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.itemView.setOnClickListener{
+            itemClickListener.onClick(it, position)
+        }
         val post = Postdata.get(position)
         holder.setPost(post)
     }
