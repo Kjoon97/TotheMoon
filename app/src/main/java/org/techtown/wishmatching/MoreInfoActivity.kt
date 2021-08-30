@@ -9,6 +9,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -17,6 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.provider.PicassoProvider
 import kotlinx.android.synthetic.main.activity_more_info.*
+import org.techtown.wishmatching.Database.MatchPostId
 import org.techtown.wishmatching.RealtimeDB.ChatMessage
 
 class MoreInfoActivity : AppCompatActivity() {
@@ -150,6 +152,7 @@ class MoreInfoActivity : AppCompatActivity() {
         //만약 좋아요를 이미 누른 상태이면 좋아요 색이 빨간색이 되어야함
         btn_moreInfo_like.setOnClickListener {
             //좋아요 버튼 이벤트 처리
+            val fromId = FirebaseAuth.getInstance().uid // 현재 사용자
 
             if(state == 0 ){
                 btn_moreInfo_like.setImageResource(R.drawable.btn_clicked_heart)
@@ -157,6 +160,10 @@ class MoreInfoActivity : AppCompatActivity() {
 
                 if (currentUser != null) {
                     usersDb.child(post_id).child("connections").child("match").child(currentUser).setValue(true)
+                    firestore?.collection("Matching_Post")?.document("$fromId"+"$post_id") // 내가 좋아요누른 게시물 데이터
+                        ?.set(
+                            MatchPostId("$goodsId")
+                        )
                 }
 
                 currentUserConnectionDb.addListenerForSingleValueEvent(object: ValueEventListener {

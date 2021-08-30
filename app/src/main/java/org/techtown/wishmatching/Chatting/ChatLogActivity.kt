@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.tasks.Task
@@ -74,8 +73,8 @@ class ChatLogActivity : AppCompatActivity() {
                 .document("${fromId.toString()}"+"${toUser!!.uid.toString()}")
                 .get()
                 .addOnSuccessListener {
-//                    my_like_post= it.data?.get("matchPostId")?.toString() ?: return@addOnSuccessListener
-                    Toast.makeText(this,"$my_like_post",Toast.LENGTH_LONG).show()
+                    my_like_post= it.data?.get("matchPostId")?.toString() ?: return@addOnSuccessListener
+//                    Toast.makeText(this,"$my_like_post",Toast.LENGTH_LONG).show()
                     val intent = Intent(this, MyItemMoreInfoActivity::class.java)
                     intent.putExtra("doc_id", my_like_post)
                     startActivity(intent)
