@@ -121,9 +121,14 @@ class MyItemMoreInfoActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        var mInflater = menuInflater
-        mInflater.inflate(R.menu.edit_item_menu,menu)
-        return true
+        val state = intent.getStringExtra("state")
+        if(state == "doing"){
+            var mInflater = menuInflater
+            mInflater.inflate(R.menu.edit_item_menu,menu)
+            return true
+        } else{
+            return false
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

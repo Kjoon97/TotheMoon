@@ -63,6 +63,7 @@ class DealSituActivity : AppCompatActivity() {
                 override fun onClick(v: View, position: Int) {
                     val intent = Intent(this@DealSituActivity, MyItemMoreInfoActivity::class.java)
                     intent.putExtra("doc_id", v.documentID.text.toString())
+                    intent.putExtra("state","doing")
                     startActivity(intent)
 
                 }
