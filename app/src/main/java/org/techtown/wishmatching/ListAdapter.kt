@@ -19,6 +19,7 @@ import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import org.techtown.wishmatching.Database.MatchPostId
 import org.techtown.wishmatching.Database.PostDTO
 import org.techtown.wishmatching.LoginActivity.Companion.prefs
 import org.techtown.wishmatching.RealtimeDB.ChatMessage
@@ -99,14 +100,14 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
         var database: DatabaseReference
         database = Firebase.database.reference
 
-        if(prefs.getString("$position","0").toInt()==1) {
-            holder.btn_like.setImageResource(R.drawable.btn_clicked_heart)
-            holder.state_like=1
-        }
-        else {
-            holder.btn_like.setImageResource(R.drawable.btn_heart)
-            holder.state_like=0
-        }
+//        if(prefs.getString("$position","0").toInt()==1) {
+//            holder.btn_like.setImageResource(R.drawable.btn_clicked_heart)
+//            holder.state_like=1
+//        }
+//        else {
+//            holder.btn_like.setImageResource(R.drawable.btn_heart)
+//            holder.state_like=0
+//        }
 
         var btn_like_state : Int
         holder.btn_like.setOnClickListener {
@@ -118,12 +119,17 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
 
 
                 if (fromId != null) {
-                    usersDb.child(post_uid).child("connections").child("match").child(fromId).setValue(true)
+                    usersDb.child(post_uid).child("connections").child("match").child(fromId).child("postId").setValue(doc_id)
+                    firestore?.collection("Matching_Post")?.document("$fromId"+"$post_uid") // 내가 좋아요누른 게시물 데이터
+                        ?.set(
+                            MatchPostId("$doc_id")
+                        )
                 }
 
                 currentUserConnectionDb.addListenerForSingleValueEvent(object: ValueEventListener{
                     override fun onDataChange(snapshot: DataSnapshot) {
                         if(snapshot.exists()) {
+
                             val reference = FirebaseDatabase.getInstance()
                                     .getReference("/user-messages/$fromId/$post_uid").push()
                                 val toReference = FirebaseDatabase.getInstance()

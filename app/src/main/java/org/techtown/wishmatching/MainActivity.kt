@@ -111,10 +111,16 @@ class MainActivity : AppCompatActivity() {
                     dataList.add(PostDTO(
                         document.data["documentId"].toString(),
                         document.data["imageUrl"].toString(),
+                        document.data["imageUrl2"].toString(),
+                        document.data["imageUrl3"].toString(),
+                        document.data["imageUrl4"].toString(),
+                        document.data["imageUrl5"].toString(),
                         document.data["uid"].toString(),
                         document.data["title"].toString(),
                         document.data["content"].toString(),
-                        document.data["category"].toString()))
+                        document.data["category"].toString(),
+                        document.data["dealsituation"].toString(),
+                        document.data["date"].toString()))
 
                     intent.putExtra("DataList", dataList)
                     configureBottomNavigation()

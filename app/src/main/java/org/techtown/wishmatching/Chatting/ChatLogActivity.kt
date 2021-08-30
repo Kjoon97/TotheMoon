@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
@@ -22,6 +24,8 @@ import kotlinx.android.synthetic.main.chat_from_row.view.*
 import kotlinx.android.synthetic.main.chat_to_row.view.*
 import org.techtown.wishmatching.Authentication
 import org.techtown.wishmatching.MainActivity
+import org.techtown.wishmatching.MoreInfoActivity
+import org.techtown.wishmatching.Mypage.DealSituation.MyItemMoreInfoActivity
 import org.techtown.wishmatching.R
 import org.techtown.wishmatching.RealtimeDB.ChatMessage
 import org.techtown.wishmatching.RealtimeDB.User
@@ -52,6 +56,59 @@ class ChatLogActivity : AppCompatActivity() {
 
         send_button_chat_log.setOnClickListener {   // send버튼 눌렀을 때
             performSendMessage()
+        }
+
+        btn_my_wish.setOnClickListener {
+            val fromId = FirebaseAuth.getInstance().uid.toString() // 현재 사용자
+            val usersDb = FirebaseDatabase.getInstance().getReference().child("matching-users")
+            var post_value = usersDb.child(toUser!!.uid).child("connections").child("match")
+            var post_value2 = usersDb.child(fromId!!).child("connections").child("match")
+            var matchPostId2 : Task<DataSnapshot> = post_value2.get()
+            var matchPostId : Task<DataSnapshot> = post_value.get()
+
+            var my_like_post:String = ""
+            var partner_like_post:String = ""
+
+            var firestore : FirebaseFirestore? = null   // 데이터베이스를 사용할 수 있도록
+            firestore = FirebaseFirestore.getInstance()  //초기화
+            firestore!!.collection("Matching_Post")
+                .document("${fromId.toString()}"+"${toUser!!.uid.toString()}")
+                .get()
+                .addOnSuccessListener {
+                    my_like_post= it.data?.get("matchPostId")?.toString() ?: return@addOnSuccessListener
+                    Toast.makeText(this,"$my_like_post",Toast.LENGTH_LONG).show()
+                    val intent = Intent(this, MyItemMoreInfoActivity::class.java)
+                    intent.putExtra("doc_id", my_like_post)
+                    startActivity(intent)
+                }
+
+
+        }
+
+        btn_partner_wish.setOnClickListener {
+            val fromId = FirebaseAuth.getInstance().uid.toString() // 현재 사용자
+            val usersDb = FirebaseDatabase.getInstance().getReference().child("matching-users")
+            var post_value = usersDb.child(toUser!!.uid).child("connections").child("match")
+            var post_value2 = usersDb.child(fromId!!).child("connections").child("match")
+            var matchPostId2 : Task<DataSnapshot> = post_value2.get()
+            var matchPostId : Task<DataSnapshot> = post_value.get()
+
+            var my_like_post:String = ""
+            var partner_like_post:String = ""
+
+            var firestore : FirebaseFirestore? = null   // 데이터베이스를 사용할 수 있도록
+            firestore = FirebaseFirestore.getInstance()  //초기화
+            firestore!!.collection("Matching_Post")
+                .document("${toUser!!.uid.toString()}"+"${fromId.toString()}")
+                .get()
+                .addOnSuccessListener {
+                    partner_like_post= it.data?.get("matchPostId")?.toString() ?: return@addOnSuccessListener
+                    Toast.makeText(this,"$partner_like_post",Toast.LENGTH_LONG).show()
+                    val intent = Intent(this, MoreInfoActivity::class.java)
+                    intent.putExtra("doc_id", partner_like_post)
+                    startActivity(intent)
+                }
+
         }
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -84,6 +141,40 @@ class ChatLogActivity : AppCompatActivity() {
                     .setNegativeButton("취소",null)
                         .create()
                 builder.show()
+
+
+                true
+            }
+            R.id.action_matchInfo -> {
+                val fromId = FirebaseAuth.getInstance().uid // 현재 사용자
+                val usersDb = FirebaseDatabase.getInstance().getReference().child("matching-users")
+                var post_value = usersDb.child(toUser!!.uid).child("connections").child("match")
+                var post_value2 = usersDb.child(fromId!!).child("connections").child("match")
+                var matchPostId2 : Task<DataSnapshot> = post_value2.get()
+                var matchPostId : Task<DataSnapshot> = post_value.get()
+
+                var my_like_post:String = ""
+                var partner_like_post:String = ""
+
+                var firestore : FirebaseFirestore? = null   // 데이터베이스를 사용할 수 있도록
+                firestore!!.collection("Matching_Post")
+                firestore!!.collection("Matching_Post")
+                    .document("$fromId"+"${toUser!!.uid}")
+                    .get()
+                    .addOnSuccessListener {
+
+                    }
+//                    .addOnSuccessListener { documents->
+//                        for(document in documents){
+//                            mypage_location.text = document.data["area"].toString()
+//                            mypage_nickname.text = document.data["nickname"].toString()
+//                            val image = storage!!.getReferenceFromUrl(document.data["imageUrl"].toString())
+//                            displayImageRef(image, img_myPage_profileImg)
+//
+//                        }
+//                    }
+
+
 
 
                 true
