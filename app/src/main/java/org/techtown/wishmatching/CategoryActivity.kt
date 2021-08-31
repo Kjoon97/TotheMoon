@@ -216,6 +216,30 @@ class CategoryActivity : AppCompatActivity() {
                 if (count > 3) Toast.makeText(this, "카테고리는 최대 3개까지 설정가능합니다.", Toast.LENGTH_SHORT)
                     .show()
                 else {
+                    db!!.collection("user").whereEqualTo("uid", Authentication.auth.uid)
+                        .get()
+                        .addOnSuccessListener { documents ->
+                            for (document in documents) {
+                                db!!.collection("user").document(document.id)
+                                    .update("userCategory1" , null)
+                            }
+                        }
+                    db!!.collection("user").whereEqualTo("uid", Authentication.auth.uid)
+                        .get()
+                        .addOnSuccessListener { documents ->
+                            for (document in documents) {
+                                db!!.collection("user").document(document.id)
+                                    .update("userCategory2" , null)
+                            }
+                        }
+                    db!!.collection("user").whereEqualTo("uid", Authentication.auth.uid)
+                        .get()
+                        .addOnSuccessListener { documents ->
+                            for (document in documents) {
+                                db!!.collection("user").document(document.id)
+                                    .update("userCategory3" , null)
+                            }
+                        }
                     for (x in 0..11 step 1) {
                         if (Clicked[x]) {
                             db!!.collection("user").whereEqualTo("uid", Authentication.auth.uid)
