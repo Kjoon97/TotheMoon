@@ -29,6 +29,9 @@ import org.techtown.wishmatching.Database.PostDTO
 
 
 class MainActivity : AppCompatActivity() {
+    companion object {
+        lateinit var prefs : PreferenceUtil
+    }
     private lateinit var auth: FirebaseAuth
     var storage : FirebaseStorage? = null
     var firestore : FirebaseFirestore? = null   // 데이터베이스를 사용할 수 있도록
@@ -44,6 +47,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         mcontext = this
+        prefs = PreferenceUtil(applicationContext)
 
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {

@@ -108,11 +108,23 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
 //            holder.btn_like.setImageResource(R.drawable.btn_heart)
 //            holder.state_like=0
 //        }
+        if(prefs.getString("$doc_id",0)==1) {
+            holder.state_like=1
+            holder.btn_like.setImageResource(R.drawable.btn_clicked_heart)
+        }
+        else {
+            holder.state_like=0
+            holder.btn_like.setImageResource(R.drawable.btn_heart)
+        }
+
+
 
         var btn_like_state : Int
+        // 좋아요 버튼 클릭시 작동
         holder.btn_like.setOnClickListener {
             if(holder.state_like==0)
             {
+                prefs.setString("$doc_id",1)
                 holder.btn_like.setImageResource(R.drawable.btn_clicked_heart)
                 holder.state_like=1
                 var firestore = FirebaseFirestore.getInstance()  //초기화
@@ -246,16 +258,17 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
 //                                    .getReference("/latest-messages/$post_uid/$fromId")
 //                                latestMessageToRef.setValue(chatMessage)
 
-                prefs.setString("$position","1")
 
             }
             else
             {
+                prefs.setString("$doc_id",0)
                 holder.btn_like.setImageResource(R.drawable.btn_heart)
                 holder.state_like=0
 
                 usersDb.child(post_uid).child("connections").child("match").child(fromId).removeValue()
             }
+            // 좋아요 버튼 취소시 작동
 
         }
 

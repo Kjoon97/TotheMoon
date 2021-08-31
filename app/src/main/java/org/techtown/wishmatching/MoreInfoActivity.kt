@@ -19,6 +19,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.provider.PicassoProvider
 import kotlinx.android.synthetic.main.activity_more_info.*
 import org.techtown.wishmatching.Database.MatchPostId
+import org.techtown.wishmatching.LoginActivity.Companion.prefs
 import org.techtown.wishmatching.RealtimeDB.ChatMessage
 
 class MoreInfoActivity : AppCompatActivity() {
@@ -44,9 +45,10 @@ class MoreInfoActivity : AppCompatActivity() {
         val post_id = intent.getStringExtra("post_id")
 
 
+
         val currentUserConnectionDb = usersDb.child(currentUser!!).child("connections").child("match").child(post_id!!)
 
-        if(state == 1){
+        if(prefs.getString("$goodsId",0) == 1){
             btn_moreInfo_like.setImageResource(R.drawable.btn_clicked_heart)
         } else{
             btn_moreInfo_like.setImageResource(R.drawable.btn_heart)
@@ -154,9 +156,10 @@ class MoreInfoActivity : AppCompatActivity() {
             //좋아요 버튼 이벤트 처리
             val fromId = FirebaseAuth.getInstance().uid // 현재 사용자
 
-            if(state == 0 ){
+            if(prefs.getString("$goodsId",0) == 0 ){
                 btn_moreInfo_like.setImageResource(R.drawable.btn_clicked_heart)
                 state=1
+                prefs.setString("$goodsId",1)
 
                 if (currentUser != null) {
                     usersDb.child(post_id).child("connections").child("match").child(currentUser).setValue(true)
@@ -235,6 +238,7 @@ class MoreInfoActivity : AppCompatActivity() {
 
 
             } else{
+                prefs.setString("$goodsId",0)
                 btn_moreInfo_like.setImageResource(R.drawable.btn_heart)
                 state=0
                 usersDb.child(post_id).child("connections").child("match").child(currentUser).removeValue()
