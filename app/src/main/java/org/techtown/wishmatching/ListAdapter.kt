@@ -206,59 +206,6 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
 
 
                 })
-//                val toId :String? = null
-//                firestore!!.collection("post").get().addOnSuccessListener {
-//                }
-//                toId = firestore.document().d
-//                val user = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
-//                val toId = user?.uid
-//                if(match_count == 0) {
-//                    match_count=1
-//                    val my_matchinfo = MatchInfo(fromId.toString(),post_uid.toString(),match_count)
-//                    reference.setValue(my_matchinfo)
-//                    val your_matchinfo = MatchInfo(fromId.toString(),post_uid.toString(),match_count)
-//                    toReference.setValue(your_matchinfo)
-//                }
-//                else if(match_count == 1){
-//                    match_count=2
-//                    val my_matchinfo = MatchInfo(fromId.toString(),post_uid.toString(),match_count)
-//                    reference.setValue(my_matchinfo)
-//                    val your_matchinfo = MatchInfo(fromId.toString(),post_uid.toString(),match_count)
-//                    toReference.setValue(your_matchinfo)
-//                }
-
-
-//                ttt.text = match_count.toString()
-//                val my_matchinfo = MatchInfo(fromId.toString(),post_uid.toString(),0)
-//                reference.setValue(my_matchinfo)
-//                val your_matchinfo = MatchInfo(fromId.toString(),post_uid.toString(),0)
-//                toReference.setValue(your_matchinfo)
-
-
-
-//                                val reference = FirebaseDatabase.getInstance()
-//                                    .getReference("/user-messages/$fromId/$post_uid").push()
-//                                val toReference = FirebaseDatabase.getInstance()
-//                                    .getReference("/user-messages/$post_uid/$fromId").push()
-//                                val chatMessage =
-//                                    ChatMessage(
-//                                        reference.key!!,
-//                                        "채팅방이 생성 되었습니다.",
-//                                        fromId.toString(),
-//                                        post_uid,
-//                                        System.currentTimeMillis() / 1000
-//                                    )
-//                                reference.setValue(chatMessage)
-//
-//                                val latestMessageFromRef = FirebaseDatabase.getInstance()
-//                                    .getReference("/latest-messages/$fromId/$post_uid")
-//                                latestMessageFromRef.setValue(chatMessage)
-//
-//                                val latestMessageToRef = FirebaseDatabase.getInstance()
-//                                    .getReference("/latest-messages/$post_uid/$fromId")
-//                                latestMessageToRef.setValue(chatMessage)
-
-
             }
             else
             {
