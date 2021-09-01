@@ -26,7 +26,7 @@ import org.techtown.wishmatching.Database.PostDTO
 import org.techtown.wishmatching.R
 
 class DealSituActivity : AppCompatActivity() {
-
+    var refresh_arrayList = ArrayList<PostDTO>()
     var firestore : FirebaseFirestore? = null
     var storage : FirebaseStorage? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,12 +36,15 @@ class DealSituActivity : AppCompatActivity() {
         storage = FirebaseStorage.getInstance() //스토리지 초기화
         firestore = FirebaseFirestore.getInstance()
         var data:MutableList<PostDTO> = mutableListOf()
+
         srl_deal_situ.setOnRefreshListener {  // 새로고침- 불완전..... 다른 방법 없나봐야함.
             val intent = Intent(this@DealSituActivity, DealSituActivity::class.java)
             startActivity(intent)
 //            srl_deal_situ.isRefreshing = false
             finish()
         }
+
+
         firestore
             ?.collection("post")!!
             .whereEqualTo("uid", Authentication.auth.currentUser!!.uid)
@@ -57,9 +60,9 @@ class DealSituActivity : AppCompatActivity() {
             adapter.Postdata = data
 
 
-            my_goods_Recyclerview.adapter = adapter
-            my_goods_Recyclerview.layoutManager = LinearLayoutManager(this)
-            adapter.setItemClickListener(object : RecyclerViewAdapter.onItemClickListener{      //리사이클러 뷰를 눌렀을 때 발생한는 클릭 이벤트
+                my_goods_Recyclerview.adapter = adapter
+                my_goods_Recyclerview.layoutManager = LinearLayoutManager(this)
+                adapter.setItemClickListener(object : RecyclerViewAdapter.onItemClickListener{      //리사이클러 뷰를 눌렀을 때 발생한는 클릭 이벤트
                 override fun onClick(v: View, position: Int) {
                     val intent = Intent(this@DealSituActivity, MyItemMoreInfoActivity::class.java)
                     intent.putExtra("doc_id", v.documentID.text.toString())
@@ -70,6 +73,7 @@ class DealSituActivity : AppCompatActivity() {
 
             })
         }
+
     }
 }
 

@@ -108,6 +108,7 @@ class MainActivity : AppCompatActivity() {
 //        auth = FirebaseAuth.getInstance()
 
         firestore!!.collection("post")
+            .whereEqualTo("dealsituation", "doingDeal")
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {

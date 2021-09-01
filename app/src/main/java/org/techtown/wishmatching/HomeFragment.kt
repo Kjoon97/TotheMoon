@@ -75,12 +75,13 @@ class HomeFragment : Fragment() {
         listView.layoutManager = gridLayoutManager
         listView.adapter = listAdapter
 
-        homefragment_swipe.setOnRefreshListener {  // 새로고침- 다른 방법 없는지
+        homefragment_swipe.setOnRefreshListener {  // 새로고침
 //            val intent = Intent(context, MainActivity::class.java)
 //            startActivity(intent)
             refresh_arrayList.clear()
             firestore = FirebaseFirestore.getInstance()
             firestore!!.collection("post")
+                .whereEqualTo("dealsituation", "doingDeal")
                 .get()
                 .addOnSuccessListener { result ->
                     for (document in result) {
