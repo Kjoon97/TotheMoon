@@ -17,6 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.provider.PicassoProvider
 import kotlinx.android.synthetic.main.activity_deal_situ.*
+import kotlinx.android.synthetic.main.activity_deal_situ.my_goods_Recyclerview
 import kotlinx.android.synthetic.main.doingdeal_row.*
 import kotlinx.android.synthetic.main.doingdeal_row.view.*
 import kotlinx.android.synthetic.main.fragment_home.*
