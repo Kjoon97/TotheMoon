@@ -155,22 +155,22 @@ class ChatLogActivity : AppCompatActivity() {
                             .addOnSuccessListener { documents->
                                 for(document in documents){
                                     user_nickname = document.data["nickname"].toString()
+
+                                    val ImageChatMessage =
+                                        toUser?.let {
+                                            ImageChatMessage(reference.key!!, uri.toString(), fromId, toId!!, System.currentTimeMillis(),
+                                                user_nickname)
+                                        }
+                                    reference.setValue(ImageChatMessage)
+                                        .addOnSuccessListener {
+                                            Log.d("ChatMessage", "이미지 채팅 메세지 저장:${reference.key}")
+                                            edittext_chat_log.text.clear()
+                                            recyclerview_chat_log.scrollToPosition(adapter.itemCount-1)
+                                        }
+                                    toReference.setValue(ImageChatMessage)
                                 }
                             }
 
-
-                        val ImageChatMessage =
-                            toUser?.let {
-                                ImageChatMessage(reference.key!!, uri.toString(), fromId, toId!!, System.currentTimeMillis(),
-                                    it.username)
-                            }
-                        reference.setValue(ImageChatMessage)
-                            .addOnSuccessListener {
-                                Log.d("ChatMessage", "이미지 채팅 메세지 저장:${reference.key}")
-                                edittext_chat_log.text.clear()
-                                recyclerview_chat_log.scrollToPosition(adapter.itemCount-1)
-                            }
-                        toReference.setValue(ImageChatMessage)
                     }
                 }
 
@@ -374,28 +374,30 @@ class ChatLogActivity : AppCompatActivity() {
             .addOnSuccessListener { documents->
                 for(document in documents){
                     user_nickname = document.data["nickname"].toString()
+
+                    val chatMessage =
+                        toUser?.let {
+                            ChatMessage(reference.key!!, text, fromId, toId!!, System.currentTimeMillis(),
+                                user_nickname)
+                        }
+                    reference.setValue(chatMessage)
+                        .addOnSuccessListener {
+                            Log.d("ChatMessage", "채팅 메세지 저장:${reference.key}")
+                            edittext_chat_log.text.clear()
+                            recyclerview_chat_log.scrollToPosition(adapter.itemCount-1)
+                        }
+                    toReference.setValue(chatMessage)
+
+                    val latestMessageFromRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId/$toId")
+                    latestMessageFromRef.setValue(chatMessage)
+
+                    val latestMessageToRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$toId/$fromId")
+                    latestMessageToRef.setValue(chatMessage)
                 }
             }
 
 
-        val chatMessage =
-            toUser?.let {
-                ChatMessage(reference.key!!, text, fromId, toId!!, System.currentTimeMillis(),
-                    it.username)
-            }
-        reference.setValue(chatMessage)
-            .addOnSuccessListener {
-                Log.d("ChatMessage", "채팅 메세지 저장:${reference.key}")
-                edittext_chat_log.text.clear()
-                recyclerview_chat_log.scrollToPosition(adapter.itemCount-1)
-            }
-        toReference.setValue(chatMessage)
 
-        val latestMessageFromRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId/$toId")
-        latestMessageFromRef.setValue(chatMessage)
-
-        val latestMessageToRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$toId/$fromId")
-        latestMessageToRef.setValue(chatMessage)
     }
 }
 
