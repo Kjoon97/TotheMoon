@@ -50,6 +50,7 @@ class ChatLogActivity : AppCompatActivity() {
 
         recyclerview_chat_log.adapter = adapter
 
+
         //        val username = intent.getStringExtra(NewMessageActivity.USER_KEY)
         toUser = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
         if (toUser != null) {
@@ -58,7 +59,7 @@ class ChatLogActivity : AppCompatActivity() {
         //setupDummyData()
 
         ListenForMessages()
-        ListenForImageMessages()
+//        ListenForImageMessages()
 
         send_button_chat_log.setOnClickListener {   // send버튼 눌렀을 때
             performSendMessage()
@@ -143,10 +144,10 @@ class ChatLogActivity : AppCompatActivity() {
                 storageRef?.putFile(photoUri!!).addOnSuccessListener {
                     storageRef.downloadUrl.addOnSuccessListener { uri ->
 
-                        val reference = FirebaseDatabase.getInstance().getReference("/user-image-messages/$fromId/$toId").push()
+                        val reference = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId").push()
                         var user_nickname :String = ""
 
-                        val toReference = FirebaseDatabase.getInstance().getReference("/user-image-messages/$toId/$fromId").push()
+                        val toReference = FirebaseDatabase.getInstance().getReference("/user-messages/$toId/$fromId").push()
                         var firestore : FirebaseFirestore? = null   // 데이터베이스를 사용할 수 있도록
                         firestore = FirebaseFirestore.getInstance()  //초기화
                         firestore!!.collection("user")
@@ -159,7 +160,7 @@ class ChatLogActivity : AppCompatActivity() {
                                     val ImageChatMessage =
                                         toUser?.let {
                                             ImageChatMessage(reference.key!!, uri.toString(), fromId, toId!!, System.currentTimeMillis(),
-                                                user_nickname)
+                                                user_nickname,1)
                                         }
                                     reference.setValue(ImageChatMessage)
                                         .addOnSuccessListener {
@@ -258,57 +259,57 @@ class ChatLogActivity : AppCompatActivity() {
         }
 
     }
-    private fun ListenForImageMessages() {
-        val fromId= FirebaseAuth.getInstance().uid
-        val toId = toUser?.uid
-        val ref = FirebaseDatabase.getInstance().getReference("/user-image-messages/$fromId/$toId")
-//        val ref = FirebaseDatabase.getInstance().getReference("/user-messages/$toId/$fromId")
-//        val ref = FirebaseDatabase.getInstance().getReference("/messages")
-        ref.addChildEventListener(object : ChildEventListener {
-            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                val imageChatMessage = snapshot.getValue(ImageChatMessage::class.java)
-
-                if (imageChatMessage != null) {
-
-                    if (imageChatMessage.fromId == FirebaseAuth.getInstance().uid) {
-                        val currentUser = ChattingFragment.currentUser ?: return
-                        adapter.add(ImageChatFromItem(imageChatMessage.imageUrl,currentUser,imageChatMessage.timestamp,imageChatMessage.nickname)) // 채팅 내용 리사이클 뷰에 띄우기
-                        Log.d("ChatMessage", "보내는사람:${fromId}")
-
-                    } else {
-
-                        toUser?.let {
-                            ChatToItem.ImageChatToItem(
-                                imageChatMessage.imageUrl,
-                                it,
-                                imageChatMessage.timestamp,
-                                imageChatMessage.nickname
-                            )
-                        }?.let { adapter.add(it) }
-                        Log.d("ChatMessage", "받는 사람:${toId}")
-                    }
-                }
-                recyclerview_chat_log.scrollToPosition(adapter.itemCount-1)
-            }
-
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onChildRemoved(snapshot: DataSnapshot) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-        })
-    }
+//    private fun ListenForImageMessages() {
+//        val fromId= FirebaseAuth.getInstance().uid
+//        val toId = toUser?.uid
+//        val ref = FirebaseDatabase.getInstance().getReference("/user-image-messages/$fromId/$toId")
+////        val ref = FirebaseDatabase.getInstance().getReference("/user-messages/$toId/$fromId")
+////        val ref = FirebaseDatabase.getInstance().getReference("/messages")
+//        ref.addChildEventListener(object : ChildEventListener {
+//            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+//                val imageChatMessage = snapshot.getValue(ImageChatMessage::class.java)
+//
+//                if (imageChatMessage != null) {
+//
+//                    if (imageChatMessage.fromId == FirebaseAuth.getInstance().uid) {
+//                        val currentUser = ChattingFragment.currentUser ?: return
+//                        adapter.add(ImageChatFromItem(imageChatMessage.imageUrl,currentUser,imageChatMessage.timestamp,imageChatMessage.nickname)) // 채팅 내용 리사이클 뷰에 띄우기
+//                        Log.d("ChatMessage", "보내는사람:${fromId}")
+//
+//                    } else {
+//
+//                        toUser?.let {
+//                            ChatToItem.ImageChatToItem(
+//                                imageChatMessage.imageUrl,
+//                                it,
+//                                imageChatMessage.timestamp,
+//                                imageChatMessage.nickname
+//                            )
+//                        }?.let { adapter.add(it) }
+//                        Log.d("ChatMessage", "받는 사람:${toId}")
+//                    }
+//                }
+//                recyclerview_chat_log.scrollToPosition(adapter.itemCount-1)
+//            }
+//
+//            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+//                TODO("Not yet implemented")
+//            }
+//
+//            override fun onChildRemoved(snapshot: DataSnapshot) {
+//                TODO("Not yet implemented")
+//            }
+//
+//            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+//                TODO("Not yet implemented")
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                TODO("Not yet implemented")
+//            }
+//
+//        })
+//    }
 
     private fun ListenForMessages() {
         val fromId= FirebaseAuth.getInstance().uid
@@ -321,19 +322,48 @@ class ChatLogActivity : AppCompatActivity() {
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
                 val chatMessage = p0.getValue(ChatMessage::class.java)
 
-                if (chatMessage != null) {
+                    if(chatMessage?.flag == 1)
+                    {
+                        var imageChatMessage : ImageChatMessage? = p0.getValue(ImageChatMessage::class.java)
+                        if (imageChatMessage?.fromId == FirebaseAuth.getInstance().uid) {
+                            val currentUser = ChattingFragment.currentUser ?: return
+                            if (imageChatMessage != null) {
+                                adapter.add(ImageChatFromItem(imageChatMessage.imageUrl,currentUser,imageChatMessage.timestamp,imageChatMessage.nickname))
+                            } // 채팅 내용 리사이클 뷰에 띄우기
+                            Log.d("ChatMessage", "보내는사람:${fromId}")
 
-                    if (chatMessage.fromId == FirebaseAuth.getInstance().uid) {
-                        val currentUser = ChattingFragment.currentUser ?: return
-                        adapter.add(ChatFromItem(chatMessage.text,currentUser,chatMessage.timestamp,chatMessage.nickname)) // 채팅 내용 리사이클 뷰에 띄우기
-                        Log.d("ChatMessage", "보내는사람:${fromId}")
+                        } else {
 
-                    } else {
-
-                        toUser?.let { ChatToItem(chatMessage.text, it,chatMessage.timestamp,chatMessage.nickname) }?.let { adapter.add(it) }
-                        Log.d("ChatMessage", "받는 사람:${toId}")
+                            if (imageChatMessage != null) {
+                                toUser?.let {
+                                    ChatToItem.ImageChatToItem(
+                                        imageChatMessage.imageUrl,
+                                        it,
+                                        imageChatMessage.timestamp,
+                                        imageChatMessage.nickname
+                                    )
+                                }?.let { adapter.add(it) }
+                            }
+                            Log.d("ChatMessage", "받는 사람:${toId}")
+                        }
                     }
-                }
+                    else {
+                        if (chatMessage != null) {
+                            if (chatMessage.fromId == FirebaseAuth.getInstance().uid) {
+                                val currentUser = ChattingFragment.currentUser ?: return
+                                adapter.add(ChatFromItem(chatMessage.text,currentUser,chatMessage.timestamp,chatMessage.nickname)) // 채팅 내용 리사이클 뷰에 띄우기
+                                Log.d("ChatMessage", "보내는사람:${fromId}")
+
+                            } else {
+
+                                toUser?.let { ChatToItem(chatMessage.text, it,chatMessage.timestamp,chatMessage.nickname) }?.let { adapter.add(it) }
+                                Log.d("ChatMessage", "받는 사람:${toId}")
+                            }
+                        }
+
+                    }
+
+
                 recyclerview_chat_log.scrollToPosition(adapter.itemCount-1)
             }
 
@@ -353,6 +383,53 @@ class ChatLogActivity : AppCompatActivity() {
 
             }
         })
+//        val ref_image = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId")
+////        val ref = FirebaseDatabase.getInstance().getReference("/user-messages/$toId/$fromId")
+////        val ref = FirebaseDatabase.getInstance().getReference("/messages")
+//        ref_image.addChildEventListener(object : ChildEventListener {
+//            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+//                val imageChatMessage = snapshot.getValue(ImageChatMessage::class.java)
+//
+//                if (imageChatMessage != null) {
+//
+//                    if (imageChatMessage.fromId == FirebaseAuth.getInstance().uid) {
+//                        val currentUser = ChattingFragment.currentUser ?: return
+//                        adapter.add(ImageChatFromItem(imageChatMessage.imageUrl,currentUser,imageChatMessage.timestamp,imageChatMessage.nickname)) // 채팅 내용 리사이클 뷰에 띄우기
+//                        Log.d("ChatMessage", "보내는사람:${fromId}")
+//
+//                    } else {
+//
+//                        toUser?.let {
+//                            ChatToItem.ImageChatToItem(
+//                                imageChatMessage.imageUrl,
+//                                it,
+//                                imageChatMessage.timestamp,
+//                                imageChatMessage.nickname
+//                            )
+//                        }?.let { adapter.add(it) }
+//                        Log.d("ChatMessage", "받는 사람:${toId}")
+//                    }
+//                }
+//                recyclerview_chat_log.scrollToPosition(adapter.itemCount-1)
+//            }
+//
+//            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+//                TODO("Not yet implemented")
+//            }
+//
+//            override fun onChildRemoved(snapshot: DataSnapshot) {
+//                TODO("Not yet implemented")
+//            }
+//
+//            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+//                TODO("Not yet implemented")
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                TODO("Not yet implemented")
+//            }
+//
+//        })
     }
 
     private fun performSendMessage() {  //보낸 메세지 파이어베이스 보내기
@@ -378,7 +455,7 @@ class ChatLogActivity : AppCompatActivity() {
                     val chatMessage =
                         toUser?.let {
                             ChatMessage(reference.key!!, text, fromId, toId!!, System.currentTimeMillis(),
-                                user_nickname)
+                                user_nickname,0)
                         }
                     reference.setValue(chatMessage)
                         .addOnSuccessListener {
@@ -426,8 +503,9 @@ class ChatFromItem(val text:String,val user: User,val time: Long,val nickname: S
 }
 class ImageChatFromItem(val imageUrl:String,val user:User,val time: Long,val nickname: String): Item<ViewHolder>() {
     override fun bind(viewHolder: ViewHolder, position: Int) {
-        PicassoProvider.get().load(imageUrl).into(viewHolder.itemView.imageview_from_row)
-
+        if(imageUrl != null && imageUrl != "") {
+            PicassoProvider.get().load(imageUrl).into(viewHolder.itemView.imageview_from_row)
+        }
         var time_hours = SimpleDateFormat("HH").format(time).toString()
         if(time_hours.toInt()>12 ){
             time_hours = (time_hours.toInt()-12).toString()

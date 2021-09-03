@@ -183,7 +183,8 @@ class MoreInfoActivity : AppCompatActivity() {
                                     currentUser.toString(),
                                     post_id,
                                     System.currentTimeMillis(),
-                                    user_nickname!!
+                                    user_nickname!!,
+                                    1
 
                                 )
                             reference.setValue(chatMessage)

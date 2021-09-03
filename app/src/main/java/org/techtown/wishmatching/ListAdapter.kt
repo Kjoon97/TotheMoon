@@ -154,7 +154,8 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
                                         fromId.toString(),
                                         post_uid,
                                         System.currentTimeMillis(),
-                                        user_nickname
+                                        user_nickname,
+                                        0
 
                                     )
                                 reference.setValue(chatMessage)
