@@ -221,7 +221,7 @@ class CategoryActivity : AppCompatActivity() {
                         .addOnSuccessListener { documents ->
                             for (document in documents) {
                                 db!!.collection("user").document(document.id)
-                                    .update("userCategory1" , null)
+                                    .update("userCategory1" , "")
                             }
                         }
                     db!!.collection("user").whereEqualTo("uid", Authentication.auth.uid)
@@ -229,7 +229,7 @@ class CategoryActivity : AppCompatActivity() {
                         .addOnSuccessListener { documents ->
                             for (document in documents) {
                                 db!!.collection("user").document(document.id)
-                                    .update("userCategory2" , null)
+                                    .update("userCategory2" , "")
                             }
                         }
                     db!!.collection("user").whereEqualTo("uid", Authentication.auth.uid)
@@ -237,7 +237,7 @@ class CategoryActivity : AppCompatActivity() {
                         .addOnSuccessListener { documents ->
                             for (document in documents) {
                                 db!!.collection("user").document(document.id)
-                                    .update("userCategory3" , null)
+                                    .update("userCategory3" , "")
                             }
                         }
                     for (x in 0..11 step 1) {
