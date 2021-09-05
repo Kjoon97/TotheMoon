@@ -77,29 +77,39 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this,"이메일과 비밀번호를 입력해주세요.",Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
+            if(Authentication.auth==null) {
+                Toast.makeText(this,"이메일과 비밀번호를 확인해주세요.",Toast.LENGTH_LONG).show()
+            }
 
             Authentication.auth?.signInWithEmailAndPassword(userEmail, userPw)?.addOnCompleteListener(this) {
-                if(Authentication.auth.currentUser!!.isEmailVerified) { //인증메일에서 링크 클릭시 로그인 가능
-                    if (it.isSuccessful){
-                        db.collection("user")
-                            .whereEqualTo("uid", Authentication.auth!!.uid)
-                            .get()
-                            .addOnSuccessListener { documents->
-                                if(documents.isEmpty){            // 처음 로그인 하면 프로필 화면으로 이동
-                                    val intent = Intent(this, ProfileActivity::class.java)
-                                    startActivity(intent)
-                                } else{                        // 그게 아니라면 메인액티비티로 이동
-                                    val intent = Intent(this, MainActivity::class.java)
-                                    startActivity(intent)
-                                }
-                            }
-                    } else{
-                        Toast.makeText(this,"인증 메일을 확인해주세요.",Toast.LENGTH_SHORT).show()
-                    }
-                }else{
-                    Toast.makeText(this, "LogIn fail.", Toast.LENGTH_SHORT).show()
+                if(Authentication.auth.currentUser?.isEmailVerified==null) {
+                    Toast.makeText(this,"이메일과 비밀번호를 확인해주세요.",Toast.LENGTH_LONG).show()
+                    return@addOnCompleteListener
                 }
-
+                else {
+                    if (Authentication.auth.currentUser!!.isEmailVerified) { //인증메일에서 링크 클릭시 로그인 가능
+                        if (it.isSuccessful) {
+                            db.collection("user")
+                                .whereEqualTo("uid", Authentication.auth!!.uid)
+                                .get()
+                                .addOnSuccessListener { documents ->
+                                    if (documents.isEmpty) {            // 처음 로그인 하면 프로필 화면으로 이동
+                                        val intent = Intent(this, ProfileActivity::class.java)
+                                        startActivity(intent)
+                                    } else {                        // 그게 아니라면 메인액티비티로 이동
+                                        val intent = Intent(this, MainActivity::class.java)
+                                        startActivity(intent)
+                                    }
+                                }
+                        } else {
+                            Toast.makeText(this, "이메일과 비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        Toast.makeText(this, "인증 메일을 확인해주세요.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }.addOnFailureListener {
+                Toast.makeText(this,"이메일과 비밀번호를 확인해주세요.",Toast.LENGTH_LONG).show()
             }
         }
 

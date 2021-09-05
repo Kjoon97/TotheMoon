@@ -109,6 +109,7 @@ class MainActivity : AppCompatActivity() {
 
         firestore!!.collection("post")
             .whereEqualTo("dealsituation", "doingDeal")
+//            .whereNotEqualTo("uid","${FirebaseAuth.getInstance().uid.toString()}")
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
@@ -126,10 +127,15 @@ class MainActivity : AppCompatActivity() {
                         document.data["category"].toString(),
                         document.data["dealsituation"].toString(),
                         document.data["date"].toString()))
-
-                    intent.putExtra("DataList", dataList)
-                    configureBottomNavigation()
                 }
+//                for(i in 0 .. dataList.count()) {
+//                    if(dataList[i].uid == FirebaseAuth.getInstance().uid.toString()) {
+//                        dataList.removeAt(i)
+//                    }
+//                }
+                intent.putExtra("DataList", dataList)
+                configureBottomNavigation()
+
             }
             .addOnFailureListener { exception ->
                 Log.d(TAG, "Error getting documents: ", exception)
