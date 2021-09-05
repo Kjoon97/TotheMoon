@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -139,7 +140,6 @@ class MainActivity : AppCompatActivity() {
                                         document.data["date"].toString()
                                     )
                                 )
-
                                 intent.putExtra("DataList", dataList)
                                 configureBottomNavigation()
                             }
@@ -174,10 +174,43 @@ class MainActivity : AppCompatActivity() {
                                         )
                                     )
                                 }
-
-                                intent.putExtra("DataList", dataList)
-                                configureBottomNavigation()
                             }
+                            if(dataList.isEmpty()) {
+                                firestore!!.collection("post")
+                                    .whereEqualTo("dealsituation", "doingDeal")
+                                    .get()
+                                    .addOnSuccessListener { result ->
+                                        for (document in result) {
+                                                Log.d(TAG, "${document.id} => ${document.data}")
+                                                dataList.add(
+                                                    PostDTO(
+                                                        document.data["documentId"].toString(),
+                                                        document.data["imageUrl"].toString(),
+                                                        document.data["imageUrl2"].toString(),
+                                                        document.data["imageUrl3"].toString(),
+                                                        document.data["imageUrl4"].toString(),
+                                                        document.data["imageUrl5"].toString(),
+                                                        document.data["uid"].toString(),
+                                                        document.data["title"].toString(),
+                                                        document.data["content"].toString(),
+                                                        document.data["category"].toString(),
+                                                        document.data["dealsituation"].toString(),
+                                                        document.data["date"].toString()
+                                                    )
+                                                )
+
+                                            intent.putExtra("DataList", dataList)
+                                            configureBottomNavigation()
+                                        }
+                                    }
+                                    .addOnFailureListener { exception ->
+                                        Log.d(TAG, "Error getting documents: ", exception)
+                                    }
+                                Toast.makeText(this,"선택한 카테고리의 상품이 없습니다.",Toast.LENGTH_SHORT).show()
+
+                            }
+                            intent.putExtra("DataList", dataList)
+                            configureBottomNavigation()
                         }
                         .addOnFailureListener { exception ->
                             Log.d(TAG, "Error getting documents: ", exception)
@@ -209,11 +242,44 @@ class MainActivity : AppCompatActivity() {
                                             document.data["date"].toString()
                                         )
                                     )
-
-                                    intent.putExtra("DataList", dataList)
-                                    configureBottomNavigation()
                                 }
                             }
+                            if(dataList.isEmpty()) {
+                                firestore!!.collection("post")
+                                    .whereEqualTo("dealsituation", "doingDeal")
+                                    .get()
+                                    .addOnSuccessListener { result ->
+                                        for (document in result) {
+                                            Log.d(TAG, "${document.id} => ${document.data}")
+                                            dataList.add(
+                                                PostDTO(
+                                                    document.data["documentId"].toString(),
+                                                    document.data["imageUrl"].toString(),
+                                                    document.data["imageUrl2"].toString(),
+                                                    document.data["imageUrl3"].toString(),
+                                                    document.data["imageUrl4"].toString(),
+                                                    document.data["imageUrl5"].toString(),
+                                                    document.data["uid"].toString(),
+                                                    document.data["title"].toString(),
+                                                    document.data["content"].toString(),
+                                                    document.data["category"].toString(),
+                                                    document.data["dealsituation"].toString(),
+                                                    document.data["date"].toString()
+                                                )
+                                            )
+
+                                            intent.putExtra("DataList", dataList)
+                                            configureBottomNavigation()
+                                        }
+                                    }
+                                    .addOnFailureListener { exception ->
+                                        Log.d(TAG, "Error getting documents: ", exception)
+                                    }
+                                Toast.makeText(this,"선택한 카테고리의 상품이 없습니다.",Toast.LENGTH_SHORT).show()
+
+                            }
+                            intent.putExtra("DataList", dataList)
+                            configureBottomNavigation()
                         }
                         .addOnFailureListener { exception ->
                             Log.d(TAG, "Error getting documents: ", exception)
@@ -246,11 +312,44 @@ class MainActivity : AppCompatActivity() {
                                             document.data["date"].toString()
                                         )
                                     )
-
-                                    intent.putExtra("DataList", dataList)
-                                    configureBottomNavigation()
                                 }
                             }
+                            if(dataList.isEmpty()) {
+                                firestore!!.collection("post")
+                                    .whereEqualTo("dealsituation", "doingDeal")
+                                    .get()
+                                    .addOnSuccessListener { result ->
+                                        for (document in result) {
+                                            Log.d(TAG, "${document.id} => ${document.data}")
+                                            dataList.add(
+                                                PostDTO(
+                                                    document.data["documentId"].toString(),
+                                                    document.data["imageUrl"].toString(),
+                                                    document.data["imageUrl2"].toString(),
+                                                    document.data["imageUrl3"].toString(),
+                                                    document.data["imageUrl4"].toString(),
+                                                    document.data["imageUrl5"].toString(),
+                                                    document.data["uid"].toString(),
+                                                    document.data["title"].toString(),
+                                                    document.data["content"].toString(),
+                                                    document.data["category"].toString(),
+                                                    document.data["dealsituation"].toString(),
+                                                    document.data["date"].toString()
+                                                )
+                                            )
+
+                                            intent.putExtra("DataList", dataList)
+                                            configureBottomNavigation()
+                                        }
+                                    }
+                                    .addOnFailureListener { exception ->
+                                        Log.d(TAG, "Error getting documents: ", exception)
+                                    }
+                                Toast.makeText(this,"선택한 카테고리의 상품이 없습니다.",Toast.LENGTH_SHORT).show()
+
+                            }
+                            intent.putExtra("DataList", dataList)
+                            configureBottomNavigation()
                         }
                         .addOnFailureListener { exception ->
                             Log.d(TAG, "Error getting documents: ", exception)
