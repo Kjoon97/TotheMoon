@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -41,14 +42,13 @@ class MainActivity : AppCompatActivity() {
     private val fragmentManager = supportFragmentManager
     public lateinit var mcontext : Context
     var dataList: ArrayList<PostDTO> = arrayListOf()
-
-
+    var infoList : ArrayList<String> = arrayListOf()
+    var categoryList : Array<String> = arrayOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         mcontext = this
         prefs = PreferenceUtil(applicationContext)
-
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
                 Log.w(TAG, "Fetching FCM registration token failed", task.exception)
@@ -106,37 +106,157 @@ class MainActivity : AppCompatActivity() {
         val postReference = FirebaseDatabase.getInstance().getReference("post")
 
 //        auth = FirebaseAuth.getInstance()
-
-        firestore!!.collection("post")
-            .whereEqualTo("dealsituation", "doingDeal")
+        firestore!!.collection("user")
+            .whereEqualTo("uid",Authentication.auth.uid)
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
-                    Log.d(TAG, "${document.id} => ${document.data}")
-                    dataList.add(PostDTO(
-                        document.data["documentId"].toString(),
-                        document.data["imageUrl"].toString(),
-                        document.data["imageUrl2"].toString(),
-                        document.data["imageUrl3"].toString(),
-                        document.data["imageUrl4"].toString(),
-                        document.data["imageUrl5"].toString(),
-                        document.data["uid"].toString(),
-                        document.data["title"].toString(),
-                        document.data["content"].toString(),
-                        document.data["category"].toString(),
-                        document.data["dealsituation"].toString(),
-                        document.data["date"].toString()))
+                    infoList.add(document.data["userCategory1"].toString())
+                    infoList.add(document.data["userCategory2"].toString())
+                    infoList.add(document.data["userCategory3"].toString())
+                }
+                Toast.makeText(this, infoList[0],Toast.LENGTH_SHORT).show()
+                if(infoList.get(0)=="") { //카테고리 설정 안되어있을 경우 전체 게시글 출력
+                    firestore!!.collection("post")
+                        .whereEqualTo("dealsituation", "doingDeal")
+                        .get()
+                        .addOnSuccessListener { result ->
+                            for (document in result) {
+                                Log.d(TAG, "${document.id} => ${document.data}")
+                                dataList.add(
+                                    PostDTO(
+                                        document.data["documentId"].toString(),
+                                        document.data["imageUrl"].toString(),
+                                        document.data["imageUrl2"].toString(),
+                                        document.data["imageUrl3"].toString(),
+                                        document.data["imageUrl4"].toString(),
+                                        document.data["imageUrl5"].toString(),
+                                        document.data["uid"].toString(),
+                                        document.data["title"].toString(),
+                                        document.data["content"].toString(),
+                                        document.data["category"].toString(),
+                                        document.data["dealsituation"].toString(),
+                                        document.data["date"].toString()
+                                    )
+                                )
 
-                    intent.putExtra("DataList", dataList)
-                    configureBottomNavigation()
+                                intent.putExtra("DataList", dataList)
+                                configureBottomNavigation()
+                            }
+                        }
+                        .addOnFailureListener { exception ->
+                            Log.d(TAG, "Error getting documents: ", exception)
+                        }
+                }
+                else if (infoList.get(1)==""){ //설정한 카테고리 1개일때
+                    firestore!!.collection("post")
+                        .whereEqualTo("dealsituation", "doingDeal")
+                        .whereEqualTo("category", infoList[0])
+                        .get()
+                        .addOnSuccessListener { result ->
+                            for (document in result) {
+                                if(document.data["category"].toString() == infoList[0]) {
+                                    Log.d(TAG, "${document.id} => ${document.data}")
+                                    dataList.add(
+                                        PostDTO(
+                                            document.data["documentId"].toString(),
+                                            document.data["imageUrl"].toString(),
+                                            document.data["imageUrl2"].toString(),
+                                            document.data["imageUrl3"].toString(),
+                                            document.data["imageUrl4"].toString(),
+                                            document.data["imageUrl5"].toString(),
+                                            document.data["uid"].toString(),
+                                            document.data["title"].toString(),
+                                            document.data["content"].toString(),
+                                            document.data["category"].toString(),
+                                            document.data["dealsituation"].toString(),
+                                            document.data["date"].toString()
+                                        )
+                                    )
+                                }
+
+                                intent.putExtra("DataList", dataList)
+                                configureBottomNavigation()
+                            }
+                        }
+                        .addOnFailureListener { exception ->
+                            Log.d(TAG, "Error getting documents: ", exception)
+                        }
+                }
+                else if (infoList.get(2)==""){ //설정한 카테고리 2개일때
+                    firestore!!.collection("post")
+                        .whereEqualTo("dealsituation", "doingDeal")
+                        /*.whereEqualTo("category", infoList[0])
+                        .whereEqualTo("category", infoList[1])*/
+                        .get()
+                        .addOnSuccessListener { result ->
+                            for (document in result) {
+                                Log.d(TAG, "${document.id} => ${document.data}")
+                                if (document.data["category"].toString() == infoList[0] || document.data["category"].toString() == infoList[1]) {
+                                    dataList.add(
+                                        PostDTO(
+                                            document.data["documentId"].toString(),
+                                            document.data["imageUrl"].toString(),
+                                            document.data["imageUrl2"].toString(),
+                                            document.data["imageUrl3"].toString(),
+                                            document.data["imageUrl4"].toString(),
+                                            document.data["imageUrl5"].toString(),
+                                            document.data["uid"].toString(),
+                                            document.data["title"].toString(),
+                                            document.data["content"].toString(),
+                                            document.data["category"].toString(),
+                                            document.data["dealsituation"].toString(),
+                                            document.data["date"].toString()
+                                        )
+                                    )
+
+                                    intent.putExtra("DataList", dataList)
+                                    configureBottomNavigation()
+                                }
+                            }
+                        }
+                        .addOnFailureListener { exception ->
+                            Log.d(TAG, "Error getting documents: ", exception)
+                        }
+                }
+                else { //설정한 카테고리 3개일때
+                    firestore!!.collection("post")
+                        .whereEqualTo("dealsituation", "doingDeal")
+                        /*.whereEqualTo("category", infoList[0])
+                        .whereEqualTo("category", infoList[1])*/
+                        .get()
+                        .addOnSuccessListener { result ->
+                            for (document in result) {
+                                Log.d(TAG, "${document.id} => ${document.data}")
+                                if (document.data["category"].toString() == infoList[0] || document.data["category"].toString() == infoList[1]
+                                    || document.data["category"].toString() == infoList[2]) {
+                                    dataList.add(
+                                        PostDTO(
+                                            document.data["documentId"].toString(),
+                                            document.data["imageUrl"].toString(),
+                                            document.data["imageUrl2"].toString(),
+                                            document.data["imageUrl3"].toString(),
+                                            document.data["imageUrl4"].toString(),
+                                            document.data["imageUrl5"].toString(),
+                                            document.data["uid"].toString(),
+                                            document.data["title"].toString(),
+                                            document.data["content"].toString(),
+                                            document.data["category"].toString(),
+                                            document.data["dealsituation"].toString(),
+                                            document.data["date"].toString()
+                                        )
+                                    )
+
+                                    intent.putExtra("DataList", dataList)
+                                    configureBottomNavigation()
+                                }
+                            }
+                        }
+                        .addOnFailureListener { exception ->
+                            Log.d(TAG, "Error getting documents: ", exception)
+                        }
                 }
             }
-            .addOnFailureListener { exception ->
-                Log.d(TAG, "Error getting documents: ", exception)
-            }
-
-
-
     }
 
 
@@ -161,54 +281,54 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         // 뒤로가기 버튼 클릭
-    val homeFragment = fragmentManager.findFragmentByTag("home")
-    val chatFragment = fragmentManager.findFragmentByTag("chat")
-    val mypageFragment = fragmentManager.findFragmentByTag("mypage")
-    if(view_pager.currentItem == 0) {
-        if(System.currentTimeMillis() - mBackWait >=2000 ) {
-            mBackWait = System.currentTimeMillis()
-            val mySnackbar = Snackbar.make(findViewById(R.id.frag_home),
-                "뒤로가기 버튼을 한번 더 누르면 종료됩니다.", Snackbar.LENGTH_SHORT)
+        val homeFragment = fragmentManager.findFragmentByTag("home")
+        val chatFragment = fragmentManager.findFragmentByTag("chat")
+        val mypageFragment = fragmentManager.findFragmentByTag("mypage")
+        if(view_pager.currentItem == 0) {
+            if(System.currentTimeMillis() - mBackWait >=2000 ) {
+                mBackWait = System.currentTimeMillis()
+                val mySnackbar = Snackbar.make(findViewById(R.id.frag_home),
+                    "뒤로가기 버튼을 한번 더 누르면 종료됩니다.", Snackbar.LENGTH_SHORT)
 
-            mySnackbar.setTextColor(Color.WHITE)
-            mySnackbar.show()
-        } else {
-            ActivityCompat.finishAffinity(this)
-            System.runFinalization()
-            System.exit(0)
+                mySnackbar.setTextColor(Color.WHITE)
+                mySnackbar.show()
+            } else {
+                ActivityCompat.finishAffinity(this)
+                System.runFinalization()
+                System.exit(0)
+            }
         }
-    }
-    else if(view_pager.currentItem == 1) {
-                if(System.currentTimeMillis() - mBackWait >=2000 ) {
-            mBackWait = System.currentTimeMillis()
-            val mySnackbar = Snackbar.make(findViewById(R.id.frag_chat),
-                "뒤로가기 버튼을 한번 더 누르면 종료됩니다.", Snackbar.LENGTH_SHORT)
+        else if(view_pager.currentItem == 1) {
+            if(System.currentTimeMillis() - mBackWait >=2000 ) {
+                mBackWait = System.currentTimeMillis()
+                val mySnackbar = Snackbar.make(findViewById(R.id.frag_chat),
+                    "뒤로가기 버튼을 한번 더 누르면 종료됩니다.", Snackbar.LENGTH_SHORT)
 
-            mySnackbar.setTextColor(Color.WHITE)
-            mySnackbar.show()
-        } else {
-            ActivityCompat.finishAffinity(this)
-            System.runFinalization()
-            System.exit(0)
+                mySnackbar.setTextColor(Color.WHITE)
+                mySnackbar.show()
+            } else {
+                ActivityCompat.finishAffinity(this)
+                System.runFinalization()
+                System.exit(0)
+            }
         }
-    }
-    else if(view_pager.currentItem == 2){
-        if(System.currentTimeMillis() - mBackWait >=2000 ) {
-            mBackWait = System.currentTimeMillis()
-            val mySnackbar = Snackbar.make(findViewById(R.id.frag_mypage),
-                "뒤로가기 버튼을 한번 더 누르면 종료됩니다.", Snackbar.LENGTH_SHORT)
+        else if(view_pager.currentItem == 2){
+            if(System.currentTimeMillis() - mBackWait >=2000 ) {
+                mBackWait = System.currentTimeMillis()
+                val mySnackbar = Snackbar.make(findViewById(R.id.frag_mypage),
+                    "뒤로가기 버튼을 한번 더 누르면 종료됩니다.", Snackbar.LENGTH_SHORT)
 
-            mySnackbar.setTextColor(Color.WHITE)
-            mySnackbar.show()
-        } else {
-            ActivityCompat.finishAffinity(this)
-            System.runFinalization()
-            System.exit(0)
+                mySnackbar.setTextColor(Color.WHITE)
+                mySnackbar.show()
+            } else {
+                ActivityCompat.finishAffinity(this)
+                System.runFinalization()
+                System.exit(0)
+            }
         }
+
+
     }
-
-
-     }
     public fun refresh() {
         MainFragmentStatePagerAdapter(supportFragmentManager, 3).notifyDataSetChanged()
     }
