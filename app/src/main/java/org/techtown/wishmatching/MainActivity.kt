@@ -4,12 +4,12 @@ package org.techtown.wishmatching
 
 import android.content.ContentValues.TAG
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.RelativeLayout
-import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -25,6 +25,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
+import kotlinx.android.synthetic.main.activity_edit_profile.*
 import kotlinx.android.synthetic.main.activity_main.*
 import org.techtown.wishmatching.Database.PostDTO
 
@@ -115,7 +116,6 @@ class MainActivity : AppCompatActivity() {
                     infoList.add(document.data["userCategory2"].toString())
                     infoList.add(document.data["userCategory3"].toString())
                 }
-                Toast.makeText(this, infoList[0],Toast.LENGTH_SHORT).show()
                 if(infoList.get(0)=="") { //카테고리 설정 안되어있을 경우 전체 게시글 출력
                     firestore!!.collection("post")
                         .whereEqualTo("dealsituation", "doingDeal")
@@ -331,6 +331,16 @@ class MainActivity : AppCompatActivity() {
     }
     public fun refresh() {
         MainFragmentStatePagerAdapter(supportFragmentManager, 3).notifyDataSetChanged()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == 3) {
+            finish()
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
 
