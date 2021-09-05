@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="org.techtown.wishmatching">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -14,7 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WishMatching"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Mypage.DealSituation.EditItemInfoActivity"></activity>
+        <activity
+            android:name=".FindPasswordActivity"></activity>
+        <activity android:name=".Mypage.DealSituation.EditItemInfoActivity" />
         <activity android:name=".Mypage.DealSituation.MyItemMoreInfoActivity" />
         <activity android:name=".CategoryActivity" />
         <activity

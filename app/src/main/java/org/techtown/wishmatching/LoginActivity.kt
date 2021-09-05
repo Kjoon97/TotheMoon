@@ -61,6 +61,10 @@ class LoginActivity : AppCompatActivity() {
 
         //--------------------------------------------------------------------------------------------------------------------------------------------
         //Local
+        btn_find_password.setOnClickListener {
+            var intent = Intent(this, FindPasswordActivity::class.java)
+            startActivity(intent)
+        }
 
         btnSignIn.setOnClickListener { // 로컬 회원가입 액티비티로 이동
             var intent = Intent(this, SignInActivity::class.java)
@@ -77,13 +81,10 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this,"이메일과 비밀번호를 입력해주세요.",Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
-            if(Authentication.auth==null) {
-                Toast.makeText(this,"이메일과 비밀번호를 확인해주세요.",Toast.LENGTH_LONG).show()
-            }
+
 
             Authentication.auth?.signInWithEmailAndPassword(userEmail, userPw)?.addOnCompleteListener(this) {
                 if(Authentication.auth.currentUser?.isEmailVerified==null) {
-                    Toast.makeText(this,"이메일과 비밀번호를 확인해주세요.",Toast.LENGTH_LONG).show()
                     return@addOnCompleteListener
                 }
                 else {
@@ -102,7 +103,7 @@ class LoginActivity : AppCompatActivity() {
                                     }
                                 }
                         } else {
-                            Toast.makeText(this, "이메일과 비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show()
+
                         }
                     } else {
                         Toast.makeText(this, "인증 메일을 확인해주세요.", Toast.LENGTH_SHORT).show()
