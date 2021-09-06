@@ -23,6 +23,7 @@ class SignInActivity : AppCompatActivity() {
         var user = Firebase.auth.currentUser
 
         btnOk.setOnClickListener { // 인증 완료시
+            Toast.makeText(this,"잠시만 기다려주세요.",Toast.LENGTH_LONG).show()
             val userEmail = editTextSignInEmail.text.toString()
             val userPassword = editTextSignInPassword.text.toString()
             val userName = editTextSignInUserName.text.toString()
@@ -38,20 +39,22 @@ class SignInActivity : AppCompatActivity() {
                 if (task.isSuccessful) Log.d(TAG, "signInWithEmail:success")
                 user=auth.currentUser
                 user!!.sendEmailVerification()?.addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        Log.d(TAG, "Email sent.")
-                        auth.signOut()
+                    auth.signOut()
+                    var dlg = AlertDialog.Builder(this)
+                    dlg.setTitle("알림")
+                    dlg.setMessage("등록된 이메일로 발송된 인증메일을 확인하세요.")
+                    dlg.setIcon(R.drawable.logo)
+                    dlg.setPositiveButton("확인") {diglog, which ->
+                        finish()
                     }
+                    dlg.show()
+//                    if (task.isSuccessful) {
+//                        Log.d(TAG, "Email sent.")
+//                        auth.signOut()
+//                    }
                 }
             }
-            var dlg = AlertDialog.Builder(this)
-            dlg.setTitle("알림")
-            dlg.setMessage("등록된 이메일로 발송된 인증메일을 확인하세요.")
-            dlg.setIcon(R.drawable.logo)
-            dlg.setPositiveButton("확인") {diglog, which ->
-                finish()
-            }
-            dlg.show()
+
         }
 
 

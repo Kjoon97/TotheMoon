@@ -11,10 +11,10 @@
     <ImageView
         android:id="@+id/imageview_chat_to_row"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="#00FFFFFF"
-        app:srcCompat="@drawable/logo" />
+        android:background="@android:color/transparent"
+        app:srcCompat="@drawable/logo_hd" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -52,6 +52,7 @@
             android:inputType="textPassword"
             android:paddingLeft="16dp" />
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -87,6 +88,17 @@
                 android:textStyle="bold"
                 app:backgroundTint="@color/tw__blue_pressed" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/btn_find_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="30dp"
+            android:text="비밀번호 찾기"
+            android:textSize="20sp"
+            android:textStyle="bold|italic" />
 
     </LinearLayout>
 

@@ -69,6 +69,8 @@ class HomeFragment : Fragment() {
 
 
 
+
+
         val gridLayoutManager = GridLayoutManager(context, 2)
         gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
         listAdapter = ListAdapter(list)

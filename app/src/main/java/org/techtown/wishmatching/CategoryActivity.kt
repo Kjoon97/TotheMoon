@@ -2,25 +2,16 @@ package org.techtown.wishmatching
 
 import android.content.Intent
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.Window
 import android.widget.Toast
-import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.android.synthetic.main.activity_add_post.*
 import kotlinx.android.synthetic.main.activity_category.*
-import kotlinx.android.synthetic.main.doingdeal_row.*
-import kotlinx.android.synthetic.main.fragment_my_page.*
-import org.techtown.wishmatching.Database.ContentDTO
-import org.techtown.wishmatching.Database.PostDTO
 
 class CategoryActivity : AppCompatActivity() {
 
@@ -221,7 +212,7 @@ class CategoryActivity : AppCompatActivity() {
                         .addOnSuccessListener { documents ->
                             for (document in documents) {
                                 db!!.collection("user").document(document.id)
-                                    .update("userCategory1" , null)
+                                    .update("userCategory1" , "")
                             }
                         }
                     db!!.collection("user").whereEqualTo("uid", Authentication.auth.uid)
@@ -229,7 +220,7 @@ class CategoryActivity : AppCompatActivity() {
                         .addOnSuccessListener { documents ->
                             for (document in documents) {
                                 db!!.collection("user").document(document.id)
-                                    .update("userCategory2" , null)
+                                    .update("userCategory2" , "")
                             }
                         }
                     db!!.collection("user").whereEqualTo("uid", Authentication.auth.uid)
@@ -237,7 +228,7 @@ class CategoryActivity : AppCompatActivity() {
                         .addOnSuccessListener { documents ->
                             for (document in documents) {
                                 db!!.collection("user").document(document.id)
-                                    .update("userCategory3" , null)
+                                    .update("userCategory3" , "")
                             }
                         }
                     for (x in 0..11 step 1) {
@@ -252,8 +243,15 @@ class CategoryActivity : AppCompatActivity() {
                                 }
                         }
                     }
+//                    for(i in 0..100000) {
+//                        var value:Int
+//                        value = i+1
+//                    }
+                    Thread.sleep(300)
+
+//                    finishActivity(3)
                     val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
+                    startActivityForResult(intent,3)
                 }
             }
         }
