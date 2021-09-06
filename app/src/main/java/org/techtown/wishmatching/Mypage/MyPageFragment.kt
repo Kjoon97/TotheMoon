@@ -7,13 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import kotlinx.android.synthetic.main.doingdeal_row.*
 import kotlinx.android.synthetic.main.fragment_my_page.*
 import org.techtown.wishmatching.Authentication
 import org.techtown.wishmatching.CategoryActivity
+import org.techtown.wishmatching.LoginActivity
 import org.techtown.wishmatching.Mypage.DealSituation.DealCompleteActivity
 import org.techtown.wishmatching.Mypage.DealSituation.DealSituActivity
 import org.techtown.wishmatching.R
@@ -52,6 +55,66 @@ class MyPageFragment : Fragment(){
             val intent = Intent(context, CategoryActivity::class.java)
             startActivity(intent)
         }
+        
+        layout_myPage_logout.setOnClickListener {
+            Authentication.auth.signOut()
+            val intent = Intent(activity, LoginActivity::class.java)
+            startActivity(intent)
+        }
+        
+        layout_myPage_delete.setOnClickListener {
+            firestore!!.collection("post")
+                .whereEqualTo("uid", Authentication.auth.currentUser!!.uid)
+                .get()
+                .addOnSuccessListener { documents ->
+                    if(documents.isEmpty){
+                        firestore!!.collection("user")
+                            .whereEqualTo("uid", Authentication.auth.currentUser!!.uid)
+                            .get()
+                            .addOnSuccessListener { documents->
+                                for(document in documents){
+                                    firestore!!.collection("user").document(document.id).delete().addOnSuccessListener {
+//                                        Toast.makeText(context,"hello",Toast.LENGTH_SHORT).show()
+                                        Authentication.auth.currentUser!!.delete().addOnSuccessListener {
+                                            val intent = Intent(activity, LoginActivity::class.java)
+                                            startActivity(intent)
+                                        }
+                                    }
+                                }
+                            }
+                    } else{
+                        var i = 0
+                        for(document in documents){
+                            if(i == documents.size()-1 ){
+                                firestore!!.collection("post").document(document.id).delete().addOnSuccessListener {
+                                    firestore!!.collection("user")
+                                        .whereEqualTo("uid", Authentication.auth.currentUser!!.uid)
+                                        .get()
+                                        .addOnSuccessListener { documents->
+                                            for(document in documents){
+                                                firestore!!.collection("user").document(document.id).delete().addOnSuccessListener {
+                                                    Authentication.auth.currentUser!!.delete().addOnSuccessListener {
+                                                        val intent = Intent(activity, LoginActivity::class.java)
+                                                        startActivity(intent)
+                                                    }
+                                                }
+                                            }
+                                        }
+                                }
+                            }else{
+                                firestore!!.collection("post").document(document.id).delete()
+                                i++
+                            }
+                    }
+
+                    }
+
+
+
+
+                }
+        }
+        
     }
 
     override fun onResume() {
