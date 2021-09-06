@@ -5,6 +5,7 @@
     <item
         android:id="@+id/action_edit"
         android:title="수정하기"
+        android:fontFamily="@font/imhyeminbold"
         app:showAsAction="always" />
 
 </menu>

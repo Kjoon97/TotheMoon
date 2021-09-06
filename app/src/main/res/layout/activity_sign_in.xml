@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/tw__light_gray"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".SignInActivity">
 
@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="222dp"
         android:background="#00FFFFFF"
-        app:srcCompat="@drawable/logo_hd" />
+        app:srcCompat="@drawable/logo" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -40,6 +40,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="10dp"
+                android:fontFamily="@font/imhyeminbold"
                 android:background="@drawable/rounded_edittext_register_login"
                 android:hint="이름"
                 android:paddingLeft="16dp" />
@@ -65,6 +66,7 @@
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
+                android:fontFamily="@font/imhyeminbold"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/rounded_edittext_register_login"
                 android:hint="Email"
@@ -90,6 +92,7 @@
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
+                android:fontFamily="@font/imhyeminbold"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/rounded_edittext_register_login"
                 android:hint="비밀번호 (최소 8자 이상)"
@@ -106,9 +109,10 @@
             android:layout_marginTop="50dp"
             android:layout_marginRight="20dp"
             android:layout_weight="1"
-            android:background="@color/tw__blue_pressed"
+            android:background="@drawable/btn_btn"
             android:text="회원 가입"
-            android:textColor="@color/white"
+            android:fontFamily="@font/imhyeminbold"
+            android:textColor="@color/black"
             android:textStyle="bold"></Button>
 
     </LinearLayout>

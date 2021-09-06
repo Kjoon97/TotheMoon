@@ -39,6 +39,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:fontFamily="@font/imhyeminbold"
                         android:id="@+id/mypage_nickname"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -47,6 +48,7 @@
                         android:textSize="20dp"></TextView>
 
                     <TextView
+                        android:fontFamily="@font/imhyeminregular"
                         android:id="@+id/mypage_location"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -69,8 +71,7 @@
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/ic_baseline_face_24"
-                    app:tint="@color/tw__composer_deep_gray"></ImageView>
+                    app:srcCompat="@drawable/flaticon_profile"></ImageView>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -82,9 +83,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/imhyeminregular"
                         android:text="프로필 변경하기"
                         android:textColor="@color/black"
-                        android:textSize="18dp"></TextView>
+                        android:textSize="20dp"></TextView>
                 </LinearLayout>
             </LinearLayout>
 
@@ -98,8 +100,7 @@
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/ic_baseline_location_on_24"
-                    app:tint="@color/tw__composer_deep_gray"></ImageView>
+                    app:srcCompat="@drawable/flaticon_map"></ImageView>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -112,8 +113,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="동네 변경하기"
+                        android:fontFamily="@font/imhyeminregular"
                         android:textColor="@color/black"
-                        android:textSize="18dp"></TextView>
+                        android:textSize="20dp"></TextView>
                 </LinearLayout>
             </LinearLayout>
 
@@ -127,8 +129,7 @@
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/box_4241"
-                    app:tint="@color/tw__composer_deep_gray"></ImageView>
+                    android:src="@drawable/flaticon_box"></ImageView>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -141,8 +142,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="등록 물품 조회"
+                        android:fontFamily="@font/imhyeminregular"
                         android:textColor="@color/black"
-                        android:textSize="18dp"></TextView>
+                        android:textSize="20dp"></TextView>
                 </LinearLayout>
             </LinearLayout>
 
@@ -156,8 +158,7 @@
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/hanshake_96905"
-                    app:tint="@color/tw__composer_deep_gray"></ImageView>
+                    android:src="@drawable/flaticon_handshake"></ImageView>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -170,8 +171,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="거래 완료 물품 조회"
+                        android:fontFamily="@font/imhyeminregular"
                         android:textColor="@color/black"
-                        android:textSize="18dp"></TextView>
+                        android:textSize="20dp"></TextView>
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
@@ -184,8 +186,7 @@
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/category_icon"
-                    app:tint="@color/tw__composer_deep_gray"></ImageView>
+                    android:src="@drawable/flaticon_tags"></ImageView>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -199,7 +200,36 @@
                         android:layout_height="wrap_content"
                         android:text="카테고리 설정"
                         android:textColor="@color/black"
-                        android:textSize="18dp"></TextView>
+                        android:fontFamily="@font/imhyeminregular"
+                        android:textSize="20dp"></TextView>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/layout_myPage_license"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/flaticon_licensing"></ImageView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="15dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="라이선스"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/imhyeminregular"
+                        android:textSize="20dp"></TextView>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

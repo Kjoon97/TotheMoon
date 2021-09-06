@@ -3,9 +3,11 @@
     <item
         android:id="@+id/deal_complete"
         android:title="거래 완료"
+        android:fontFamily="@font/imhyeminbold"
         />
     <item
         android:id="@+id/deal_situ_delete"
         android:title="삭제하기"
+        android:fontFamily="@font/imhyeminbold"
         />
 </menu>

@@ -32,6 +32,7 @@
             android:layout_marginTop="16dp"
             android:text="물건 이름"
             android:textSize="20dp"
+            android:fontFamily="@font/imhyeminbold"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/doingdeal_row_image"
             app:layout_constraintTop_toTopOf="parent" />
@@ -43,6 +44,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginBottom="48dp"
             android:text="지역"
+            android:fontFamily="@font/imhyeminbold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/doingdeal_row_image" />
 

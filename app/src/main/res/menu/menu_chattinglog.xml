@@ -4,8 +4,10 @@
 
     <item
         android:id="@+id/action_matchInfo"
+        android:fontFamily="@font/imhyeminbold"
         android:title="매칭 정보" />
     <item
         android:id="@+id/action_exit"
+        android:fontFamily="@font/imhyeminbold"
         android:title="채팅방 나가기" />
 </menu>

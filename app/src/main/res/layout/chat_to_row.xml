@@ -19,6 +19,7 @@
         android:id="@+id/textview_to_row"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/imhyeminbold"
         android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/rounded_to_chat"

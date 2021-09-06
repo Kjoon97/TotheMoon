@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1"
+            android:fontFamily="@font/imhyeminbold"
             android:background="@drawable/rounded_button"
             android:text="상대 물품"
             android:textStyle="bold" />
@@ -33,6 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1"
+            android:fontFamily="@font/imhyeminbold"
             android:background="@drawable/rounded_button"
             android:text="나의 물품"
             android:textStyle="bold" />
@@ -48,6 +50,7 @@
         android:ems="10"
         android:hint="Enter Message"
         android:inputType="textPersonName"
+        android:fontFamily="@font/imhyeminregular"
         android:paddingLeft="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/send_button_chat_log"
