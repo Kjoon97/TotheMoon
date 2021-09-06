@@ -247,7 +247,7 @@ class CategoryActivity : AppCompatActivity() {
 //                        var value:Int
 //                        value = i+1
 //                    }
-                    Thread.sleep(150)
+                    Thread.sleep(300)
 
 //                    finishActivity(3)
                     val intent = Intent(this, MainActivity::class.java)

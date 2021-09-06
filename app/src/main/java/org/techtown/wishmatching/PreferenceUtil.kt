@@ -10,4 +10,11 @@ class PreferenceUtil(context: Context) {
     }
     fun setString(key: String, flag: Int) {
         prefs.edit().putInt(key, flag).apply()
-    } }
+    }
+    fun getStringForProfile(key: String, value: String): String? {
+        return prefs.getString(key, value)
+    }
+    fun setStringForProfile(key: String, value: String) {
+        prefs.edit().putString(key, value).apply()
+    }
+}

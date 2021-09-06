@@ -190,6 +190,9 @@ class ProfileActivity : AppCompatActivity() {
                 contentDTO.imageUrl = uri.toString()
                 contentDTO.nickname = edt_profile_nickname.text.toString()
                 contentDTO.area = city[index[0]]+" "+innercity[index[0]][index[1]]
+                contentDTO.userCategory1 = ""
+                contentDTO.userCategory2 = ""
+                contentDTO.userCategory3 = ""
                 firestore?.collection("user")?.document()?.set(contentDTO)
                 setResult(Activity.RESULT_OK)
 
