@@ -130,35 +130,35 @@ class HomeFragment : Fragment() {
     // 메뉴 버튼 클릭시 이벤트 처리
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_add -> {
-                val intent = Intent(activity, AddPostActivity::class.java)
-                startActivity(intent)
-
-                true
-            }
-            R.id.action_test -> {
-//                startActivity(Intent(activity,ProfileActivity::class.java))
-                val user = Firebase.auth.currentUser
-                user?.let {
-                    // Name, email address, and profile photo Url
-                    val name = user.displayName
-                    val email = user.email
-                    val photoUrl = user.photoUrl
-
-                    // Check if user's email is verified
-                    val emailVerified = user.isEmailVerified
-
-                    // The user's ID, unique to the Firebase project. Do NOT use this value to
-                    // authenticate with your backend server, if you have one. Use
-                    // FirebaseUser.getToken() instead.
-                    val uid = user.uid
-                }
-
-                if (user != null) {
-                    Toast.makeText(activity,"${user.uid}",Toast.LENGTH_LONG).show()
-                }
-                true
-            }
+//            R.id.action_add -> {
+//                val intent = Intent(activity, AddPostActivity::class.java)
+//                startActivity(intent)
+//
+//                true
+//            }
+//            R.id.action_test -> {
+////                startActivity(Intent(activity,ProfileActivity::class.java))
+//                val user = Firebase.auth.currentUser
+//                user?.let {
+//                    // Name, email address, and profile photo Url
+//                    val name = user.displayName
+//                    val email = user.email
+//                    val photoUrl = user.photoUrl
+//
+//                    // Check if user's email is verified
+//                    val emailVerified = user.isEmailVerified
+//
+//                    // The user's ID, unique to the Firebase project. Do NOT use this value to
+//                    // authenticate with your backend server, if you have one. Use
+//                    // FirebaseUser.getToken() instead.
+//                    val uid = user.uid
+//                }
+//
+//                if (user != null) {
+//                    Toast.makeText(activity,"${user.uid}",Toast.LENGTH_LONG).show()
+//                }
+//                true
+//            }
             R.id.action_logout -> {
                 Authentication.auth.signOut()
                 val intent = Intent(activity, LoginActivity::class.java)
@@ -167,11 +167,11 @@ class HomeFragment : Fragment() {
 
                 true
             }
-            R.id.friendlist-> {
-                val intent = Intent(activity, NewMessageActivity::class.java)
-                startActivity(intent)
-                true
-            }
+//            R.id.friendlist-> {
+//                val intent = Intent(activity, NewMessageActivity::class.java)
+//                startActivity(intent)
+//                true
+//            }
 
             else -> super.onOptionsItemSelected(item)
         }
