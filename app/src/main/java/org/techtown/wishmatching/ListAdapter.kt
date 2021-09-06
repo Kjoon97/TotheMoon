@@ -172,8 +172,9 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
                             val channel_name = "match_channel"
                             val channelId = "MATCH_ID"
                             val channel_description = "test"
+
                             val notificationBuilder = NotificationCompat.Builder(context, channelId)
-                                .setSmallIcon(R.mipmap.ic_launcher) // 아이콘 설정
+                                .setSmallIcon(R.drawable.logo) // 아이콘 설정
                                 .setContentTitle("매칭이 성사되었습니다.") // 제목
                                 .setContentText("채팅방이 생성되었습니다.") // 메시지 내용
                                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
