@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import org.techtown.wishmatching.Chatting.NewMessageActivity
 import org.techtown.wishmatching.Database.PostDTO
 
-
+// test
 class HomeFragment : Fragment() {
 //    private lateinit var callback: OnBackPressedCallback
     var mBackWait:Long = 0
