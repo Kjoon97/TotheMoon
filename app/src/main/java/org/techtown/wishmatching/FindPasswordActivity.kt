@@ -1,12 +1,12 @@
 package org.techtown.wishmatching
-
+//123
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_find_password.*
-
+//123
 class FindPasswordActivity : AppCompatActivity() {
 
     lateinit var auth : FirebaseAuth
