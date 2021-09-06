@@ -11,10 +11,11 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/imhyeminbold"
         android:layout_marginTop="30dp"
         android:layout_gravity="center"
         android:text="관심 카테고리 설정"
-        android:textSize="25dp"
+        android:textSize="27dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,8 +26,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:layout_gravity="center"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="20dp"
         android:text="선택한 카테고리의 게시글만 홈에 보이게 됩니다."
+        android:fontFamily="@font/imhyeminregular"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -34,7 +36,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="최대 3개까지 선택가능"
-        android:layout_marginBottom="15dp"
+        android:fontFamily="@font/imhyeminregular"
+        android:layout_marginBottom="18dp"
         android:layout_gravity="center"/>
 
     <LinearLayout
@@ -43,20 +46,23 @@
         android:orientation="horizontal"
         android:layout_marginBottom="20dp"
         android:gravity="center">
+
         <Button
             android:id="@+id/Digital"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="디지털기기"
-            android:background="#86C8E6"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginRight="20dp"
+            android:background="#FFC107"
+            android:fontFamily="@font/imhyeminbold"
+            android:text="디지털기기" />
         <Button
             android:id="@+id/Funiture"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="가구/인테리어"
+            android:fontFamily="@font/imhyeminbold"
             android:layout_marginLeft="20dp"
-            android:background="#86C8E6"/>
+            android:background="#FFC107"/>
     </LinearLayout>
 
     <LinearLayout
@@ -70,15 +76,17 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="식품"
-            android:background="#86C8E6"
+            android:fontFamily="@font/imhyeminbold"
+            android:background="#FFC107"
             android:layout_marginRight="20dp"/>
         <Button
             android:id="@+id/Sports"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="스포츠/레저"
+            android:fontFamily="@font/imhyeminbold"
             android:layout_marginLeft="20dp"
-            android:background="#86C8E6"/>
+            android:background="#FFC107"/>
     </LinearLayout>
 
     <LinearLayout
@@ -92,7 +100,8 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="남성잡화"
-            android:background="#86C8E6"
+            android:background="#FFC107"
+            android:fontFamily="@font/imhyeminbold"
             android:layout_marginRight="20dp"/>
         <Button
             android:id="@+id/WomanClothes"
@@ -100,7 +109,8 @@
             android:layout_height="wrap_content"
             android:text="여성잡화"
             android:layout_marginLeft="20dp"
-            android:background="#86C8E6"/>
+            android:fontFamily="@font/imhyeminbold"
+            android:background="#FFC107"/>
     </LinearLayout>
 
     <LinearLayout
@@ -114,7 +124,8 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="게임/취미"
-            android:background="#86C8E6"
+            android:background="#FFC107"
+            android:fontFamily="@font/imhyeminbold"
             android:layout_marginRight="20dp"/>
         <Button
             android:id="@+id/Beauty"
@@ -122,7 +133,8 @@
             android:layout_height="wrap_content"
             android:text="미용"
             android:layout_marginLeft="20dp"
-            android:background="#86C8E6"/>
+            android:fontFamily="@font/imhyeminbold"
+            android:background="#FFC107"/>
     </LinearLayout>
 
     <LinearLayout
@@ -136,15 +148,17 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="반료동물물품"
-            android:background="#86C8E6"
+            android:fontFamily="@font/imhyeminbold"
+            android:background="#FFC107"
             android:layout_marginRight="20dp"/>
         <Button
             android:id="@+id/Books"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="도서/티켓/음반"
+            android:fontFamily="@font/imhyeminbold"
             android:layout_marginLeft="20dp"
-            android:background="#86C8E6"/>
+            android:background="#FFC107"/>
     </LinearLayout>
 
     <LinearLayout
@@ -158,14 +172,16 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="유아용품"
-            android:background="#86C8E6"
+            android:fontFamily="@font/imhyeminbold"
+            android:background="#FFC107"
             android:layout_marginRight="20dp"/>
         <Button
             android:id="@+id/Etc"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="기타"
+            android:fontFamily="@font/imhyeminbold"
             android:layout_marginLeft="20dp"
-            android:background="#86C8E6"/>
+            android:background="#FFC107"/>
     </LinearLayout>
 </LinearLayout>

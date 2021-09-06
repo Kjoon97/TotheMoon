@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.WishMatching" parent="Theme.AppCompat.Light">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#E6E6FA</item>
-        <item name="colorPrimaryVariant">#B0C4DE</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryVariant">@color/tw__light_gray</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -18,9 +18,9 @@
     </style>
 
     <style name="Theme.WishMatching_post" parent="Theme.AppCompat.Light">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">#00FFFFFF</item>
-        <item name="colorPrimaryVariant">#B0C4DE</item>
+        <!-- Primary brand color. #56FFC107-->
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryVariant">@color/tw__light_gray</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>

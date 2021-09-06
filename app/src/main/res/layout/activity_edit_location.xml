@@ -33,19 +33,22 @@
         android:id="@+id/tv_edtLocation_cityText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
-        android:text="동네 입력"
-        android:textSize="30dp"
+        android:layout_marginTop="48dp"
+        android:text="동네 선택"
+        android:textSize="26dp"
+        android:fontFamily="@font/imhyeminbold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:background="@drawable/btn_btn"
         android:id="@+id/btn_edtLocation_update"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:text="완료"
+        android:fontFamily="@font/imhyeminbold"
         app:layout_constraintEnd_toEndOf="@+id/spin_edtLocation_innercity"
         app:layout_constraintTop_toBottomOf="@+id/spin_edtLocation_innercity" />
 

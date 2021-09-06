@@ -3,20 +3,20 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
-    <item
-        android:id="@+id/friendlist"
-        android:title="new"
-        app:showAsAction="always" />
-    <item
-        android:id="@+id/action_add"
-        android:icon="@drawable/ic_add_a_photo"
-        android:title="ddd"
-        app:showAsAction="always" />
-    <item
-        android:id="@+id/action_test"
-        android:icon="@drawable/ic_baseline_add_24"
-        android:title="fff"
-        app:showAsAction="always" />
+<!--    <item-->
+<!--        android:id="@+id/friendlist"-->
+<!--        android:title="new"-->
+<!--        app:showAsAction="always" />-->
+<!--    <item-->
+<!--        android:id="@+id/action_add"-->
+<!--        android:icon="@drawable/ic_add_a_photo"-->
+<!--        android:title="ddd"-->
+<!--        app:showAsAction="always" />-->
+<!--    <item-->
+<!--        android:id="@+id/action_test"-->
+<!--        android:icon="@drawable/ic_baseline_add_24"-->
+<!--        android:title="fff"-->
+<!--        app:showAsAction="always" />-->
     <item
         android:id="@+id/action_logout"
         android:icon="@drawable/ic_baseline_call_missed_outgoing_24"
