@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/drawable-v24/custom_edittext.xml" value="0.26153846153846155" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/drawable/bg_label.xml" value="0.26153846153846155" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/drawable/btn_btn.xml" value="0.26564102564102565" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/drawable/edge.xml" value="0.26564102564102565" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/drawable/edittext_rounded_corner_rectangle.xml" value="0.26564102564102565" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.26153846153846155" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.26153846153846155" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/drawable/ic_baseline_call_missed_outgoing_24.xml" value="0.26153846153846155" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/drawable/ic_baseline_check_24.xml" value="0.26153846153846155" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.26153846153846155" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/drawable/ic_baseline_face_24.xml" value="0.26153846153846155" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/drawable/ic_baseline_location_on_24.xml" value="0.26153846153846155" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/drawable/ic_more.xml" value="0.26153846153846155" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/drawable/ic_warning.xml" value="0.26153846153846155" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/drawable/like_btn.xml" value="0.26564102564102565" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/drawable/navigationbar_edge.xml" value="0.26564102564102565" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/drawable/navigationbaredge.xml" value="0.26979166666666665" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/drawable/rounded_button.xml" value="0.26564102564102565" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/drawable/rounded_edittext_register_login.xml" value="0.26564102564102565" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/drawable/selector_bottom_navi_home_icon.xml" value="0.26979166666666665" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/drawable/selector_bottom_navi_my_page_icon.xml" value="0.26979166666666665" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/font/app_main_font.xml" value="0.24722222222222223" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_add_post.xml" value="0.12335359675785208" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_category.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_chat_log.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_deal_complete.xml" value="0.12335359675785208" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_deal_situ.xml" value="0.12335359675785208" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_edit_item_info.xml" value="0.2463768115942029" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_edit_location.xml" value="0.2463768115942029" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_edit_profile.xml" value="0.264" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_license.xml" value="0.22282608695652173" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_login.xml" value="0.264" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_main.xml" value="0.12335359675785208" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_more_info.xml" value="0.2" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_my_item_more_info.xml" value="0.2463768115942029" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_new_message.xml" value="0.12335359675785208" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_profile.xml" value="0.4" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_sign_in.xml" value="0.264" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/bottom_navigation_tab.xml" value="0.3783783783783784" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/chat_from_row.xml" value="0.4" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/chat_to_row.xml" value="0.4" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/doingdeal_row.xml" value="0.264" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/fragment_chatting.xml" value="0.12335359675785208" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/fragment_home.xml" value="0.264" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/fragment_my_page.xml" value="0.264" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/image_chat_from_row.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/image_chat_to_row.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/latest_message_row.xml" value="0.2" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/list_item.xml" value="0.264" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/user_row_new_message.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/menu/deal_complete_menu.xml" value="0.20925925925925926" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/menu/deal_situ_menu.xml" value="0.2388888888888889" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/menu/edit_item_menu.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/menu/menu_addpostactivity.xml" value="0.2388888888888889" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/menu/menu_category.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/menu/menu_chattingfragment.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/menu/menu_chattinglog.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/menu/menu_homefragment.xml" value="0.2388888888888889" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
+</project>
