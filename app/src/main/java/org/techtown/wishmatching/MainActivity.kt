@@ -117,7 +117,38 @@ class MainActivity : AppCompatActivity() {
                     infoList.add(document.data["userCategory2"].toString())
                     infoList.add(document.data["userCategory3"].toString())
                 }
-                if(infoList.get(0)=="") { //카테고리 설정 안되어있을 경우 전체 게시글 출력
+                if (infoList.isNullOrEmpty()){
+                    firestore!!.collection("post")
+                        .whereEqualTo("dealsituation", "doingDeal")
+                        .get()
+                        .addOnSuccessListener { result ->
+                            for (document in result) {
+                                Log.d(TAG, "${document.id} => ${document.data}")
+                                dataList.add(
+                                    PostDTO(
+                                        document.data["documentId"].toString(),
+                                        document.data["imageUrl"].toString(),
+                                        document.data["imageUrl2"].toString(),
+                                        document.data["imageUrl3"].toString(),
+                                        document.data["imageUrl4"].toString(),
+                                        document.data["imageUrl5"].toString(),
+                                        document.data["uid"].toString(),
+                                        document.data["title"].toString(),
+                                        document.data["content"].toString(),
+                                        document.data["category"].toString(),
+                                        document.data["dealsituation"].toString(),
+                                        document.data["date"].toString()
+                                    )
+                                )
+                                intent.putExtra("DataList", dataList)
+                                configureBottomNavigation()
+                            }
+                        }
+                        .addOnFailureListener { exception ->
+                            Log.d(TAG, "Error getting documents: ", exception)
+                        }
+                }
+                else if(infoList.get(0)=="") { //카테고리 설정 안되어있을 경우 전체 게시글 출력
                     firestore!!.collection("post")
                         .whereEqualTo("dealsituation", "doingDeal")
                         .get()
