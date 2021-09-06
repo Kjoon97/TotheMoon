@@ -120,6 +120,7 @@ class ProfileActivity : AppCompatActivity() {
                 }else{
                     contentUpload()
                     //액티비티 실행
+                    Thread.sleep(300)
                     startActivity(Intent(this,MainActivity::class.java))
                 }
 
