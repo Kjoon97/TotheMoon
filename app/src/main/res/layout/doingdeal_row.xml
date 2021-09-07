@@ -26,13 +26,13 @@
 
         <TextView
             android:id="@+id/stuff_name"
-            android:layout_width="97dp"
+            android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
+            android:fontFamily="@font/imhyeminbold"
             android:text="물건 이름"
             android:textSize="20dp"
-            android:fontFamily="@font/imhyeminbold"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/doingdeal_row_image"
             app:layout_constraintTop_toTopOf="parent" />
