@@ -67,7 +67,7 @@ class MyPageFragment : Fragment(){
         layout_myPage_delete.setOnClickListener {
 
             AlertDialog.Builder(requireContext())
-                .setTitle("삭제하기")
+                .setTitle("계정 삭제하기")
                 .setIcon(R.drawable.ic_warning)
                 .setMessage("정말로 삭제하시겠습니까?")
                 .setPositiveButton("네"){
