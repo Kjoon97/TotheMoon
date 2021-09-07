@@ -13,8 +13,6 @@ import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import kotlinx.android.synthetic.main.doingdeal_row.*
-import kotlinx.android.synthetic.main.doingdeal_row.view.*
 import kotlinx.android.synthetic.main.fragment_my_page.*
 import org.techtown.wishmatching.Authentication
 import org.techtown.wishmatching.CategoryActivity
@@ -59,9 +57,26 @@ class MyPageFragment : Fragment(){
         }
         
         layout_myPage_logout.setOnClickListener {
-            Authentication.auth.signOut()
-            val intent = Intent(activity, LoginActivity::class.java)
-            startActivity(intent)
+
+            AlertDialog.Builder(requireContext())
+                .setTitle("로그아웃")
+                .setMessage("로그아웃 하시겠습니까?")
+                .setPositiveButton("네"){
+                        dialog,_->
+
+                    Authentication.auth.signOut()
+                    val intent = Intent(activity, LoginActivity::class.java)
+                    startActivity(intent)
+
+                }
+                .setNegativeButton("아니요"){
+                        dialog,_->
+                    dialog.dismiss()
+                }
+                .create()
+                .show()
+
+
         }
         
         layout_myPage_delete.setOnClickListener {
