@@ -114,7 +114,12 @@ class MyPageFragment : Fragment(){
 
                 }
         }
-        
+        layout_myPage_license.setOnClickListener {
+            val intent = Intent(context, LicenseActivity::class.java)
+            startActivity(intent)
+        }
+
+
     }
 
     override fun onResume() {

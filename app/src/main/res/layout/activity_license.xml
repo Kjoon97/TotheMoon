@@ -42,6 +42,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Icons made by https://www.flaticon.com/authors/pixel-perfect"></TextView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="Icons made by   https://www.flaticon.com/authors/monkik"></TextView>
         <TextView
             android:layout_width="match_parent"

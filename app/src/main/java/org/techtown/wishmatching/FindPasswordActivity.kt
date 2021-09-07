@@ -13,6 +13,7 @@ class FindPasswordActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(R.layout.activity_find_password)
         super.onCreate(savedInstanceState)
+        supportActionBar?.title = "비밀번호 찾기"
 
         auth = FirebaseAuth.getInstance()
 

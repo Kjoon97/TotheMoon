@@ -16,7 +16,9 @@
         android:theme="@style/Theme.WishMatching"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".FindPasswordActivity"></activity>
+            android:name=".Mypage.LicenseActivity"
+            android:exported="true" />
+        <activity android:name=".FindPasswordActivity" />
         <activity android:name=".Mypage.DealSituation.EditItemInfoActivity" />
         <activity android:name=".Mypage.DealSituation.MyItemMoreInfoActivity" />
         <activity android:name=".CategoryActivity" />

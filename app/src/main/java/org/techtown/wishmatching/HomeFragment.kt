@@ -159,14 +159,14 @@ class HomeFragment : Fragment() {
 //                }
 //                true
 //            }
-            R.id.action_logout -> {
-                Authentication.auth.signOut()
-                val intent = Intent(activity, LoginActivity::class.java)
-                startActivity(intent)
-
-
-                true
-            }
+//            R.id.action_logout -> {
+//                Authentication.auth.signOut()
+//                val intent = Intent(activity, LoginActivity::class.java)
+//                startActivity(intent)
+//
+//
+//                true
+//            }
 //            R.id.friendlist-> {
 //                val intent = Intent(activity, NewMessageActivity::class.java)
 //                startActivity(intent)

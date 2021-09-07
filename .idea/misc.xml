@@ -26,7 +26,7 @@
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/drawable/selector_bottom_navi_home_icon.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/drawable/selector_bottom_navi_my_page_icon.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/font/app_main_font.xml" value="0.24722222222222223" />
-        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_add_post.xml" value="0.12335359675785208" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_add_post.xml" value="0.264" />
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_category.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_chat_log.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_deal_complete.xml" value="0.12335359675785208" />
@@ -35,7 +35,8 @@
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_edit_location.xml" value="0.2463768115942029" />
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_edit_profile.xml" value="0.264" />
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_find_password.xml" value="0.25364583333333335" />
-        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_license.xml" value="0.22282608695652173" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_license.xml" value="0.4" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_license2.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_main.xml" value="0.12335359675785208" />
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_more_info.xml" value="0.2" />

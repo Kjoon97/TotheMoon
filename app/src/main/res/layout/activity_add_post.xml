@@ -32,6 +32,7 @@
                     app:srcCompat="@drawable/camera_moto" />
 
                 <TextView
+                    android:fontFamily="@font/imhyeminbold"
                     android:id="@+id/textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -78,6 +79,7 @@
     </HorizontalScrollView>
 
     <EditText
+        android:fontFamily="@font/imhyeminregular"
         android:id="@+id/editText_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -93,6 +95,7 @@
         android:layout_margin="20dp" />
 
     <EditText
+        android:fontFamily="@font/imhyeminregular"
         android:id="@+id/editText_content"
         android:layout_width="match_parent"
         android:layout_height="239dp"

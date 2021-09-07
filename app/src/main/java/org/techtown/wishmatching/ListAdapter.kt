@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.cardview.widget.CardView
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -34,6 +35,7 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
 
         var photourl: ImageView = itemView!!.findViewById(R.id.item_photo)
         var btn_like: ImageView = itemView!!.findViewById(R.id.btn_like)
+        var card : CardView = itemView!!.findViewById(R.id.item_card)
         var state_like: Int = 0
 
 
@@ -221,7 +223,7 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
 
         }
 
-        holder.photourl.setOnClickListener {
+        holder.card.setOnClickListener {
             val intent = Intent(it.context, MoreInfoActivity::class.java)
             intent.putExtra("doc_id", doc_id)
             intent.putExtra("state", holder.state_like)

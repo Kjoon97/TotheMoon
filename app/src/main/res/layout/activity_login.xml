@@ -100,6 +100,8 @@
             android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/btn_find_password"
+                android:fontFamily="@font/imhyeminregular"
+                android:textSize="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="비밀번호 찾기"></TextView>
