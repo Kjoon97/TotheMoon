@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
                 else if(position == 2) {
                     val actionBar: ActionBar? = supportActionBar
                     if (actionBar != null) {
-                        actionBar.setTitle("My Page")
+                        actionBar.setTitle("My Page  ")
                     }
                 }
 

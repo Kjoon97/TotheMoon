@@ -84,7 +84,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/imhyeminregular"
-                        android:text="프로필 변경하기"
+                        android:text="프로필 수정"
                         android:textColor="@color/black"
                         android:textSize="20dp"></TextView>
                 </LinearLayout>
@@ -112,7 +112,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="동네 변경하기"
+                        android:text="동네 수정"
                         android:fontFamily="@font/imhyeminregular"
                         android:textColor="@color/black"
                         android:textSize="20dp"></TextView>
@@ -233,34 +233,7 @@
                         android:textSize="20dp"></TextView>
                 </LinearLayout>
             </LinearLayout>
-            <LinearLayout
-                android:id="@+id/layout_myPage_delete"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="15dp">
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/flaticon_delete"></ImageView>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="15dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="계정 탈퇴"
-                        android:textColor="@color/black"
-                        android:fontFamily="@font/imhyeminregular"
-                        android:textSize="20dp"></TextView>
-                </LinearLayout>
-            </LinearLayout>
             <LinearLayout
                 android:id="@+id/layout_myPage_license"
                 android:layout_width="match_parent"
@@ -284,6 +257,35 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="라이선스"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/imhyeminregular"
+                        android:textSize="20dp"></TextView>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_myPage_delete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/flaticon_delete"></ImageView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="15dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="계정 삭제"
                         android:textColor="@color/black"
                         android:fontFamily="@font/imhyeminregular"
                         android:textSize="20dp"></TextView>

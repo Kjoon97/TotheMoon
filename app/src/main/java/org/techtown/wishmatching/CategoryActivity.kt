@@ -47,7 +47,7 @@ class CategoryActivity : AppCompatActivity() {
             } else { //미선택
                 Clicked[0] == false
                 count -= 1
-                Digital.setBackgroundColor(Color.parseColor("#86C8E6"))
+                Digital.setBackgroundColor(Color.parseColor("#FFC107"))
             }
         }
 
@@ -60,7 +60,7 @@ class CategoryActivity : AppCompatActivity() {
             else { //미선택
                 Clicked[1] == false
                 count -= 1
-                Funiture.setBackgroundColor(Color.parseColor("#86C8E6"))
+                Funiture.setBackgroundColor(Color.parseColor("#FFC107"))
             }
         }
 
@@ -73,7 +73,7 @@ class CategoryActivity : AppCompatActivity() {
             else { //미선택
                 Clicked[2] == false
                 count -= 1
-                Food.setBackgroundColor(Color.parseColor("#86C8E6"))
+                Food.setBackgroundColor(Color.parseColor("#FFC107"))
             }
         }
 
@@ -86,7 +86,7 @@ class CategoryActivity : AppCompatActivity() {
             else { //미선택
                 Clicked[3] == false
                 count -= 1
-                Sports.setBackgroundColor(Color.parseColor("#86C8E6"))
+                Sports.setBackgroundColor(Color.parseColor("#FFC107"))
             }
         }
 
@@ -99,7 +99,7 @@ class CategoryActivity : AppCompatActivity() {
             else { //미선택
                 Clicked[4] == false
                 count -= 1
-                ManClothes.setBackgroundColor(Color.parseColor("#86C8E6"))
+                ManClothes.setBackgroundColor(Color.parseColor("#FFC107"))
             }
         }
 
@@ -112,7 +112,7 @@ class CategoryActivity : AppCompatActivity() {
             else { //미선택
                 Clicked[5] == false
                 count -= 1
-                WomanClothes.setBackgroundColor(Color.parseColor("#86C8E6"))
+                WomanClothes.setBackgroundColor(Color.parseColor("#FFC107"))
             }
         }
 
@@ -125,7 +125,7 @@ class CategoryActivity : AppCompatActivity() {
             else { //미선택
                 Clicked[6] == false
                 count -= 1
-                Games.setBackgroundColor(Color.parseColor("#86C8E6"))
+                Games.setBackgroundColor(Color.parseColor("#FFC107"))
             }
         }
 
@@ -138,7 +138,7 @@ class CategoryActivity : AppCompatActivity() {
             else { //미선택
                 Clicked[7] == false
                 count -= 1
-                Beauty.setBackgroundColor(Color.parseColor("#86C8E6"))
+                Beauty.setBackgroundColor(Color.parseColor("#FFC107"))
             }
         }
 
@@ -151,7 +151,7 @@ class CategoryActivity : AppCompatActivity() {
             else { //미선택
                 Clicked[8] == false
                 count -= 1
-                Animals.setBackgroundColor(Color.parseColor("#86C8E6"))
+                Animals.setBackgroundColor(Color.parseColor("#FFC107"))
             }
         }
 
@@ -164,7 +164,7 @@ class CategoryActivity : AppCompatActivity() {
             else { //미선택
                 Clicked[9] == false
                 count -= 1
-                Books.setBackgroundColor(Color.parseColor("#86C8E6"))
+                Books.setBackgroundColor(Color.parseColor("#FFC107"))
             }
         }
 
@@ -177,7 +177,7 @@ class CategoryActivity : AppCompatActivity() {
             else { //미선택
                 Clicked[10] == false
                 count -= 1
-                Baby.setBackgroundColor(Color.parseColor("#86C8E6"))
+                Baby.setBackgroundColor(Color.parseColor("#FFC107"))
             }
         }
 
@@ -190,7 +190,7 @@ class CategoryActivity : AppCompatActivity() {
             else { //미선택
                 Clicked[11] == false
                 count -= 1
-                Etc.setBackgroundColor(Color.parseColor("#86C8E6"))
+                Etc.setBackgroundColor(Color.parseColor("#FFC107"))
             }
         }
     }
