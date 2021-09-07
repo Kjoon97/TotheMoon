@@ -2,7 +2,6 @@ package org.techtown.wishmatching.Mypage.DealSituation
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,13 +10,13 @@ import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.provider.PicassoProvider
 import kotlinx.android.synthetic.main.activity_deal_situ.*
-import kotlinx.android.synthetic.main.activity_deal_situ.my_goods_Recyclerview
 import kotlinx.android.synthetic.main.doingdeal_row.*
 import kotlinx.android.synthetic.main.doingdeal_row.view.*
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -78,7 +77,7 @@ class DealSituActivity : AppCompatActivity() {
     }
 }
 
-class RecyclerViewAdapter(val c:Context): RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>(){
+open class RecyclerViewAdapter(val c:Context): RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>(){
     var Postdata = mutableListOf<PostDTO>()
 
     interface onItemClickListener {
@@ -190,6 +189,8 @@ class RecyclerViewAdapter(val c:Context): RecyclerView.Adapter<RecyclerViewAdapt
     override fun getItemCount(): Int {
         return Postdata.size
     }
+
+
 
 
 }

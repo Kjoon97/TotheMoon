@@ -15,6 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WishMatching"
         android:usesCleartextTraffic="true">
+        <activity android:name=".Mypage.DealSituation.MatchingPartnerPostInfo"></activity>
+        <activity android:name=".Mypage.DealSituation.MatchingMyPostInfo" />
         <activity
             android:name=".Mypage.LicenseActivity"
             android:exported="true" />

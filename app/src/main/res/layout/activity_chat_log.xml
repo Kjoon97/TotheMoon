@@ -23,9 +23,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:fontFamily="@font/imhyeminbold"
             android:background="@drawable/rounded_button"
-            android:text="상대 물품"
+            android:fontFamily="@font/imhyeminbold"
+            android:text="나의 물품"
             android:textStyle="bold" />
 
         <Button
@@ -34,9 +34,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:fontFamily="@font/imhyeminbold"
             android:background="@drawable/rounded_button"
-            android:text="나의 물품"
+            android:fontFamily="@font/imhyeminbold"
+            android:text="상대 물품"
             android:textStyle="bold" />
     </LinearLayout>
 
