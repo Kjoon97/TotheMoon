@@ -221,40 +221,7 @@ class ChatLogActivity : AppCompatActivity() {
 
                 true
             }
-            R.id.action_matchInfo -> {
-                val fromId = FirebaseAuth.getInstance().uid // 현재 사용자
-                val usersDb = FirebaseDatabase.getInstance().getReference().child("matching-users")
-                var post_value = usersDb.child(toUser!!.uid).child("connections").child("match")
-                var post_value2 = usersDb.child(fromId!!).child("connections").child("match")
-                var matchPostId2 : Task<DataSnapshot> = post_value2.get()
-                var matchPostId : Task<DataSnapshot> = post_value.get()
 
-                var my_like_post:String = ""
-                var partner_like_post:String = ""
-
-                var firestore : FirebaseFirestore? = null   // 데이터베이스를 사용할 수 있도록
-                firestore!!.collection("Matching_Post")
-                firestore!!.collection("Matching_Post")
-                    .document("$fromId"+"${toUser!!.uid}")
-                    .get()
-                    .addOnSuccessListener {
-
-                    }
-//                    .addOnSuccessListener { documents->
-//                        for(document in documents){
-//                            mypage_location.text = document.data["area"].toString()
-//                            mypage_nickname.text = document.data["nickname"].toString()
-//                            val image = storage!!.getReferenceFromUrl(document.data["imageUrl"].toString())
-//                            displayImageRef(image, img_myPage_profileImg)
-//
-//                        }
-//                    }
-
-
-
-
-                true
-            }
             else -> return super.onOptionsItemSelected(item)
         }
 

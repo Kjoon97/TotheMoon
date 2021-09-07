@@ -7,12 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import kotlinx.android.synthetic.main.doingdeal_row.*
 import kotlinx.android.synthetic.main.fragment_my_page.*
 import org.techtown.wishmatching.Authentication
 import org.techtown.wishmatching.CategoryActivity
@@ -57,62 +56,91 @@ class MyPageFragment : Fragment(){
         }
         
         layout_myPage_logout.setOnClickListener {
-            Authentication.auth.signOut()
-            val intent = Intent(activity, LoginActivity::class.java)
-            startActivity(intent)
+
+            var builder = AlertDialog.Builder(requireContext())
+            builder.setTitle("로그아웃")
+            builder.setMessage("로그아웃 하시겠습니까?")
+            builder.setPositiveButton("예") { dialog, which ->
+
+                Authentication.auth.signOut()
+                val intent = Intent(activity, LoginActivity::class.java)
+                startActivity(intent)
+
+            }
+                .setNegativeButton("취소",null)
+                .create()
+            builder.show()
+
+
         }
         
         layout_myPage_delete.setOnClickListener {
-            firestore!!.collection("post")
-                .whereEqualTo("uid", Authentication.auth.currentUser!!.uid)
-                .get()
-                .addOnSuccessListener { documents ->
-                    if(documents.isEmpty){
-                        firestore!!.collection("user")
-                            .whereEqualTo("uid", Authentication.auth.currentUser!!.uid)
-                            .get()
-                            .addOnSuccessListener { documents->
-                                for(document in documents){
-                                    firestore!!.collection("user").document(document.id).delete().addOnSuccessListener {
+
+            var builder = AlertDialog.Builder(requireActivity())
+            builder.setTitle("회원 탈퇴")
+            builder.setMessage("회원 정보와 작성한 게시글이 지워집니다. 탈퇴하시겠습니까?")
+            builder.setIcon(R.drawable.ic_warning)
+            builder.setPositiveButton("예") { dialog, which ->
+
+                firestore!!.collection("post")
+                    .whereEqualTo("uid", Authentication.auth.currentUser!!.uid)
+                    .get()
+                    .addOnSuccessListener { documents ->
+                        if(documents.isEmpty){
+                            firestore!!.collection("user")
+                                .whereEqualTo("uid", Authentication.auth.currentUser!!.uid)
+                                .get()
+                                .addOnSuccessListener { documents->
+                                    for(document in documents){
+                                        firestore!!.collection("user").document(document.id).delete().addOnSuccessListener {
 //                                        Toast.makeText(context,"hello",Toast.LENGTH_SHORT).show()
-                                        Authentication.auth.currentUser!!.delete().addOnSuccessListener {
-                                            val intent = Intent(activity, LoginActivity::class.java)
-                                            startActivity(intent)
+                                            Authentication.auth.currentUser!!.delete().addOnSuccessListener {
+                                                val intent = Intent(activity, LoginActivity::class.java)
+                                                startActivity(intent)
+                                            }
                                         }
                                     }
                                 }
-                            }
-                    } else{
-                        var i = 0
-                        for(document in documents){
-                            if(i == documents.size()-1 ){
-                                firestore!!.collection("post").document(document.id).delete().addOnSuccessListener {
-                                    firestore!!.collection("user")
-                                        .whereEqualTo("uid", Authentication.auth.currentUser!!.uid)
-                                        .get()
-                                        .addOnSuccessListener { documents->
-                                            for(document in documents){
-                                                firestore!!.collection("user").document(document.id).delete().addOnSuccessListener {
-                                                    Authentication.auth.currentUser!!.delete().addOnSuccessListener {
-                                                        val intent = Intent(activity, LoginActivity::class.java)
-                                                        startActivity(intent)
+                        } else{
+                            var i = 0
+                            for(document in documents){
+                                if(i == documents.size()-1 ){
+                                    firestore!!.collection("post").document(document.id).delete().addOnSuccessListener {
+                                        firestore!!.collection("user")
+                                            .whereEqualTo("uid", Authentication.auth.currentUser!!.uid)
+                                            .get()
+                                            .addOnSuccessListener { documents->
+                                                for(document in documents){
+                                                    firestore!!.collection("user").document(document.id).delete().addOnSuccessListener {
+                                                        Authentication.auth.currentUser!!.delete().addOnSuccessListener {
+                                                            val intent = Intent(activity, LoginActivity::class.java)
+                                                            startActivity(intent)
+                                                        }
                                                     }
                                                 }
                                             }
-                                        }
+                                    }
+                                }else{
+                                    firestore!!.collection("post").document(document.id).delete()
+                                    i++
                                 }
-                            }else{
-                                firestore!!.collection("post").document(document.id).delete()
-                                i++
                             }
-                    }
+
+                        }
+
+
+
 
                     }
 
+            }
+                .setNegativeButton("취소",null)
+                .create()
+            builder.show()
 
 
 
-                }
+
         }
         layout_myPage_license.setOnClickListener {
             val intent = Intent(context, LicenseActivity::class.java)
