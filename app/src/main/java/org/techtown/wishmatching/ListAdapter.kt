@@ -22,7 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import org.techtown.wishmatching.Database.MatchPostId
 import org.techtown.wishmatching.Database.PostDTO
-import org.techtown.wishmatching.LoginActivity.Companion.prefs
+import org.techtown.wishmatching.MainActivity.Companion.prefs
 import org.techtown.wishmatching.RealtimeDB.ChatMessage
 
 

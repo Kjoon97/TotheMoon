@@ -19,7 +19,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.provider.PicassoProvider
 import kotlinx.android.synthetic.main.activity_more_info.*
 import org.techtown.wishmatching.Database.MatchPostId
-import org.techtown.wishmatching.LoginActivity.Companion.prefs
+import org.techtown.wishmatching.MainActivity.Companion.prefs
 import org.techtown.wishmatching.RealtimeDB.ChatMessage
 
 class MoreInfoActivity : AppCompatActivity() {
