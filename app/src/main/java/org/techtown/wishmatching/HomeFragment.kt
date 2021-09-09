@@ -26,6 +26,7 @@ class HomeFragment : Fragment() {
     var arrayList = ArrayList<PostDTO>()
     var refresh_arrayList = ArrayList<PostDTO>()
     var firestore : FirebaseFirestore? = null   // 데이터베이스를 사용할 수 있도록
+    var infoList : ArrayList<String> = arrayListOf()
 //    var dataList: ArrayList<PostDTO> = arrayListOf(
 //        PostDTO("https://firebasestorage.googleapis.com/v0/b/wishmatching-ed07a.appspot.com/o/Post%2FIMAGE_20210808_224047_.png?alt=media&token=7616bfae-af82-4d4b-957e-6c0d8f0477e0","","","",""),
 //
@@ -80,26 +81,284 @@ class HomeFragment : Fragment() {
         homefragment_swipe.setOnRefreshListener {  // 새로고침
 //            val intent = Intent(context, MainActivity::class.java)
 //            startActivity(intent)
-            refresh_arrayList.clear()
             firestore = FirebaseFirestore.getInstance()
-            firestore!!.collection("post")
-                .whereEqualTo("dealsituation", "doingDeal")
+            refresh_arrayList.clear()
+            firestore!!.collection("user")
+                .whereEqualTo("uid",Authentication.auth.uid)
                 .get()
                 .addOnSuccessListener { result ->
                     for (document in result) {
-                        Log.d(ContentValues.TAG, "${document.id} => ${document.data}")
-                        refresh_arrayList.add(PostDTO(
-                            document.data["documentId"].toString(),
-                            document.data["imageUrl"].toString(),
-                            document.data["uid"].toString(),
-                            document.data["title"].toString(),
-                            document.data["content"].toString(),
-                            document.data["category"].toString()))
+                        infoList.add(document.data["userCategory1"].toString())
+                        infoList.add(document.data["userCategory2"].toString())
+                        infoList.add(document.data["userCategory3"].toString())
                     }
+                    if (infoList.isNullOrEmpty()){
+                        firestore!!.collection("post")
+                            .whereEqualTo("dealsituation", "doingDeal")
+                            .get()
+                            .addOnSuccessListener { result ->
+                                for (document in result) {
+                                    Log.d(ContentValues.TAG, "${document.id} => ${document.data}")
+                                    refresh_arrayList.add(
+                                        PostDTO(
+                                            document.data["documentId"].toString(),
+                                            document.data["imageUrl"].toString(),
+                                            document.data["imageUrl2"].toString(),
+                                            document.data["imageUrl3"].toString(),
+                                            document.data["imageUrl4"].toString(),
+                                            document.data["imageUrl5"].toString(),
+                                            document.data["uid"].toString(),
+                                            document.data["title"].toString(),
+                                            document.data["content"].toString(),
+                                            document.data["category"].toString(),
+                                            document.data["dealsituation"].toString(),
+                                            document.data["date"].toString()
+                                        )
+                                    )
+                                }
+                            }
+                            .addOnFailureListener { exception ->
+                                Log.d(ContentValues.TAG, "Error getting documents: ", exception)
+                            }
+                    }
+                    else if(infoList.get(0)=="") { //카테고리 설정 안되어있을 경우 전체 게시글 출력
+                        firestore!!.collection("post")
+                            .whereEqualTo("dealsituation", "doingDeal")
+                            .get()
+                            .addOnSuccessListener { result ->
+                                for (document in result) {
+                                    Log.d(ContentValues.TAG, "${document.id} => ${document.data}")
+                                    refresh_arrayList.add(
+                                        PostDTO(
+                                            document.data["documentId"].toString(),
+                                            document.data["imageUrl"].toString(),
+                                            document.data["imageUrl2"].toString(),
+                                            document.data["imageUrl3"].toString(),
+                                            document.data["imageUrl4"].toString(),
+                                            document.data["imageUrl5"].toString(),
+                                            document.data["uid"].toString(),
+                                            document.data["title"].toString(),
+                                            document.data["content"].toString(),
+                                            document.data["category"].toString(),
+                                            document.data["dealsituation"].toString(),
+                                            document.data["date"].toString()
+                                        )
+                                    )
+                                }
+                            }
+                            .addOnFailureListener { exception ->
+                                Log.d(ContentValues.TAG, "Error getting documents: ", exception)
+                            }
+                    }
+                    else if (infoList.get(1)==""){ //설정한 카테고리 1개일때
+                        firestore!!.collection("post")
+                            .whereEqualTo("dealsituation", "doingDeal")
+                            .whereEqualTo("category", infoList[0])
+                            .get()
+                            .addOnSuccessListener { result ->
+                                for (document in result) {
+                                    if(document.data["category"].toString() == infoList[0]) {
+                                        Log.d(ContentValues.TAG, "${document.id} => ${document.data}")
+                                        refresh_arrayList.add(
+                                            PostDTO(
+                                                document.data["documentId"].toString(),
+                                                document.data["imageUrl"].toString(),
+                                                document.data["imageUrl2"].toString(),
+                                                document.data["imageUrl3"].toString(),
+                                                document.data["imageUrl4"].toString(),
+                                                document.data["imageUrl5"].toString(),
+                                                document.data["uid"].toString(),
+                                                document.data["title"].toString(),
+                                                document.data["content"].toString(),
+                                                document.data["category"].toString(),
+                                                document.data["dealsituation"].toString(),
+                                                document.data["date"].toString()
+                                            )
+                                        )
+                                    }
+                                }
+                                if(refresh_arrayList.isEmpty()) {
+                                    firestore!!.collection("post")
+                                        .whereEqualTo("dealsituation", "doingDeal")
+                                        .get()
+                                        .addOnSuccessListener { result ->
+                                            for (document in result) {
+                                                Log.d(ContentValues.TAG, "${document.id} => ${document.data}")
+                                                refresh_arrayList.add(
+                                                    PostDTO(
+                                                        document.data["documentId"].toString(),
+                                                        document.data["imageUrl"].toString(),
+                                                        document.data["imageUrl2"].toString(),
+                                                        document.data["imageUrl3"].toString(),
+                                                        document.data["imageUrl4"].toString(),
+                                                        document.data["imageUrl5"].toString(),
+                                                        document.data["uid"].toString(),
+                                                        document.data["title"].toString(),
+                                                        document.data["content"].toString(),
+                                                        document.data["category"].toString(),
+                                                        document.data["dealsituation"].toString(),
+                                                        document.data["date"].toString()
+                                                    )
+                                                )
+                                            }
+                                        }
+                                        .addOnFailureListener { exception ->
+                                            Log.d(ContentValues.TAG, "Error getting documents: ", exception)
+                                        }
+
+                                }
+                            }
+                            .addOnFailureListener { exception ->
+                                Log.d(ContentValues.TAG, "Error getting documents: ", exception)
+                            }
+                    }
+                    else if (infoList.get(2)==""){ //설정한 카테고리 2개일때
+                        firestore!!.collection("post")
+                            .whereEqualTo("dealsituation", "doingDeal")
+                            /*.whereEqualTo("category", infoList[0])
+                            .whereEqualTo("category", infoList[1])*/
+                            .get()
+                            .addOnSuccessListener { result ->
+                                for (document in result) {
+                                    Log.d(ContentValues.TAG, "${document.id} => ${document.data}")
+                                    if (document.data["category"].toString() == infoList[0] || document.data["category"].toString() == infoList[1]) {
+                                        refresh_arrayList.add(
+                                            PostDTO(
+                                                document.data["documentId"].toString(),
+                                                document.data["imageUrl"].toString(),
+                                                document.data["imageUrl2"].toString(),
+                                                document.data["imageUrl3"].toString(),
+                                                document.data["imageUrl4"].toString(),
+                                                document.data["imageUrl5"].toString(),
+                                                document.data["uid"].toString(),
+                                                document.data["title"].toString(),
+                                                document.data["content"].toString(),
+                                                document.data["category"].toString(),
+                                                document.data["dealsituation"].toString(),
+                                                document.data["date"].toString()
+                                            )
+                                        )
+                                    }
+                                }
+                                if(refresh_arrayList.isEmpty()) {
+                                    firestore!!.collection("post")
+                                        .whereEqualTo("dealsituation", "doingDeal")
+                                        .get()
+                                        .addOnSuccessListener { result ->
+                                            for (document in result) {
+                                                Log.d(ContentValues.TAG, "${document.id} => ${document.data}")
+                                                refresh_arrayList.add(
+                                                    PostDTO(
+                                                        document.data["documentId"].toString(),
+                                                        document.data["imageUrl"].toString(),
+                                                        document.data["imageUrl2"].toString(),
+                                                        document.data["imageUrl3"].toString(),
+                                                        document.data["imageUrl4"].toString(),
+                                                        document.data["imageUrl5"].toString(),
+                                                        document.data["uid"].toString(),
+                                                        document.data["title"].toString(),
+                                                        document.data["content"].toString(),
+                                                        document.data["category"].toString(),
+                                                        document.data["dealsituation"].toString(),
+                                                        document.data["date"].toString()
+                                                    )
+                                                )
+                                            }
+                                        }
+                                        .addOnFailureListener { exception ->
+                                            Log.d(ContentValues.TAG, "Error getting documents: ", exception)
+                                        }
+                                }
+                            }
+                            .addOnFailureListener { exception ->
+                                Log.d(ContentValues.TAG, "Error getting documents: ", exception)
+                            }
+                    }
+                    else { //설정한 카테고리 3개일때
+                        firestore!!.collection("post")
+                            .whereEqualTo("dealsituation", "doingDeal")
+                            /*.whereEqualTo("category", infoList[0])
+                            .whereEqualTo("category", infoList[1])*/
+                            .get()
+                            .addOnSuccessListener { result ->
+                                for (document in result) {
+                                    Log.d(ContentValues.TAG, "${document.id} => ${document.data}")
+                                    if (document.data["category"].toString() == infoList[0] || document.data["category"].toString() == infoList[1]
+                                        || document.data["category"].toString() == infoList[2]) {
+                                        refresh_arrayList.add(
+                                            PostDTO(
+                                                document.data["documentId"].toString(),
+                                                document.data["imageUrl"].toString(),
+                                                document.data["imageUrl2"].toString(),
+                                                document.data["imageUrl3"].toString(),
+                                                document.data["imageUrl4"].toString(),
+                                                document.data["imageUrl5"].toString(),
+                                                document.data["uid"].toString(),
+                                                document.data["title"].toString(),
+                                                document.data["content"].toString(),
+                                                document.data["category"].toString(),
+                                                document.data["dealsituation"].toString(),
+                                                document.data["date"].toString()
+                                            )
+                                        )
+                                    }
+                                }
+                                if(refresh_arrayList.isEmpty()) {
+                                    firestore!!.collection("post")
+                                        .whereEqualTo("dealsituation", "doingDeal")
+                                        .get()
+                                        .addOnSuccessListener { result ->
+                                            for (document in result) {
+                                                Log.d(ContentValues.TAG, "${document.id} => ${document.data}")
+                                                refresh_arrayList.add(
+                                                    PostDTO(
+                                                        document.data["documentId"].toString(),
+                                                        document.data["imageUrl"].toString(),
+                                                        document.data["imageUrl2"].toString(),
+                                                        document.data["imageUrl3"].toString(),
+                                                        document.data["imageUrl4"].toString(),
+                                                        document.data["imageUrl5"].toString(),
+                                                        document.data["uid"].toString(),
+                                                        document.data["title"].toString(),
+                                                        document.data["content"].toString(),
+                                                        document.data["category"].toString(),
+                                                        document.data["dealsituation"].toString(),
+                                                        document.data["date"].toString()
+                                                    )
+                                                )
+                                            }
+                                        }
+                                        .addOnFailureListener { exception ->
+                                            Log.d(ContentValues.TAG, "Error getting documents: ", exception)
+                                        }
+
+                                }
+                            }
+                            .addOnFailureListener { exception ->
+                                Log.d(ContentValues.TAG, "Error getting documents: ", exception)
+                            }
+                    }
+
                 }
-                .addOnFailureListener { exception ->
-                    Log.d(ContentValues.TAG, "Error getting documents: ", exception)
-                }
+
+//            firestore!!.collection("post")
+//                .whereEqualTo("dealsituation", "doingDeal")
+//                .get()
+//                .addOnSuccessListener { result ->
+//                    for (document in result) {
+//                        Log.d(ContentValues.TAG, "${document.id} => ${document.data}")
+//                        refresh_arrayList.add(PostDTO(
+//                            document.data["documentId"].toString(),
+//                            document.data["imageUrl"].toString(),
+//                            document.data["uid"].toString(),
+//                            document.data["title"].toString(),
+//                            document.data["content"].toString(),
+//                            document.data["category"].toString()))
+//                    }
+//                }
+//                .addOnFailureListener { exception ->
+//                    Log.d(ContentValues.TAG, "Error getting documents: ", exception)
+//                }
             val gridLayoutManager = GridLayoutManager(context, 2)
             var listAdapter: ListAdapter
             listAdapter = ListAdapter(refresh_arrayList)
