@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.doingdeal_row.*
 import kotlinx.android.synthetic.main.doingdeal_row.view.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_my_page.*
+import kotlinx.android.synthetic.main.matching_doingdeal_row.view.*
 import org.techtown.wishmatching.Authentication
 import org.techtown.wishmatching.Database.PostDTO
 import org.techtown.wishmatching.R
@@ -64,7 +65,7 @@ class MatchingMyPostInfo : AppCompatActivity() {
                         document.get("imageUrl2").toString(),document.get("imageUrl3").toString(),document.get("imageUrl4").toString(),
                         document.get("imageUrl5").toString(), document.get("uid").toString(), document.get("title").toString(), document.get("content").toString(), document.get("category").toString(), document.get("dealsituation").toString()))
                 }
-                var adapter = RecyclerViewAdapter(this)
+                var adapter = MatchRecyclerViewAdapter(this)
                 adapter.Postdata = data
 
 
@@ -73,7 +74,7 @@ class MatchingMyPostInfo : AppCompatActivity() {
                 adapter.setItemClickListener(object : RecyclerViewAdapter.onItemClickListener{      //리사이클러 뷰를 눌렀을 때 발생한는 클릭 이벤트
                     override fun onClick(v: View, position: Int) {
                         val intent = Intent(this@MatchingMyPostInfo, MyItemMoreInfoActivity::class.java)
-                        intent.putExtra("doc_id", v.documentID.text.toString())
+                        intent.putExtra("doc_id", v.matching_documentID.text.toString())
                         intent.putExtra("state","doing")
                         startActivity(intent)
 
@@ -84,4 +85,110 @@ class MatchingMyPostInfo : AppCompatActivity() {
 
     }
 }
+//
+//class MyMatchRecyclerViewAdapter(val c: Context): RecyclerView.Adapter<MyMatchRecyclerViewAdapter.ViewHolder>() {
+//    var Postdata = mutableListOf<PostDTO>()
+//
+//    interface onItemClickListener {
+//        fun onClick(v: View, position: Int)
+//    }
+//    private lateinit var itemClickListener: RecyclerViewAdapter.onItemClickListener
+//
+//    fun setItemClickListener(onItemClickListener: RecyclerViewAdapter.onItemClickListener){
+//        this.itemClickListener = onItemClickListener
+//    }
+//
+//    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+//
+//        var firestore = FirebaseFirestore.getInstance()
+//
+//        fun setPost(post : PostDTO){
+//            val fromId = FirebaseAuth.getInstance().uid // 현재 사용자
+//
+//            var post_id = post.documentId
+//            var check_like : String? = null
+//            var firestore : FirebaseFirestore? = null   // 데이터베이스를 사용할 수 있도록
+//            firestore = FirebaseFirestore.getInstance()  //초기화
+//
+//
+//
+////            firestore!!.collection("Matching_Post_id")
+////                .document("${ChatLogActivity.toUser!!.uid.toString()}"+"${fromId.toString()}"+"$post_id")
+////                .get()
+////                .addOnSuccessListener {
+////                    check_like= it.data?.get("matchPostId")?.toString() ?: return@addOnSuccessListener
+////                    Log.d("1123","112111 : ${post_id}")
+////                }
+//
+////            Toast.makeText(Activity(),check_like.toString(),Toast.LENGTH_SHORT).show()
+////            if(check_like != null && check_like != "") {
+////                itemView.matching_card.setCardBackgroundColor(Color.parseColor("#FFDCFF"))
+////            }
+//
+//            PicassoProvider.get().load(post.imageUrl).into(itemView.matching_doingdeal_row_image)
+//            itemView.matching_stuff_name.text = post.title.toString()
+//            itemView.matching_documentID.text =post.documentId
+//            firestore!!.collection("Matching_Post_id")
+//                .document("${fromId.toString()}"+"${ChatLogActivity.toUser!!.uid.toString()}"+"$post_id")
+//                .get()
+//                .addOnSuccessListener {
+//                    check_like= it.data?.get("matchPostId")?.toString() ?: return@addOnSuccessListener
+//                    Log.d("1123","112111 : ${check_like}")
+//                    itemView.matching_card.setCardBackgroundColor(Color.parseColor("#FFDCFF"))
+//                }
+//            firestore!!.collection("user")
+//                .whereEqualTo("uid", Authentication.auth.currentUser!!.uid).limit(1)
+//                .get()
+//                .addOnSuccessListener { documents->
+//                    for(document in documents){
+//                        itemView.matching_deal_location.text = document.data["area"].toString()
+//                    }
+//                }
+//        }
+//    }
+//
+//
+//    override fun onBindViewHolder(holder: MyMatchRecyclerViewAdapter.ViewHolder, position: Int) {
+//
+//        var firestore = FirebaseFirestore.getInstance()
+//        val fromId = FirebaseAuth.getInstance().uid // 현재 사용자
+//        firestore = FirebaseFirestore.getInstance()  //초기화
+//        var check_like : String? = null
+////        Log.d("1123","112111 : ${post_id}")
+//
+//        holder.itemView.setOnClickListener{
+//            itemClickListener.onClick(it, position)
+//        }
+//
+//
+//
+//        val post = Postdata.get(position)
+//        val post_id = post.documentId
+//
+//
+////        var post_id = post.documentId
+////
+////        firestore = FirebaseFirestore.getInstance()  //초기화
+////        firestore!!.collection("Matching_Post_id")
+////            .document("${ChatLogActivity.toUser!!.uid.toString()}"+"${fromId.toString()}"+"$post_id")
+////            .get()
+////            .addOnSuccessListener {
+////                check_like= it.data?.get("matchPostId")?.toString() ?: return@addOnSuccessListener
+////                Log.d("1123","112111 : ${post_id}")
+////            }
+//
+//        holder.setPost(post)
+//    }
+//
+//    override fun getItemCount(): Int {
+//        return Postdata.size
+//    }
+//
+//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+//        var view = LayoutInflater.from(parent.context).inflate(R.layout.matching_doingdeal_row,parent,false)
+//        return ViewHolder(view)
+//    }
+//
+//
+//}
 

@@ -139,6 +139,10 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
                         ?.set(
                             MatchPostId("$fromId")
                         )
+                    firestore?.collection("Matching_Post_id")?.document("$fromId"+"$post_uid"+"$doc_id") // 내가 좋아요누른 게시물 데이터
+                        ?.set(
+                            MatchPostId("$fromId")
+                        )
                 }
 
                 currentUserConnectionDb.addListenerForSingleValueEvent(object: ValueEventListener{
