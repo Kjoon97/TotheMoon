@@ -156,7 +156,7 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
                                 val chatMessage =
                                     ChatMessage(
                                         reference.key!!,
-                                        "채팅방이 생성 되었습니다.",
+                                        "매칭이 성사되었습니다.",
                                         fromId.toString(),
                                         post_uid,
                                         System.currentTimeMillis(),
