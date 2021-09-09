@@ -120,7 +120,7 @@ class ChattingFragment : Fragment() {
                 refreshRecyclerViewMessages()
             }
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                Log.d("1123","cancelled")
             }
         })
     }

@@ -14,9 +14,12 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.fragment_my_page.*
-import org.techtown.wishmatching.*
+import org.techtown.wishmatching.Authentication
+import org.techtown.wishmatching.CategoryActivity
+import org.techtown.wishmatching.LoginActivity
 import org.techtown.wishmatching.Mypage.DealSituation.DealCompleteActivity
 import org.techtown.wishmatching.Mypage.DealSituation.DealSituActivity
+import org.techtown.wishmatching.R
 
 class MyPageFragment : Fragment(){
     var firestore : FirebaseFirestore? = null   // 데이터베이스를 사용할 수 있도록
@@ -62,6 +65,7 @@ class MyPageFragment : Fragment(){
                         dialog,_->
 
                     Authentication.auth.signOut()
+
                     val intent = Intent(activity, LoginActivity::class.java)
                     startActivity(intent)
                 }
