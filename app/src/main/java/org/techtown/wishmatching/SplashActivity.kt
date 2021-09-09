@@ -19,8 +19,8 @@ class SplashActivity : AppCompatActivity() {
 //        },2500)
         iv_logo1.alpha =0f
         iv_logo2.alpha =0f
-        iv_logo2.animate().setDuration(1000).alpha(1f)
-        iv_logo1.animate().setDuration(1000).alpha(1f).withEndAction {
+        iv_logo2.animate().setDuration(1300).alpha(1f)
+        iv_logo1.animate().setDuration(1300).alpha(1f).withEndAction {
             sleep(1000)
             val intent = Intent(this,LoginActivity::class.java)
             startActivity(intent)
