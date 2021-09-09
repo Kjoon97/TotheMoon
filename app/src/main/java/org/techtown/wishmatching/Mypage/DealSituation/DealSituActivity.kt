@@ -77,7 +77,7 @@ class DealSituActivity : AppCompatActivity() {
     }
 }
 
-open class RecyclerViewAdapter(val c:Context): RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>(){
+class RecyclerViewAdapter(val c:Context): RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>(){
     var Postdata = mutableListOf<PostDTO>()
 
     interface onItemClickListener {
