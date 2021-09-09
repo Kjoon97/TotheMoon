@@ -18,6 +18,16 @@
         <activity android:name=".Mypage.DealSituation.MatchingPartnerPostInfo"></activity>
         <activity android:name=".Mypage.DealSituation.MatchingMyPostInfo" />
         <activity
+            android:name=".SplashActivity"
+            android:theme="@style/SplashTheme"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".Mypage.LicenseActivity"
             android:exported="true" />
         <activity android:name=".FindPasswordActivity" />
@@ -30,9 +40,6 @@
         <activity android:name=".MoreInfoActivity" />
         <activity
             android:name=".Mypage.DealSituation.DealSituActivity"
-            android:exported="true" />
-        <activity
-            android:name=".Mypage.DealSituation.DealSituationActivity"
             android:exported="true" />
         <activity
             android:name=".Chatting.ChatLogActivity"
@@ -58,11 +65,6 @@
         <activity
             android:name=".LoginActivity"
             android:theme="@style/Theme.WishMatching_login">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
