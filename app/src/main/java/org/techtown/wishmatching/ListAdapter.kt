@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -124,32 +125,40 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
         var btn_like_state : Int
         // 좋아요 버튼 클릭시 작동
         holder.btn_like.setOnClickListener {
-            if(holder.state_like==0)
-            {
-                prefs.setString("$doc_id",1)
-                holder.btn_like.setImageResource(R.drawable.btn_clicked_heart)
-                holder.state_like=1
-                var firestore = FirebaseFirestore.getInstance()  //초기화
+            if(post_uid.toString() == fromId.toString()) {
+                Toast.makeText(holder.itemView.context,"자신의 게시글엔 좋아요를 할 수 없습니다.",Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+            else {
+                if (holder.state_like == 0) {
+                    prefs.setString("$doc_id", 1)
+                    holder.btn_like.setImageResource(R.drawable.btn_clicked_heart)
+                    holder.state_like = 1
+                    var firestore = FirebaseFirestore.getInstance()  //초기화
 
 
-                if (fromId != null) {
+                    if (fromId != null) {
 //                    usersDb.child(post_uid).child("connections").child("match").child(fromId).child("postId").setValue(doc_id)
-                    usersDb.child(post_uid).child("connections").child("match").child(fromId).setValue(true)
-                    firestore?.collection("Matching_Post")?.document("$fromId"+"$post_uid") // 내가 좋아요누른 게시물 데이터
-                        ?.set(
-                            MatchPostId("$fromId")
-                        )
-                    firestore?.collection("Matching_Post_id")?.document("$fromId"+"$post_uid"+"$doc_id") // 내가 좋아요누른 게시물 데이터
-                        ?.set(
-                            MatchPostId("$fromId")
-                        )
-                }
+                        usersDb.child(post_uid).child("connections").child("match").child(fromId)
+                            .setValue(true)
+                        firestore?.collection("Matching_Post")
+                            ?.document("$fromId" + "$post_uid") // 내가 좋아요누른 게시물 데이터
+                            ?.set(
+                                MatchPostId("$fromId")
+                            )
+                        firestore?.collection("Matching_Post_id")
+                            ?.document("$fromId" + "$post_uid" + "$doc_id") // 내가 좋아요누른 게시물 데이터
+                            ?.set(
+                                MatchPostId("$fromId")
+                            )
+                    }
 
-                currentUserConnectionDb.addListenerForSingleValueEvent(object: ValueEventListener{
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        if(snapshot.exists()) {
+                    currentUserConnectionDb.addListenerForSingleValueEvent(object :
+                        ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            if (snapshot.exists()) {
 
-                            val reference = FirebaseDatabase.getInstance()
+                                val reference = FirebaseDatabase.getInstance()
                                     .getReference("/user-messages/$fromId/$post_uid").push()
                                 val toReference = FirebaseDatabase.getInstance()
                                     .getReference("/user-messages/$post_uid/$fromId").push()
@@ -175,56 +184,59 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
                                     .getReference("/latest-messages/$post_uid/$fromId")
                                 latestMessageToRef.setValue(chatMessage)
 
-                            val channel_name = "match_channel"
-                            val channelId = "MATCH_ID"
-                            val channel_description = "test"
+                                val channel_name = "match_channel"
+                                val channelId = "MATCH_ID"
+                                val channel_description = "test"
 
-                            val notificationBuilder = NotificationCompat.Builder(context, channelId)
-                                .setSmallIcon(R.drawable.logo_wm) // 아이콘 설정
-                                .setContentTitle("매칭이 성사되었습니다.") // 제목
-                                .setContentText("채팅방이 생성되었습니다.") // 메시지 내용
-                                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                                .setAutoCancel(true)
+                                val notificationBuilder =
+                                    NotificationCompat.Builder(context, channelId)
+                                        .setSmallIcon(R.drawable.logo_wm) // 아이콘 설정
+                                        .setContentTitle("매칭이 성사되었습니다.") // 제목
+                                        .setContentText("채팅방이 생성되었습니다.") // 메시지 내용
+                                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                                        .setAutoCancel(true)
 
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
-                                val importance = NotificationManager.IMPORTANCE_DEFAULT
-                                val channel = NotificationChannel(channelId, channel_name, importance).apply {
-                                    description = channel_description
+                                    val importance = NotificationManager.IMPORTANCE_DEFAULT
+                                    val channel = NotificationChannel(
+                                        channelId,
+                                        channel_name,
+                                        importance
+                                    ).apply {
+                                        description = channel_description
+                                    }
+                                    // Register the channel with the system
+                                    val notificationManager: NotificationManager =
+                                        context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                                    notificationManager.createNotificationChannel(channel)
                                 }
-                                // Register the channel with the system
-                                val notificationManager: NotificationManager =
-                                    context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                                notificationManager.createNotificationChannel(channel)
+
+                                with(NotificationManagerCompat.from(context)) {
+                                    // notificationId is a unique int for each notification that you must define
+                                    notify(8154, notificationBuilder.build())
+                                }
+
+
                             }
+                        }
 
-                            with(NotificationManagerCompat.from(context)) {
-                                // notificationId is a unique int for each notification that you must define
-                                notify(8154, notificationBuilder.build())
-                            }
-
-
+                        override fun onCancelled(error: DatabaseError) {
 
                         }
-                    }
-
-                    override fun onCancelled(error: DatabaseError) {
-
-                    }
 
 
-                })
+                    })
+                } else {
+                    prefs.setString("$doc_id", 0)
+                    holder.btn_like.setImageResource(R.drawable.btn_heart)
+                    holder.state_like = 0
+
+                    usersDb.child(post_uid).child("connections").child("match").child(fromId)
+                        .removeValue()
+                }
+                // 좋아요 버튼 취소시 작동
             }
-            else
-            {
-                prefs.setString("$doc_id",0)
-                holder.btn_like.setImageResource(R.drawable.btn_heart)
-                holder.state_like=0
-
-                usersDb.child(post_uid).child("connections").child("match").child(fromId).removeValue()
-            }
-            // 좋아요 버튼 취소시 작동
-
         }
 
         holder.card.setOnClickListener {
