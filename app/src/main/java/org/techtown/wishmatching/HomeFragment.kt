@@ -381,6 +381,12 @@ class HomeFragment : Fragment() {
 
     }
 
+    override fun onResume(){
+        super.onResume()
+        listAdapter.notifyDataSetChanged()
+
+    }
+
     // 메뉴 생성
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
