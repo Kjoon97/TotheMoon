@@ -10,6 +10,7 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
@@ -22,6 +23,7 @@ import kotlinx.android.synthetic.main.activity_edit_profile.*
 import kotlinx.android.synthetic.main.fragment_my_page.*
 import org.techtown.wishmatching.Authentication
 import org.techtown.wishmatching.Database.ContentDTO
+import org.techtown.wishmatching.MainActivity
 import org.techtown.wishmatching.R
 import java.text.SimpleDateFormat
 import java.util.*
