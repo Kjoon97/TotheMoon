@@ -27,8 +27,26 @@ class SplashActivity : AppCompatActivity() {
             sleep(1000)
             val user = Firebase.auth.currentUser
             if(user != null) {
-                val intent = Intent(this,MainActivity::class.java)
-                startActivity(intent)
+                user.let {
+                    var providerId: String? = null
+                    for (profile in it!!.providerData) {
+                        providerId = profile.providerId
+                    }
+                    if(providerId == "password"){
+                        if(Authentication.auth.currentUser?.isEmailVerified == true){
+                            val intent = Intent(this,MainActivity::class.java)
+                            startActivity(intent)
+                        } else{
+                            val intent = Intent(this,LoginActivity::class.java)
+                            startActivity(intent)
+                        }
+                    }else{
+                        val intent = Intent(this,MainActivity::class.java)
+                        startActivity(intent)
+                    }
+                }
+
+
             }
             else {
                 val intent = Intent(this,LoginActivity::class.java)
