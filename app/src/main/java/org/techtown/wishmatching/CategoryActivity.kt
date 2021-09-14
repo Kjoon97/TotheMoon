@@ -87,7 +87,19 @@ class CategoryActivity : AppCompatActivity() {
 
 
 
+
         Digital.setOnClickListener {
+            var catergory_count : Int = 0
+            for(i in 0..11 step 1) {
+                if (Clicked[i]==true) {
+                    catergory_count++
+                }
+            }
+            if(catergory_count>=3 && Clicked[0]==false) {
+                Toast.makeText(this,"카테고리는 최대 3개까지만 선택가능합니다.",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             Clicked[0] = !Clicked[0]
             if (Clicked[0] == true) { //선택했을때
                 Digital.setBackgroundColor(Color.GRAY)
@@ -100,6 +112,16 @@ class CategoryActivity : AppCompatActivity() {
         }
 
         Funiture.setOnClickListener {
+            var catergory_count : Int = 0
+            for(i in 0..11 step 1) {
+                if (Clicked[i]==true) {
+                    catergory_count++
+                }
+            }
+            if(catergory_count>=3 && Clicked[1]==false) {
+                Toast.makeText(this,"카테고리는 최대 3개까지만 선택가능합니다.",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             Clicked[1] = !Clicked[1]
             if (Clicked[1] == true) { //선택했을때
                 Funiture.setBackgroundColor(Color.GRAY)
@@ -113,6 +135,16 @@ class CategoryActivity : AppCompatActivity() {
         }
 
         Food.setOnClickListener {
+            var catergory_count : Int = 0
+            for(i in 0..11 step 1) {
+                if (Clicked[i]==true) {
+                    catergory_count++
+                }
+            }
+            if(catergory_count>=3 && Clicked[2]==false) {
+                Toast.makeText(this,"카테고리는 최대 3개까지만 선택가능합니다.",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             Clicked[2] = !Clicked[2]
             if (Clicked[2] == true) { //선택했을때
                 Food.setBackgroundColor(Color.GRAY)
@@ -126,6 +158,16 @@ class CategoryActivity : AppCompatActivity() {
         }
 
         Sports.setOnClickListener {
+            var catergory_count : Int = 0
+            for(i in 0..11 step 1) {
+                if (Clicked[i]==true) {
+                    catergory_count++
+                }
+            }
+            if(catergory_count>=3 && Clicked[3]==false) {
+                Toast.makeText(this,"카테고리는 최대 3개까지만 선택가능합니다.",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             Clicked[3] = !Clicked[3]
             if (Clicked[3] == true) { //선택했을때
                 Sports.setBackgroundColor(Color.GRAY)
@@ -139,6 +181,16 @@ class CategoryActivity : AppCompatActivity() {
         }
 
         ManClothes.setOnClickListener {
+            var catergory_count : Int = 0
+            for(i in 0..11 step 1) {
+                if (Clicked[i]==true) {
+                    catergory_count++
+                }
+            }
+            if(catergory_count>=3 && Clicked[4]==false) {
+                Toast.makeText(this,"카테고리는 최대 3개까지만 선택가능합니다.",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             Clicked[4] = !Clicked[4]
             if (Clicked[4] == true) { //선택했을때
                 ManClothes.setBackgroundColor(Color.GRAY)
@@ -152,6 +204,16 @@ class CategoryActivity : AppCompatActivity() {
         }
 
         WomanClothes.setOnClickListener {
+            var catergory_count : Int = 0
+            for(i in 0..11 step 1) {
+                if (Clicked[i]==true) {
+                    catergory_count++
+                }
+            }
+            if(catergory_count>=3 && Clicked[5]==false) {
+                Toast.makeText(this,"카테고리는 최대 3개까지만 선택가능합니다.",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             Clicked[5] = !Clicked[5]
             if (Clicked[5] == true) { //선택했을때
                 WomanClothes.setBackgroundColor(Color.GRAY)
@@ -165,6 +227,16 @@ class CategoryActivity : AppCompatActivity() {
         }
 
         Games.setOnClickListener {
+            var catergory_count : Int = 0
+            for(i in 0..11 step 1) {
+                if (Clicked[i]==true) {
+                    catergory_count++
+                }
+            }
+            if(catergory_count>=3 && Clicked[6]==false) {
+                Toast.makeText(this,"카테고리는 최대 3개까지만 선택가능합니다.",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             Clicked[6] = !Clicked[6]
             if (Clicked[6] == true) { //선택했을때
                 Games.setBackgroundColor(Color.GRAY)
@@ -178,6 +250,16 @@ class CategoryActivity : AppCompatActivity() {
         }
 
         Beauty.setOnClickListener {
+            var catergory_count : Int = 0
+            for(i in 0..11 step 1) {
+                if (Clicked[i]==true) {
+                    catergory_count++
+                }
+            }
+            if(catergory_count>=3 && Clicked[7]==false) {
+                Toast.makeText(this,"카테고리는 최대 3개까지만 선택가능합니다.",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             Clicked[7] = !Clicked[7]
             if (Clicked[7] == true) { //선택했을때
                 Beauty.setBackgroundColor(Color.GRAY)
@@ -191,6 +273,16 @@ class CategoryActivity : AppCompatActivity() {
         }
 
         Animals.setOnClickListener {
+            var catergory_count : Int = 0
+            for(i in 0..11 step 1) {
+                if (Clicked[i]==true) {
+                    catergory_count++
+                }
+            }
+            if(catergory_count>=3 && Clicked[8]==false) {
+                Toast.makeText(this,"카테고리는 최대 3개까지만 선택가능합니다.",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             Clicked[8] = !Clicked[8]
             if (Clicked[8] == true) { //선택했을때
                 Animals.setBackgroundColor(Color.GRAY)
@@ -204,6 +296,16 @@ class CategoryActivity : AppCompatActivity() {
         }
 
         Books.setOnClickListener {
+            var catergory_count : Int = 0
+            for(i in 0..11 step 1) {
+                if (Clicked[i]==true) {
+                    catergory_count++
+                }
+            }
+            if(catergory_count>=3 && Clicked[9]==false) {
+                Toast.makeText(this,"카테고리는 최대 3개까지만 선택가능합니다.",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             Clicked[9] = !Clicked[9]
             if (Clicked[9] == true) { //선택했을때
                 Books.setBackgroundColor(Color.GRAY)
@@ -217,6 +319,16 @@ class CategoryActivity : AppCompatActivity() {
         }
 
         Baby.setOnClickListener {
+            var catergory_count : Int = 0
+            for(i in 0..11 step 1) {
+                if (Clicked[i]==true) {
+                    catergory_count++
+                }
+            }
+            if(catergory_count>=3 && Clicked[10]==false) {
+                Toast.makeText(this,"카테고리는 최대 3개까지만 선택가능합니다.",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             Clicked[10] = !Clicked[10]
             if (Clicked[10] == true) { //선택했을때
                 Baby.setBackgroundColor(Color.GRAY)
@@ -230,6 +342,16 @@ class CategoryActivity : AppCompatActivity() {
         }
 
         Etc.setOnClickListener {
+            var catergory_count : Int = 0
+            for(i in 0..11 step 1) {
+                if (Clicked[i]==true) {
+                    catergory_count++
+                }
+            }
+            if(catergory_count>=3 && Clicked[11]==false) {
+                Toast.makeText(this,"카테고리는 최대 3개까지만 선택가능합니다.",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             Clicked[11] = !Clicked[11]
             if (Clicked[11] == true) { //선택했을때
                 Etc.setBackgroundColor(Color.GRAY)
