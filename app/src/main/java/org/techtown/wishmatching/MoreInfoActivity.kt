@@ -41,7 +41,6 @@ class MoreInfoActivity : AppCompatActivity() {
 
         val intent = intent
         val goodsId = intent.getStringExtra("doc_id")      //물품 아이디를 인텐트를 통해 받아옴
-        var state = intent.getIntExtra("state",0)
         val post_id = intent.getStringExtra("post_id")
 
 
@@ -158,7 +157,6 @@ class MoreInfoActivity : AppCompatActivity() {
 
             if(prefs.getString("$goodsId",0) == 0 ){
                 btn_moreInfo_like.setImageResource(R.drawable.btn_clicked_heart)
-                state=1
                 prefs.setString("$goodsId",1)
 
                 if (currentUser != null) {
@@ -241,7 +239,6 @@ class MoreInfoActivity : AppCompatActivity() {
             } else{
                 prefs.setString("$goodsId",0)
                 btn_moreInfo_like.setImageResource(R.drawable.btn_heart)
-                state=0
                 usersDb.child(post_id).child("connections").child("match").child(currentUser).removeValue()
             }
 

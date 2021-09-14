@@ -244,14 +244,13 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
             if(post_uid.toString() == fromId.toString()){
                 val intent = Intent(it.context, MyItemMoreInfoActivity::class.java)
                 intent.putExtra("doc_id", doc_id)
-                intent.putExtra("state", holder.state_like)
+                intent.putExtra("state","doing")
                 intent.putExtra("post_id", post_uid)
                 it.context.startActivity(intent)
             }
             else{
                 val intent = Intent(it.context, MoreInfoActivity::class.java)
                 intent.putExtra("doc_id", doc_id)
-                intent.putExtra("state", holder.state_like)
                 intent.putExtra("post_id", post_uid)
                 it.context.startActivity(intent)
             }
