@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_category.*
+import org.techtown.wishmatching.MainActivity.Companion.prefs
 
 class CategoryActivity : AppCompatActivity() {
 
@@ -37,6 +38,53 @@ class CategoryActivity : AppCompatActivity() {
         userId = auth?.currentUser!!.uid // 로그인 유저의 uid
         val intent = intent
         docId = intent.getStringExtra("doc_id")
+
+        for (x in 0..11 step 1) {
+            if (prefs.getValueForCategory("$x",0)==1) {
+                Clicked[x] = true
+            }
+            else {
+                Clicked[x] = false
+            }
+        }
+
+        if(Clicked[0]==true) {
+            Digital.setBackgroundColor(Color.GRAY)
+        }
+        if(Clicked[1]==true) {
+            Funiture.setBackgroundColor(Color.GRAY)
+        }
+        if(Clicked[2]==true) {
+            Food.setBackgroundColor(Color.GRAY)
+        }
+        if(Clicked[3]==true) {
+            Sports.setBackgroundColor(Color.GRAY)
+        }
+        if(Clicked[4]==true) {
+            ManClothes.setBackgroundColor(Color.GRAY)
+        }
+        if(Clicked[5]==true) {
+            WomanClothes.setBackgroundColor(Color.GRAY)
+        }
+        if(Clicked[6]==true) {
+            Games.setBackgroundColor(Color.GRAY)
+        }
+        if(Clicked[7]==true) {
+            Beauty.setBackgroundColor(Color.GRAY)
+        }
+        if(Clicked[8]==true) {
+            Animals.setBackgroundColor(Color.GRAY)
+        }
+        if(Clicked[9]==true) {
+            Books.setBackgroundColor(Color.GRAY)
+        }
+        if(Clicked[10]==true) {
+            Baby.setBackgroundColor(Color.GRAY)
+        }
+        if(Clicked[11]==true) {
+            Etc.setBackgroundColor(Color.GRAY)
+        }
+
 
 
         Digital.setOnClickListener {
@@ -239,8 +287,12 @@ class CategoryActivity : AppCompatActivity() {
                                     for (document in documents) {
                                         db!!.collection("user").document(document.id)
                                             .update("userCategory" + "${num++}", Category[x])
+                                        prefs.setValueForCategory("$x",1)
                                     }
                                 }
+                        }
+                        else {
+                            prefs.setValueForCategory("$x",0)
                         }
                     }
 //                    for(i in 0..100000) {

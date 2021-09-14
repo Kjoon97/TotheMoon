@@ -17,4 +17,10 @@ class PreferenceUtil(context: Context) {
     fun setStringForProfile(key: String, value: String) {
         prefs.edit().putString(key, value).apply()
     }
+    fun getValueForCategory(key: String, flag: Int): Int {
+        return prefs.getInt(key, flag)
+    }
+    fun setValueForCategory(key: String, flag: Int) {
+        prefs.edit().putInt(key, flag).apply()
+    }
 }
