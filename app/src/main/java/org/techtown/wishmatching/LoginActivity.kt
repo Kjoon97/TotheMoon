@@ -127,49 +127,49 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    override fun onStart() {
-        super.onStart()
-
-        if(Authentication.auth.currentUser !=null){
-            val user = Authentication.auth.currentUser
-            user.let {
-                var providerId : String? = null
-                for(profile in it!!.providerData) {
-                    providerId = profile.providerId
-                }
-                if(providerId == "password"){
-                    if(Authentication.auth.currentUser?.isEmailVerified == true){
-                        db.collection("user")
-                            .whereEqualTo("uid", Authentication.auth!!.uid)
-                            .get()
-                            .addOnSuccessListener { documents->
-                                if(documents.isEmpty){            // 처음 로그인 하면 프로필 화면으로 이동
-                                    val intent = Intent(this, ProfileActivity::class.java)
-                                    startActivity(intent)
-                                } else{                        // 그게 아니라면 메인액티비티로 이동
-                                    val intent = Intent(this, MainActivity::class.java)
-                                    startActivity(intent)
-                                }
-                            }
-                    } else {}
-                } else{
-                    db.collection("user")
-                        .whereEqualTo("uid", Authentication.auth!!.uid)
-                        .get()
-                        .addOnSuccessListener { documents->
-                            if(documents.isEmpty){            // 처음 로그인 하면 프로필 화면으로 이동
-                                val intent = Intent(this, ProfileActivity::class.java)
-                                startActivity(intent)
-                            } else{                        // 그게 아니라면 메인액티비티로 이동
-                                val intent = Intent(this, MainActivity::class.java)
-                                startActivity(intent)
-                            }
-                        }
-                }
-            }
-
-        }
-    }
+//    override fun onStart() {
+//        super.onStart()
+//
+//        if(Authentication.auth.currentUser !=null){
+//            val user = Authentication.auth.currentUser
+//            user.let {
+//                var providerId : String? = null
+//                for(profile in it!!.providerData) {
+//                    providerId = profile.providerId
+//                }
+//                if(providerId == "password"){
+//                    if(Authentication.auth.currentUser?.isEmailVerified == true){
+//                        db.collection("user")
+//                            .whereEqualTo("uid", Authentication.auth!!.uid)
+//                            .get()
+//                            .addOnSuccessListener { documents->
+//                                if(documents.isEmpty){            // 처음 로그인 하면 프로필 화면으로 이동
+//                                    val intent = Intent(this, ProfileActivity::class.java)
+//                                    startActivity(intent)
+//                                } else{                        // 그게 아니라면 메인액티비티로 이동
+//                                    val intent = Intent(this, MainActivity::class.java)
+//                                    startActivity(intent)
+//                                }
+//                            }
+//                    } else {}
+//                } else{
+//                    db.collection("user")
+//                        .whereEqualTo("uid", Authentication.auth!!.uid)
+//                        .get()
+//                        .addOnSuccessListener { documents->
+//                            if(documents.isEmpty){            // 처음 로그인 하면 프로필 화면으로 이동
+//                                val intent = Intent(this, ProfileActivity::class.java)
+//                                startActivity(intent)
+//                            } else{                        // 그게 아니라면 메인액티비티로 이동
+//                                val intent = Intent(this, MainActivity::class.java)
+//                                startActivity(intent)
+//                            }
+//                        }
+//                }
+//            }
+//
+//        }
+//    }
 
     //-------------------------------------------------------------------------------------------------
     private fun initTwitter(){      //API키를 대입해서 트위터 인증이 가능하도록 초기 설정

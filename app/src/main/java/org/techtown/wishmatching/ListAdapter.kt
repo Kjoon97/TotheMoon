@@ -123,6 +123,7 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
 
 
 
+
         var btn_like_state : Int
         // 좋아요 버튼 클릭시 작동
         holder.btn_like.setOnClickListener {
