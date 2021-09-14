@@ -18,6 +18,7 @@
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/drawable/ic_more.xml" value="0.26153846153846155" />
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/drawable/ic_warning.xml" value="0.26153846153846155" />
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/drawable/like_btn.xml" value="0.26564102564102565" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/drawable/matching_card_background.xml" value="0.26564102564102565" />
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/drawable/navigationbar_edge.xml" value="0.26564102564102565" />
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/drawable/navigationbaredge.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/drawable/rounded_button.xml" value="0.26564102564102565" />
@@ -39,6 +40,7 @@
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_license2.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_main.xml" value="0.12335359675785208" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_matching_my_post_info.xml" value="0.23052536231884058" />
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_more_info.xml" value="0.2" />
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_my_item_more_info.xml" value="0.2463768115942029" />
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/activity_new_message.xml" value="0.12335359675785208" />
@@ -56,6 +58,7 @@
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/image_chat_to_row.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/latest_message_row.xml" value="0.2" />
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/list_item.xml" value="0.264" />
+        <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/matching_doingdeal_row.xml" value="0.23052536231884058" />
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/layout/user_row_new_message.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/menu/deal_complete_menu.xml" value="0.20925925925925926" />
         <entry key="..\:/Users/jh833/AndroidStudioProjects/SummerProject/app/src/main/res/menu/deal_situ_menu.xml" value="0.2388888888888889" />

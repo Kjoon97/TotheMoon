@@ -24,6 +24,7 @@ import com.google.firebase.ktx.Firebase
 import org.techtown.wishmatching.Database.MatchPostId
 import org.techtown.wishmatching.Database.PostDTO
 import org.techtown.wishmatching.MainActivity.Companion.prefs
+import org.techtown.wishmatching.Mypage.DealSituation.MyItemMoreInfoActivity
 import org.techtown.wishmatching.RealtimeDB.ChatMessage
 
 
@@ -240,12 +241,22 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
         }
 
         holder.card.setOnClickListener {
-            val intent = Intent(it.context, MoreInfoActivity::class.java)
-            intent.putExtra("doc_id", doc_id)
-            intent.putExtra("state", holder.state_like)
-            intent.putExtra("post_id", post_uid)
-            it.context.startActivity(intent)
+            if(post_uid.toString() == fromId.toString()){
+                val intent = Intent(it.context, MyItemMoreInfoActivity::class.java)
+                intent.putExtra("doc_id", doc_id)
+                intent.putExtra("state", holder.state_like)
+                intent.putExtra("post_id", post_uid)
+                it.context.startActivity(intent)
+            }
+            else{
+                val intent = Intent(it.context, MoreInfoActivity::class.java)
+                intent.putExtra("doc_id", doc_id)
+                intent.putExtra("state", holder.state_like)
+                intent.putExtra("post_id", post_uid)
+                it.context.startActivity(intent)
+            }
         }
+
 
 
         Log.d("ListAdapter", "===== ===== ===== ===== onBindViewHolder ===== ===== ===== =====")
@@ -258,6 +269,8 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
         constructor(): this("","",1)
 
     }
+
+
 
 
 
