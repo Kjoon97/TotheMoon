@@ -177,12 +177,12 @@ class MoreInfoActivity : AppCompatActivity() {
                             val chatMessage =
                                 ChatMessage(
                                     reference.key!!,
-                                    "채팅방이 생성 되었습니다.",
+                                    "매칭이 성사되었습니다.",
                                     currentUser.toString(),
                                     post_id,
                                     System.currentTimeMillis(),
                                     user_nickname!!,
-                                    1
+                                    0
 
                                 )
                             reference.setValue(chatMessage)
