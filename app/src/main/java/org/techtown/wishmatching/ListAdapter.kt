@@ -4,6 +4,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
+import android.opengl.Visibility
 import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
@@ -111,6 +112,9 @@ class ListAdapter (private var list: ArrayList<PostDTO>): RecyclerView.Adapter<L
 //        else {
 //            holder.btn_like.setImageResource(R.drawable.btn_heart)
 //            holder.state_like=0
+//        }
+//        if(post_uid.toString() == fromId.toString()){
+//            holder.btn_like.visibility =View.INVISIBLE
 //        }
         if(prefs.getString("$doc_id",0)==1) {
             holder.state_like=1

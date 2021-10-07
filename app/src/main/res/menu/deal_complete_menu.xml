@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/return_doing_deal"
-        android:title="등록 물품으로 변경하기"
+        android:title="등록 물품으로 변경"
         android:fontFamily="@font/imhyeminbold"
         />
     <item
