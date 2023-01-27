@@ -23,13 +23,19 @@
 ![firebase](https://user-images.githubusercontent.com/71515740/127357065-25a04ce7-8de9-4873-911c-a0fbdae89614.png)
 
 ![img](https://user-images.githubusercontent.com/71515740/127357112-b542681b-75e6-4bbc-89fd-8d0f5afcd9f8.png)
-------------
-
 
 
 ## 개발 계획
 
 https://trello.com/b/NrXnbKtG/wishmatching
+------------
+
+## 실행화면
+#### 앱 로그인 화면
+<image src= "https://user-images.githubusercontent.com/70521476/215034356-4811ce4d-7f8d-4e0f-b1a4-e417f1fd98a9.png" width="200">
+
+#### 앱 동작 화면
+<image src= "https://user-images.githubusercontent.com/70521476/215036866-aff2270e-07d9-4d65-9839-1378e19b3ff5.png" width="200">&nbsp;<image src= "https://user-images.githubusercontent.com/70521476/215037145-312b235b-5756-4dda-bef5-8568a2be1c18.png" width="200">&nbsp;<image src= "https://user-images.githubusercontent.com/70521476/215034946-a30c0917-9c2a-4712-ad41-bb92f5f3c1ac.png" width="200">&nbsp;<image src= "https://user-images.githubusercontent.com/70521476/215035274-c8c8f633-1b7a-46b5-bf16-34f26b31c744.png" width="200">&nbsp;<image src= "https://user-images.githubusercontent.com/70521476/215035490-16d751f5-8b18-4ed5-a607-cb418d2d227e.png" width="200">&nbsp;<image src= "https://user-images.githubusercontent.com/70521476/215035157-fda5d832-9275-42c7-8b47-c0952c38f09c.png" width="200">
 
 ------------
 ## 팀원 구성
